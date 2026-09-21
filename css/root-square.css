@@ -37,7 +37,7 @@
 .field input:focus,.field textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px #fd5a0126}
 .callback-toggle{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:750;color:var(--muted);cursor:pointer}
 .callback-toggle input[type="checkbox"]{width:18px;height:18px;accent-color:var(--accent);cursor:pointer;flex:none}
-.contact-form-card .btn{border:0;cursor:pointer;font:inherit;justify-content:center;width:100%}
+.contact-form-card .btn{border:0;cursor:pointer;font:inherit;font-weight:850;line-height:1;justify-content:center;width:100%}
 .contact-form-card .btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
 .form-status{margin:0;font-size:14px;font-weight:750;min-height:1.4em}
 .form-status.is-sending{color:var(--muted)}

@@ -80,9 +80,11 @@
       .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
       .then(function (result) {
         if (result.ok && result.data && result.data.success) {
-          form.hidden = true;
-          setStatus('success', 'Thanks — your message is on its way. We typically reply within two business days.');
-          status.hidden = false;
+          Array.prototype.forEach.call(fields, function (el) { el.disabled = true; });
+          submitBtn.textContent = 'Sent';
+          setStatus('success', callback.checked
+            ? 'Thanks — we will give you a call within the next two business days.'
+            : 'Thanks — your message is on its way. We typically reply within two business days.');
         } else {
           throw new Error((result.data && result.data.message) || 'Submission failed');
         }
