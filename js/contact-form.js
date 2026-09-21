@@ -10,6 +10,8 @@
   const callback = document.getElementById('qc-callback');
   const phoneField = document.getElementById('qc-phone-field');
   const phoneInput = document.getElementById('qc-phone');
+  const messageField = document.getElementById('qc-message-field');
+  const messageInput = document.getElementById('qc-message');
   const emailInput = document.getElementById('qc-email');
   const replyTo = document.getElementById('qc-replyto');
 
@@ -22,6 +24,11 @@
     phoneField.querySelector('label').innerHTML = wantsCallback
       ? 'Phone'
       : 'Phone <span class="field-optional">(optional)</span>';
+    messageInput.required = !wantsCallback;
+    messageInput.setAttribute('aria-required', String(!wantsCallback));
+    messageField.querySelector('label').innerHTML = wantsCallback
+      ? 'Message <span class="field-optional">(optional)</span>'
+      : 'Message';
     submitBtn.textContent = wantsCallback ? 'Request callback' : 'Send message';
   }
   if (callback) {
