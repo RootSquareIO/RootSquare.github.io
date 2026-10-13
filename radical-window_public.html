@@ -1,0 +1,2977 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RootSquare&rsquo;s radical window</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Outfit:wght@100..900&display=swap');
+
+  :root{
+    --bg:#f5f5f5;
+    --surface:#ffffff;
+    --ink:#1b1825;
+    --muted:#644041;
+    --coral:#fd5a01;
+    --coral-soft:#fd5a011a;
+    --blue:#37375e;
+    --hairline:rgba(27,24,37,0.12);
+    --stage-shadow:0 1px 2px rgba(27,24,37,0.06), 0 20px 40px -24px rgba(27,24,37,0.25);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#15131c;
+      --surface:#1f1b2b;
+      --ink:#f4f2f7;
+      --muted:#c9a8ab;
+      --coral:#ff7a33;
+      --coral-soft:#ff7a3322;
+      --blue:#9a9ad2;
+      --hairline:rgba(244,242,247,0.14);
+      --stage-shadow:0 1px 2px rgba(0,0,0,0.4), 0 20px 40px -24px rgba(0,0,0,0.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#15131c;
+    --surface:#1f1b2b;
+    --ink:#f4f2f7;
+    --muted:#c9a8ab;
+    --coral:#ff7a33;
+    --coral-soft:#ff7a3322;
+    --blue:#9a9ad2;
+    --hairline:rgba(244,242,247,0.14);
+    --stage-shadow:0 1px 2px rgba(0,0,0,0.4), 0 20px 40px -24px rgba(0,0,0,0.6);
+  }
+
+  *{box-sizing:border-box;}
+  [hidden]{display:none !important;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Outfit', ui-sans-serif, system-ui, sans-serif;
+    display:flex;
+    justify-content:center;
+    padding:40px 24px 64px;
+  }
+  main{width:100%; max-width:1200px; display:flex; flex-direction:column; gap:32px;}
+
+  /* the logo stays put on the left while the controls scroll on the right */
+  .workspace{
+    display:grid;
+    grid-template-columns:minmax(0, 1fr) 400px;
+    gap:28px;
+    align-items:start;
+  }
+  .stage-col{
+    position:sticky;
+    top:24px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:18px;
+    min-width:0;
+  }
+  .params-col{min-width:0;}
+
+  .eyebrow{
+    font-family:'Outfit', ui-sans-serif, system-ui, sans-serif;
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--coral);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:7px; height:7px;
+    background:var(--coral);
+    display:inline-block;
+    border-radius:1px;
+    transform:rotate(45deg);
+  }
+
+  /* title and standfirst share a row, so the workspace starts near the top */
+  header{
+    display:grid;
+    grid-template-columns:minmax(0, 1fr) 400px;
+    gap:28px;
+    align-items:end;
+  }
+  .titles{display:flex; flex-direction:column; gap:12px; min-width:0;}
+  h1{margin:0; font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-0.02em; text-wrap:balance;}
+  .dek{margin:0; max-width:60ch; color:var(--muted); font-size:14.5px; line-height:1.6;}
+  .dek a{color:var(--coral); text-decoration:underline; text-underline-offset:2px;}
+  .dek a:hover{color:var(--blue);}
+  .dek b{color:var(--ink); font-weight:600;}
+
+  /* width drives height through the aspect ratio, so the width cap is what
+     keeps the whole logo on screen next to the panel — --stage-ar is the
+     live canvas ratio, set from JS whenever the canvas size changes */
+  .stage{
+    width:100%;
+    max-width:min(560px, calc((100vh - 300px) * var(--stage-ar, 1)));
+    aspect-ratio:1/1;
+    border-radius:14px;
+    background:var(--surface);
+    box-shadow:var(--stage-shadow);
+    overflow:hidden;
+  }
+  canvas{width:100%; height:100%; display:block;}
+
+  .controls{display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:center;}
+  button{
+    font-family:'Outfit', ui-sans-serif, system-ui, sans-serif;
+    font-size:13.5px;
+    font-weight:850;
+    letter-spacing:0.01em;
+    color:var(--surface);
+    background:var(--ink);
+    border:none;
+    padding:11px 20px;
+    border-radius:99px;
+    cursor:pointer;
+    transition:background-color 0.15s ease, color 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
+  }
+  button:hover{background:var(--coral); color:var(--ink); transform:translateY(-1px);}
+  button:disabled{opacity:0.4; cursor:default; transform:none;}
+  button:focus-visible{outline:2px solid var(--blue); outline-offset:2px;}
+
+  .seg{display:flex;}
+  .seg button{
+    background:transparent;
+    color:var(--muted);
+    border:1px solid var(--hairline);
+    border-right-width:0;
+    border-radius:0;
+    padding:10px 14px;
+  }
+  .seg button:first-child{border-radius:8px 0 0 8px;}
+  .seg button:last-child{border-radius:0 8px 8px 0; border-right-width:1px;}
+  .seg button.is-on{background:var(--ink); color:var(--surface); border-color:var(--ink);}
+  .seg button.is-on + button{border-left-color:var(--ink);}
+
+  .motion-note{
+    font-family:'Outfit', ui-sans-serif, system-ui, sans-serif;
+    font-size:11.5px;
+    color:var(--muted);
+    letter-spacing:0.02em;
+    width:100%;
+    text-align:center;
+  }
+
+  /* ---- parameter panel ---- */
+  .params{
+    border:1px solid var(--hairline);
+    border-radius:12px;
+    background:var(--surface);
+    position:sticky;
+    top:24px;
+  }
+  .params > summary{
+    font-family:'Outfit', ui-sans-serif, system-ui, sans-serif;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--ink);
+    padding:16px 18px;
+    cursor:pointer;
+    list-style:none;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .params > summary::-webkit-details-marker{display:none;}
+  .params > summary::after{content:"+"; font-size:15px; color:var(--muted);}
+  .params[open] > summary::after{content:"\2212";}
+  .params > summary:focus-visible{outline:2px solid var(--blue); outline-offset:-2px; border-radius:12px;}
+  /* the panel header stays pinned; only the controls beneath it scroll */
+  .params-body{
+    padding:0 18px 20px;
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+    max-height:calc(100vh - 130px);
+    overflow-y:auto;
+    overscroll-behavior:contain;
+  }
+  #groups{display:flex; flex-direction:column; gap:22px;}
+  .pgroup{display:flex; flex-direction:column; gap:12px;}
+  .pgroup h3{
+    margin:0;
+    font-family:'Outfit', ui-sans-serif, system-ui, sans-serif;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--coral);
+  }
+  .prow{
+    display:grid;
+    grid-template-columns:minmax(110px, 1fr) minmax(100px, 1.7fr) 92px;
+    align-items:center;
+    gap:12px;
+  }
+  .valcell{display:flex; align-items:center; justify-content:flex-end; gap:4px;}
+  .valcell input[type="number"]{
+    width:60px;
+    padding:5px 6px;
+    text-align:right;
+    font-size:12px;
+  }
+  .valcell .unit{
+    font-family:'Outfit', ui-sans-serif, system-ui, sans-serif;
+    font-size:11px;
+    color:var(--muted);
+    min-width:14px;
+  }
+  .prow > label{font-size:13.5px; color:var(--ink);}
+  .prow output{
+    font-family:'Outfit', ui-sans-serif, system-ui, sans-serif;
+    font-size:12px;
+    color:var(--muted);
+    text-align:right;
+    font-variant-numeric:tabular-nums;
+  }
+  .field{display:flex; align-items:center; gap:10px;}
+  input[type="range"]{width:100%; accent-color:var(--coral); height:20px; min-width:80px;}
+  input[type="range"]:focus-visible{outline:2px solid var(--blue); outline-offset:3px;}
+  input[type="color"]{
+    width:34px; height:26px; padding:0;
+    border:1px solid var(--hairline);
+    border-radius:6px;
+    background:transparent;
+    cursor:pointer;
+    flex:none;
+  }
+  input[type="text"], input[type="number"], select{
+    font-family:'Outfit', system-ui, sans-serif;
+    font-size:13.5px;
+    color:var(--ink);
+    background:var(--bg);
+    border:1px solid var(--hairline);
+    border-radius:7px;
+    padding:7px 9px;
+    width:100%;
+  }
+  input[type="text"], input[type="number"]{font-family:'Outfit', ui-sans-serif, system-ui, sans-serif;}
+  input[type="file"]{font-size:12px; color:var(--muted); width:100%;}
+  input[type="file"]::file-selector-button{
+    font-family:'Outfit', ui-sans-serif, system-ui, sans-serif;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    color:var(--ink);
+    background:transparent;
+    border:1px solid var(--hairline);
+    border-radius:6px;
+    padding:6px 10px;
+    margin-right:10px;
+    cursor:pointer;
+  }
+  input[type="checkbox"]{accent-color:var(--coral); width:16px; height:16px;}
+  input:focus-visible, select:focus-visible{outline:2px solid var(--blue); outline-offset:2px;}
+
+  button.mini{
+    padding:5px 10px;
+    font-size:10.5px;
+    color:var(--ink);
+    background:transparent;
+    border:1px solid var(--hairline);
+  }
+  .name-row{display:flex; align-items:center; gap:10px;}
+  .name-row label{font-size:13.5px; color:var(--ink); flex:none;}
+  .name-row input{flex:1 1 auto; min-width:0; font-size:12px; padding:6px 8px;}
+  .name-row button{flex:none;}
+  .export-row{display:flex; flex-wrap:wrap; gap:10px; align-items:center;}
+  .export-row button{padding:9px 14px; font-size:11.5px;}
+  #exportStatus{
+    font-family:'Outfit', ui-sans-serif, system-ui, sans-serif;
+    font-size:11.5px;
+    color:var(--muted);
+    font-variant-numeric:tabular-nums;
+  }
+
+  .params-foot{display:flex; flex-wrap:wrap; align-items:flex-start; gap:12px;}
+  .params-foot button{padding:9px 14px; font-size:11.5px;}
+  .foot-actions{display:flex; flex-direction:column; align-items:flex-start; gap:8px;}
+  #settingsStatus{
+    font-family:'Outfit', ui-sans-serif, system-ui, sans-serif;
+    font-size:11px;
+    line-height:1.4;
+    color:var(--muted);
+  }
+  textarea{
+    flex:1;
+    min-width:240px;
+    min-height:104px;
+    font-family:'Outfit', ui-sans-serif, system-ui, sans-serif;
+    font-size:11.5px;
+    line-height:1.55;
+    color:var(--muted);
+    background:var(--coral-soft);
+    border:none;
+    border-radius:8px;
+    padding:12px;
+    resize:vertical;
+  }
+  textarea:focus-visible{outline:2px solid var(--blue); outline-offset:2px;}
+  .hint{font-size:12.5px; color:var(--muted); line-height:1.5; margin:0;}
+
+  .approach{border-top:1px solid var(--hairline); padding-top:28px; display:flex; flex-direction:column; gap:10px;}
+  .approach h2{
+    margin:0;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .approach p{margin:0; max-width:64ch; font-size:15px; line-height:1.65; color:var(--ink);}
+  .approach code{
+    font-family:'Outfit', ui-sans-serif, system-ui, sans-serif;
+    font-size:0.9em;
+    background:var(--coral-soft);
+    color:var(--coral);
+    padding:0.1em 0.4em;
+    border-radius:4px;
+  }
+  .approach .formula{
+    display:grid;
+    grid-template-columns:auto auto 1fr;
+    align-items:baseline;
+    gap:2px 10px;
+    font-size:15px;
+    line-height:2.1;
+    color:var(--ink);
+    background:var(--coral-soft);
+    border-radius:10px;
+    padding:18px 20px;
+    overflow-x:auto;
+  }
+  .approach .frow{display:contents;}
+  .approach .formula .lhs{
+    justify-self:end;
+    white-space:nowrap;
+    font-family:'Outfit', ui-sans-serif, system-ui, sans-serif;
+  }
+  .approach .formula .rel{color:var(--muted);}
+  .approach .formula .rhs{white-space:nowrap;}
+  .approach .formula var{
+    font-style:italic;
+    font-family:'Outfit', ui-sans-serif, system-ui, sans-serif;
+  }
+  .approach .formula sub{
+    font-size:0.68em;
+    font-style:italic;
+    vertical-align:-0.25em;
+    padding-left:0.5px;
+  }
+  .approach .formula .sum{
+    font-size:1.32em;
+    font-weight:500;
+    vertical-align:-0.08em;
+    margin-right:2px;
+  }
+  .approach .formula .sum sub{vertical-align:-0.28em; font-size:0.5em; padding-left:0;}
+  .approach .formula .paren{color:var(--muted);}
+  .approach .formula .op{color:var(--muted); padding:0 1px;}
+  .approach .formula .num{font-variant-numeric:tabular-nums; font-weight:500;}
+  .approach .formula .gloss{
+    color:var(--muted);
+    font-size:0.88em;
+    font-family:'Outfit', ui-sans-serif, system-ui, sans-serif;
+  }
+  @media (max-width:640px){
+    .approach .formula{font-size:13.5px; padding:14px 14px;}
+  }
+  .approach .legend-intro{margin-bottom:6px;}
+  .approach .legend{
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:7px 18px;
+    margin:0 0 20px;
+    padding:0;
+    align-items:baseline;
+  }
+  .approach .legend dt{
+    justify-self:end;
+    white-space:nowrap;
+    font-size:14.5px;
+    color:var(--ink);
+  }
+  .approach .legend dd{margin:0; color:var(--muted);}
+  .approach .legend dd b{
+    color:var(--ink);
+    font-weight:500;
+    font-family:'Outfit', ui-sans-serif, system-ui, sans-serif;
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    white-space:nowrap;
+  }
+  .approach .legend dd b::before{content:'\00a0\00b7\00a0';color:var(--hairline);}
+  .approach .legend var, .approach var.inl{
+    font-style:italic;
+    font-family:'Outfit', ui-sans-serif, system-ui, sans-serif;
+  }
+  .approach .legend sub, .approach .legend sup{font-size:0.66em; font-style:italic;}
+  .approach .legend sub{vertical-align:-0.25em;}
+  @media (max-width:560px){
+    .approach .legend{grid-template-columns:1fr; gap:2px 0;}
+    .approach .legend dt{justify-self:start; margin-top:10px;}
+  }
+
+  /* one column, but the logo still rides along at the top of the screen */
+  @media (max-width: 980px){
+    body{padding:32px 16px 56px;}
+    main{max-width:720px;}
+    header{grid-template-columns:1fr; gap:14px; align-items:start;}
+    .workspace{grid-template-columns:1fr; gap:20px;}
+    .stage-col{
+      top:0;
+      background:var(--bg);
+      padding:8px 0 12px;
+      z-index:2;
+    }
+    .stage{max-width:min(100%, calc(40vh * var(--stage-ar, 1)));}
+    .params{position:static;}
+    .params-body{max-height:none; overflow:visible;}
+  }
+  @media (max-width: 560px){
+    .prow{grid-template-columns:1fr 60px;}
+    .prow > .field{grid-column:1 / -1; order:3;}
+    .motion-note{display:none;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    button{transition:none;}
+  }
+</style>
+
+<main>
+  <header>
+    <div class="titles">
+      <span class="eyebrow">RootSquare &middot; open-source logo generation</span>
+      <h1>RootSquare&rsquo;s radical window</h1>
+    </div>
+    <p class="dek">The RootSquare logo reflects our philosophy. The warped field is the inevitably noisy environments we find ourselves in: sometimes noisy data, sometimes noisy AI slop, sometimes noisy models. The square root symbolizes our goal: becoming an aperture through which noise is silenced and order becomes visible. The lines inside the window are the same as the ones outside, just organized. Now, the tool that draws our marks is below, and it is yours to play with. <a href="https://github.com/RootSquareIO/rootsquare-logo">Source and licence on GitHub</a></p>
+  </header>
+
+  <div class="workspace">
+   <div class="stage-col">
+    <div class="stage" id="stageBox">
+      <canvas id="stage" aria-label="Animated logo: a coral window sweeps across a warped grid, flattening it underneath; a symbol-shaped cut-out reveals the straightened lattice"></canvas>
+    </div>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Sweep axis">
+        <button type="button" data-axis="x">Horizontal</button>
+        <button type="button" data-axis="y">Vertical</button>
+        <button type="button" data-axis="none" class="is-on">Still</button>
+      </div>
+      <button id="replay" type="button">Replay sweep</button>
+      <button id="reseed" type="button">Re-seed field</button>
+      <span class="motion-note" id="motionNote"></span>
+    </div>
+   </div>
+
+   <aside class="params-col">
+  <details class="params" open>
+    <summary>Parameters</summary>
+    <div class="params-body">
+      <div id="groups"></div>
+
+      <div class="pgroup">
+        <h3>Export</h3>
+        <div class="prow">
+          <label for="exBackground">Background</label>
+          <div class="field">
+            <select id="exBackground">
+              <option value="opaque">Include background</option>
+              <option value="transparent">Transparent</option>
+            </select>
+          </div>
+          <output></output>
+        </div>
+        <div class="prow">
+          <label for="exScale">Image scale</label>
+          <div class="field">
+            <select id="exScale">
+              <option value="1" selected>1&times; canvas size</option>
+              <option value="2">2&times; canvas size</option>
+              <option value="3">3&times; canvas size</option>
+            </select>
+          </div>
+          <output id="exDims"></output>
+        </div>
+        <div class="prow">
+          <label for="exVideoSize">Video height</label>
+          <div class="field">
+            <select id="exVideoSize">
+              <option value="480">480 px</option>
+              <option value="720" selected>720 px</option>
+              <option value="1080">1080 px</option>
+            </select>
+          </div>
+          <output></output>
+        </div>
+        <div class="prow">
+          <label for="exVideoFormat">Video format</label>
+          <div class="field">
+            <select id="exVideoFormat">
+              <option value="mp4" selected>MP4 &mdash; plays everywhere</option>
+              <option value="webm">WebM &mdash; can carry transparency</option>
+            </select>
+          </div>
+          <output></output>
+        </div>
+        <div class="name-row">
+          <label for="exName">File name</label>
+          <input id="exName" type="text" spellcheck="false" autocomplete="off">
+          <button id="exNameAuto" class="mini" type="button">Suggest</button>
+        </div>
+        <div class="export-row">
+          <button id="saveSvg" type="button">Save SVG</button>
+          <button id="copySvg" type="button">Copy SVG</button>
+          <button id="savePng" type="button">Save PNG</button>
+          <button id="recordWebm" type="button">Record animation</button>
+          <span id="exportStatus"></span>
+        </div>
+        <p class="hint">Copy SVG puts the vector straight on your clipboard, ready to paste into Figma, Illustrator or Inkscape. Every file you save is written alongside a text file of the same name holding the parameters that made it. If you paste that back into the box below and press Apply, you get the identical picture.</p>
+      </div>
+
+      <div class="params-foot">
+        <textarea id="settings" spellcheck="false" aria-label="Settings as JSON — edit and apply"></textarea>
+        <div class="foot-actions">
+          <button id="applySettings" type="button">Apply</button>
+          <button id="reset" type="button">Reset</button>
+          <span id="settingsStatus"></span>
+        </div>
+      </div>
+      <p class="hint">The JSON is editable: change a value or paste a whole saved set and press Apply (or Cmd/Ctrl+Enter). Values are clamped to each control's range, and any unrecognized values are ignored, with a count shown. These are the same values as the <code>CONFIG</code> object at the top of this file's script; edit them there to change the defaults permanently. The damping band is measured inwards from the window's edge: widen it past the cut-out's clearance and the wobble starts leaking into the window.</p>
+    </div>
+  </details>
+   </aside>
+  </div>
+
+  <section class="approach">
+    <h2>How our logo is built</h2>
+    <p>Every mesh point is pushed off its lattice position by the slope of a height field, and that field is a sum of plane waves running in randomly chosen directions:</p>
+    <div class="formula" role="math" aria-label="h of x, y, t equals the sum over i of a-i times sine of k-i times x cosine theta-i plus y sine theta-i, plus omega-i t plus phi-i. Displacement equals A times the gradient of h times damp of x, y. Damp is 0 inside the window and 1 outside.">
+      <div class="frow">
+        <span class="lhs"><var>h</var>(<var>x</var>,&thinsp;<var>y</var>,&thinsp;<var>t</var>)</span>
+        <span class="rel">=</span>
+        <span class="rhs"><span class="sum">&Sigma;<sub>i</sub></span> <var>a</var><sub>i</sub>&thinsp;sin<span class="paren">(</span><var>k</var><sub>i</sub><span class="paren">(</span><var>x</var>&thinsp;cos&thinsp;<var>&theta;</var><sub>i</sub> <span class="op">+</span> <var>y</var>&thinsp;sin&thinsp;<var>&theta;</var><sub>i</sub><span class="paren">)</span> <span class="op">+</span> <var>&omega;</var><sub>i</sub><var>t</var> <span class="op">+</span> <var>&phi;</var><sub>i</sub><span class="paren">)</span></span>
+      </div>
+      <div class="frow">
+        <span class="lhs">displacement</span>
+        <span class="rel">=</span>
+        <span class="rhs"><var>A</var>&thinsp;&middot;&thinsp;&nabla;<var>h</var>&thinsp;&middot;&thinsp;damp<span class="paren">(</span><var>x</var>,&thinsp;<var>y</var><span class="paren">)</span></span>
+      </div>
+      <div class="frow">
+        <span class="lhs">damp</span>
+        <span class="rel">=</span>
+        <span class="rhs"><span class="num">0</span> <span class="gloss">inside the window,</span> <span class="num">1</span> <span class="gloss">outside</span></span>
+      </div>
+    </div>
+    <p class="legend-intro">Each symbol is a control in the panel:</p>
+    <dl class="legend">
+      <dt><var>k</var><sub>i</sub> = 2&pi;<var>n</var><sub>i</sub>/&lambda;</dt><dd>how tight the ripple is <b>Base wavelength</b></dd>
+      <dt><var>a</var><sub>i</sub> = 1/<var>n</var><sub>i</sub><sup><var>p</var></sup></dt><dd>how much that mode contributes <b>Amplitude falloff</b></dd>
+      <dt><var>&theta;</var><sub>i</sub></dt><dd>its heading, random <b>Seed</b></dd>
+      <dt><var>&omega;</var><sub>i</sub> &prop; <var>n</var><sub>i</sub>/<var>T</var></dt><dd>how fast it drifts <b>Drift period</b></dd>
+      <dt><var>i</var></dt><dd>one term per wave <b>Wave count</b></dd>
+      <dt><var>A</var></dt><dd>the overall push, in pixels <b>Warp amplitude</b></dd>
+      <dt>damp</dt><dd>1 in open field, 0 where order holds <b>Window + Damping band</b></dd>
+    </dl>
+    <p><var class="inl">h</var> itself is never evaluated. Only its gradient is, because differentiating the sine leaves a cosine with the direction cosines folded in, so each mode costs two constants and one cosine per sample. The surface is a fiction; what you see is its slope.</p>
+    <p><code>damp</code> is a blend weight rather than a multiplier: the displacement runs between the full field value and a target. In <b>Rest</b> that target is zero, which is the product shown above. <b>Keep offset</b> and <b>Local mean</b> use non-zero targets, which is why a straightened line can still sit off its lattice position. The noise is removed; the signal is not replaced.</p>
+    <p>Randomizing each wave's heading is what removes the diagonal: with every mode running along the same two axes, the crests line up into a traveling plaid, whereas incommensurate headings and drift rates never resolve to a single direction. Amplitude falls off as <code>1/n<sup>1.6</sup></code>, which keeps the long wavelengths dominant and holds the sheet's stretch short of the point where it folds back through itself. At the defaults the margin is about a factor of two; push both the wave count and the warp amplitude to the tops of their ranges and the field can crease.</p>
+  </section>
+</main>
+
+<script>
+(function(){
+
+  // =====================================================================
+  // CONFIG — every tunable in one place. The Parameters panel writes here.
+  // =====================================================================
+  const DEFAULTS = {
+    // canvas
+    canvasW:        1024,      // exported pixel width
+    canvasH:        1024,      // exported pixel height
+    // cut-out
+    cutout:         'radical', // 'radical' | 'text' | 'image'
+    cutoutText:     '√',
+    cutoutFont:     'plex',   // typeface for a typed cut-out
+    cutoutWeight:   700,      // its weight
+    cutoutInvert:   false,     // flip an uploaded image's mask
+    cutoutScale:    1,         // size multiplier on the cut-out
+    cutoutStretch:  1,         // extra horizontal scale, for widening a symbol
+    cutoutX:        0,         // offset from the window's centre, as a fraction of it
+    cutoutY:        0,
+    strokeWeight:   0.1125,    // radical stroke, as a fraction of the mark scale
+    cutoutRounding: 0,         // px radius pulled onto the cut-out's corners
+    cutoutSoftness: 0,         // px blur on the cut-out's edge; 0 is crisp
+    // window (the coloured shape the cut-out sits in)
+    windowShape:    'square',  // 'square' | 'rounded' | 'circle'
+    cornerRadius:   40,        // px, used when shape is 'rounded'
+    windowW:        340,       // px in design units (canvas short edge = 640)
+    windowH:        340,       // the mark scales with whichever is smaller
+    windowRounding: 0,         // px radius pulled onto the window's corners
+    windowSoftness: 0,         // px blur on the window's edge; 0 is crisp
+    feather:        24,        // px, damping ramp inset from the window's edge
+    // resolution — how the lattice inside the window relates to the field
+    // outside it, and where the transition between them is visible
+    interior:       'rest',    // 'rest' | 'offset' | 'mean'
+    transition:     0.6,        // -1 hides the ramp inside the window, +1 puts it outside
+    dampShape:      'window',  // 'window' = calm the whole window, 'cutout' = only the mark
+    // field
+    waveCount:      6,         // number of plane waves summed
+    wavelength:     430,       // px, longest wavelength
+    amplitude:      320,       // displacement scale
+    driftPeriod:    5200,      // ms, drift period of the longest mode
+    falloff:        1.6,       // amplitude ~ 1/n^falloff
+    fieldSeed:      4271,      // fixes every random draw, so exports repeat
+    stillPhase:     3998623,         // ms into the field's motion a still is taken at
+    // grid
+    spacing:        11,        // px between gridlines
+    lineWeight:     1.5,       // px stroke
+    lineStyle:      'solid',   // solid | dotted | dashed | dashdot | sparse
+    raggedV:        0,         // trims the ends of the vertical lines
+    raggedH:        0,         // trims the ends of the horizontal lines
+    edgeMargin:     80,         // px of clear space at the canvas edges
+    edgeGrip:       0,        // px over which the warp is pinned back to the margin box
+    thickVary:      0,      // depth of the width modulation, for the 'vary' style
+    meshColour:     'gradient',  // 'single' | 'gradient'
+    gradientAxis:   'radial',  // 'x' | 'y' | 'radial' (centred on the window)
+    gradientMix:    0.52,       // where the colours change over: low favours the far end
+    gradientStops:  3,         // colours in the gradient, the base included
+    cutoutBold:     'ramp',     // 'off' | 'step' | 'ramp' — thicken lines inside the mark
+    cutoutBoldAmount: 2.4,       // how much thicker, as a multiple of lineWeight
+    boldShape:      'window',  // what the bolding follows, independent of the damping
+    alignEnds:      true,      // end each line exactly on the outermost crossing line
+    windowFill:     'gradient',   // 'solid' | 'gradient'
+    windowGradDir:  'diag',       // 'x' | 'y' | 'diag'
+    // elements — each part of the mark can be dropped independently
+    showMesh:       true,
+    showWindow:     true,
+    showCutout:     true,
+    showBorder:     false,
+    // sweep — positions run 0 (window fully off the near side) to 1 (fully
+    // off the far side); 0.5 is dead centre whatever the sizes
+    sweepFrom:      1.04,      // where it starts
+    sweepTurn:      0.33,      // how far it travels before turning back
+    sweepSettle:    0.5,       // where it comes to rest
+    enterMs:        4200,      // start to turn
+    settleMs:       1700,      // turn to rest
+    // colour — null means "follow the page theme"
+    squareColour:   '#f55d23', squareAlpha: 1,
+    lineColour:     '#f53d27', lineAlpha:   1,
+    borderColour:   '#f51d1f', borderAlpha: 1,
+    gradientColour: '#f55d23', gradientEnd: 0.55,
+    gradientColour3: '#f55d23', gradientColour4: '#1d1a27',
+    squareColour2:  '#f53d27'
+  };
+  const CONFIG = Object.assign({}, DEFAULTS);
+
+  // the standard radical, as fractions of the window
+  const RADICAL = [
+    [0.220, 0.470],   // start of the foot
+    [0.330, 0.720],   // bottom of the turn
+    [0.605, 0.255],   // top of the rise
+    [0.815, 0.255]    // end of the vinculum
+  ];
+
+  const DASHES = {
+    solid:  [],
+    dotted: [0.1, 4],
+    dashed: [9, 6],
+    dashdot:[11, 5, 1.5, 5],
+    sparse: [0.1, 9]
+  };
+
+  const CANVAS_PRESETS = [
+    ['1024x1024', 'Square 1024'],
+    ['512x512',   'App icon 512'],
+    ['2048x2048', 'Square 2048'],
+    ['1200x630',  'Open Graph 1200 × 630'],
+    ['1500x500',  'Banner 1500 × 500'],
+    ['1920x1080', 'Wide 1920 × 1080'],
+    ['1080x1920', 'Story 1080 × 1920']
+  ];
+
+  const REF = 640;   // design units along the shorter edge of the canvas
+
+  // =====================================================================
+
+  const canvas = document.getElementById('stage');
+  const stageBox = document.getElementById('stageBox');
+  // ctx is swapped for a path recorder while the SVG exporter replays the
+  // same drawing code, so the vector file cannot drift from the canvas
+  let ctx = canvas.getContext('2d');
+  const liveCtx = ctx;
+  let recording = false;
+  const replayBtn = document.getElementById('replay');
+  const reseedBtn = document.getElementById('reseed');
+  const resetBtn = document.getElementById('reset');
+  const settingsBox = document.getElementById('settings');
+  const applyBtn = document.getElementById('applySettings');
+  const settingsStatus = document.getElementById('settingsStatus');
+  const motionNote = document.getElementById('motionNote');
+  const segButtons = Array.from(document.querySelectorAll('.seg button'));
+  const exBackground = document.getElementById('exBackground');
+  const exScale = document.getElementById('exScale');
+  const exVideoSize = document.getElementById('exVideoSize');
+  const exVideoFormat = document.getElementById('exVideoFormat');
+  const exName = document.getElementById('exName');
+  const exNameAuto = document.getElementById('exNameAuto');
+  const exDims = document.getElementById('exDims');
+  const savePngBtn = document.getElementById('savePng');
+  const saveSvgBtn = document.getElementById('saveSvg');
+  const copySvgBtn = document.getElementById('copySvg');
+  const recordBtn = document.getElementById('recordWebm');
+  const exportStatus = document.getElementById('exportStatus');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let LW = REF, LH = REF;      // logical canvas, design units
+  let viewScale = 1;           // device pixels per design unit
+
+  function cssVar(name){
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+  function toHex(c){
+    if (/^#[0-9a-f]{6}$/i.test(c)) return c;
+    if (/^#[0-9a-f]{3}$/i.test(c)) return '#' + c.slice(1).split('').map(ch => ch+ch).join('');
+    const m = String(c).match(/\d+/g);
+    if (!m) return '#000000';
+    return '#' + m.slice(0,3).map(v => (+v).toString(16).padStart(2,'0')).join('');
+  }
+  function rgba(colour, alpha){
+    const hex = toHex(colour);
+    const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+  }
+  function paint(key, varName, alphaKey){
+    return rgba(CONFIG[key] || cssVar(varName), CONFIG[alphaKey]);
+  }
+  function clamp(v, lo, hi){ return Math.max(lo, Math.min(hi, v)); }
+  function easeInOutCubic(x){ return x < 0.5 ? 4*x*x*x : 1 - Math.pow(-2*x + 2, 3)/2; }
+  function easeOutCubic(x){ return 1 - Math.pow(1-x, 3); }
+  function lerp(a, b, u){ return a + (b-a)*u; }
+
+  // Every random draw comes from a seeded generator rather than Math.random,
+  // so a saved parameter set reproduces the same field and the same ragged
+  // ends instead of a fresh accident each time the page loads.
+  function mulberry32(a){
+    return function(){
+      a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  // ---- canvas sizing ----------------------------------------------------
+  function applyScale(scale){
+    viewScale = scale;
+    canvas.width = Math.round(LW * scale);
+    canvas.height = Math.round(LH * scale);
+    ctx.setTransform(scale, 0, 0, scale, 0, 0);
+    rebuildStamp();
+  }
+
+  // the logical canvas, in design units — the window's size bounds are read
+  // off it, so it has to be current before anything is clamped against it
+  function recomputeLogicalSize(){
+    const k = REF / Math.min(CONFIG.canvasW, CONFIG.canvasH);
+    LW = CONFIG.canvasW * k;
+    LH = CONFIG.canvasH * k;
+  }
+
+  function rebuildCanvas(){
+    recomputeLogicalSize();
+    stageBox.style.aspectRatio = CONFIG.canvasW + ' / ' + CONFIG.canvasH;
+    // the stylesheet caps the stage's width by the height available to it
+    document.documentElement.style.setProperty('--stage-ar', (CONFIG.canvasW / CONFIG.canvasH).toFixed(4));
+    rebuildGeometry();
+    rebuildGrid();
+    applyScale(dpr);
+    updateDims();
+  }
+  function updateDims(){
+    const m = parseInt(exScale.value, 10);
+    exDims.textContent = (CONFIG.canvasW*m) + '×' + (CONFIG.canvasH*m);
+  }
+  function resize(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    applyScale(dpr);
+  }
+  window.addEventListener('resize', resize);
+
+  // ---- derived geometry -------------------------------------------------
+  // sw, sh are the window's box; s is the mark's scale, which follows the
+  // shorter side so the cut-out stays proportional and never overflows
+  let sw = 0, sh = 0, s = 0, centre = { x: 0, y: 0 };
+  function rebuildGeometry(){
+    sw = CONFIG.windowW;
+    sh = CONFIG.windowH;
+    s = Math.min(sw, sh);
+    centre = { x: (LW - sw)/2, y: (LH - sh)/2 };
+  }
+
+  // each line carries two random trims, so "ragged" can shorten its ends
+  let over = 0;
+  let sampleStep = 5;
+  const vLines = [], hLines = [];
+
+  // with no edge margin the field is drawn past the canvas edges so the warp
+  // can never expose a gap; with a margin it stops short of them instead
+  function gridStart(){ return CONFIG.edgeMargin > 0 ? CONFIG.edgeMargin : -over; }
+  function gridEnd(dim){ return CONFIG.edgeMargin > 0 ? dim - CONFIG.edgeMargin : dim + over; }
+
+  function rebuildGrid(){
+    // a separate stream off the same seed, so changing the spacing does not
+    // also re-deal the field
+    const rnd = mulberry32((((CONFIG.fieldSeed | 0) || 1) ^ 0x9E3779B9) | 0);
+    over = Math.max(CONFIG.spacing * 2, 20);
+    vLines.length = 0; hLines.length = 0;
+
+    // With a margin the mesh has to land exactly on both edges, so the run is
+    // divided into a whole number of gaps and the spacing nudged to fit. A
+    // plain fixed step leaves a ragged remainder at the far edge instead.
+    function fill(into, from, to){
+      if (CONFIG.edgeMargin > 0){
+        const gaps = Math.max(1, Math.round((to - from) / CONFIG.spacing));
+        const step = (to - from) / gaps;
+        for (let i = 0; i <= gaps; i++){
+          into.push({ pos: from + i*step, t0: rnd(), t1: rnd(), c0: rnd() });
+        }
+      } else {
+        for (let v = from; v <= to; v += CONFIG.spacing){
+          into.push({ pos: v, t0: rnd(), t1: rnd(), c0: rnd() });
+        }
+      }
+    }
+    fill(vLines, gridStart(), gridEnd(LW));
+    fill(hLines, gridStart(), gridEnd(LH));
+    // tight spacing means many more polylines, so walk each one in longer
+    // strides — the warp's wavelength is far larger than the stride either way
+    const total = vLines.length + hLines.length;
+    sampleStep = clamp(Math.round(total / 110) * 2 + 4, 4, 16);
+  }
+
+  // ---- warp field: superposition of randomly-oriented plane waves -------
+  // h(x,y,t) = SUM_i a_i sin( k_i (x cos0_i + y sin0_i) + w_i t + p_i )
+  // points are displaced along grad(h). Random headings keep the crests
+  // from lining up into one travelling diagonal.
+  let waves = [];
+  let phaseBase, phaseInc;
+  function seedField(){
+    const rnd = mulberry32((CONFIG.fieldSeed | 0) || 1);
+    waves = [];
+    for (let i = 0; i < CONFIG.waveCount; i++){
+      const n = 1 + i*0.66 + rnd()*0.35;   // irregular mode ladder
+      const k = (2*Math.PI*n) / CONFIG.wavelength;
+      const theta = rnd()*Math.PI*2;
+      const drift = (2*Math.PI*n) / CONFIG.driftPeriod * (0.75 + rnd()*0.5);
+      const a = 1 / Math.pow(n, CONFIG.falloff);
+      waves.push({
+        k,
+        cx: Math.cos(theta),
+        cy: Math.sin(theta),
+        omega: rnd() < 0.5 ? -drift : drift,
+        phi: rnd()*Math.PI*2,
+        gx: a * k * Math.cos(theta),
+        gy: a * k * Math.sin(theta)
+      });
+    }
+    phaseBase = new Float64Array(waves.length);
+    phaseInc = new Float64Array(waves.length);
+    waveReach = waves.reduce((sum, w) => sum + Math.hypot(w.gx, w.gy), 0);
+  }
+
+  // the furthest the field can ever push a point, so an unpinned mesh can be
+  // held clear of the margin box instead of being clipped against it
+  let waveReach = 0;
+  function maxDisplacement(){ return CONFIG.amplitude * waveReach; }
+  function meshInset(){
+    return (CONFIG.edgeMargin > 0 && CONFIG.edgeGrip <= 0)
+      ? maxDisplacement() + CONFIG.lineWeight
+      : 0;
+  }
+  seedField();
+
+  // ---- the sweep --------------------------------------------------------
+  let axis = 'none';
+  let sweepStart = performance.now();
+
+  // 0 puts the window entirely off the near side, 1 entirely off the far
+  // side, so 0.5 is centred no matter how big the window or the canvas is
+  function posAt(u){
+    const span = axis === 'x' ? LW : LH;
+    return lerp(-(axis === 'x' ? sw : sh), span, u);
+  }
+
+  function sweepOffset(t){
+    const from = posAt(CONFIG.sweepFrom);
+    const turn = posAt(CONFIG.sweepTurn);
+    const rest = posAt(CONFIG.sweepSettle);
+    const e = t - sweepStart;
+    if (e < CONFIG.enterMs) return lerp(from, turn, easeInOutCubic(e / CONFIG.enterMs));
+    if (e < CONFIG.enterMs + CONFIG.settleMs){
+      return lerp(turn, rest, easeOutCubic((e - CONFIG.enterMs) / CONFIG.settleMs));
+    }
+    return rest;
+  }
+
+  function windowOrigin(t){
+    if (axis === 'none' || reduceMotion) return { x: centre.x, y: centre.y };
+    const d = sweepOffset(t);
+    return axis === 'x' ? { x: d, y: centre.y } : { x: centre.x, y: d };
+  }
+
+  // where the sweep comes to rest — what a still export should show
+  function restOrigin(){
+    if (axis === 'none' || reduceMotion) return { x: centre.x, y: centre.y };
+    const d = posAt(CONFIG.sweepSettle);
+    return axis === 'x' ? { x: d, y: centre.y } : { x: centre.x, y: d };
+  }
+
+  // 1 out in the open, 0 under the window: the window holds the sheet flat.
+  // d is the signed distance inside the window's edge. The ramp spans a band
+  // of `feather`, and `transition` slides that band across the edge: at -1 it
+  // sits wholly inside (hidden under the opaque fill), at +1 wholly outside,
+  // where you can watch the lines bend into alignment before they go under.
+  // When the calm zone follows the cut-out rather than the window, the ramp
+  // comes from a blurred silhouette of the mark: a Gaussian-blurred shape is
+  // already a smooth 1-to-0 field around its own outline, so sampling it gives
+  // the distance ramp for free, whatever the shape happens to be.
+  let shapeField = null, shapeW = 0, shapeH = 0, shapeK = 1, shapePad = 0;
+
+  function rebuildShapeField(){
+    if (CONFIG.dampShape !== 'cutout' && CONFIG.boldShape !== 'cutout'){ shapeField = null; return; }
+    const band = Math.max(CONFIG.feather, 1);
+    // leave room for an offset mark so its ramp is not clipped by the field box
+    const shift = Math.max(Math.abs(CONFIG.cutoutX) * sw, Math.abs(CONFIG.cutoutY) * sh);
+    shapePad = band * 2 + 12 + shift;
+    const boxW = sw + shapePad*2, boxH = sh + shapePad*2;
+    shapeK = 192 / Math.max(boxW, boxH);
+    shapeW = Math.max(2, Math.ceil(boxW * shapeK));
+    shapeH = Math.max(2, Math.ceil(boxH * shapeK));
+    const c = scratch(shapeW, shapeH);
+    const cx = c.getContext('2d', { willReadFrequently: true });
+    cx.setTransform(shapeK, 0, 0, shapeK, 0, 0);
+    cx.translate(shapePad - stampPad, shapePad - stampPad);
+    // the blur supplies the ramp, but on a stroke no wider than the blur it
+    // also flattens the peak, so the interior never reads as "inside". Laying
+    // the sharp shape over the blurred one restores a solid core with the
+    // halo still around it.
+    cx.filter = 'blur(' + (band * shapeK) + 'px)';
+    drawCutoutShape(cx);
+    cx.filter = 'none';
+    drawCutoutShape(cx);
+    try {
+      const data = cx.getImageData(0, 0, shapeW, shapeH).data;
+      shapeField = new Uint8Array(shapeW * shapeH);
+      for (let i = 0, j = 3; i < shapeField.length; i++, j += 4) shapeField[i] = data[j];
+    } catch (e){ shapeField = null; }
+  }
+
+  function smoothstep(a, b, v){
+    if (b === a) return v < a ? 0 : 1;
+    const u = clamp((v - a) / (b - a), 0, 1);
+    return u*u*(3 - 2*u);
+  }
+
+  function dampByShape(x, y, o){
+    const fx = ((x - o.x) + shapePad) * shapeK;
+    const fy = ((y - o.y) + shapePad) * shapeK;
+    if (fx < 0 || fy < 0 || fx >= shapeW || fy >= shapeH) return 1;
+    const a = shapeField[(fy | 0) * shapeW + (fx | 0)] / 255;
+    // transition slides which slice of the blurred edge counts as "calm"
+    const mid = 0.5 - CONFIG.transition * 0.4;
+    return 1 - smoothstep(mid - 0.18, mid + 0.18, a);
+  }
+
+  function damp(x, y, o){ return dampFor(CONFIG.dampShape, x, y, o); }
+
+  // the damping and the bolding can follow different shapes, so the choice of
+  // silhouette is a parameter rather than read from CONFIG inside
+  function dampFor(shape, x, y, o){
+    if (shape === 'cutout' && shapeField) return dampByShape(x, y, o);
+    let d;
+    if (CONFIG.windowShape === 'circle'){
+      // normalised ellipse distance, scaled back to px by the shorter radius
+      const nx = (x - (o.x + sw/2)) / (sw/2);
+      const ny = (y - (o.y + sh/2)) / (sh/2);
+      d = (1 - Math.hypot(nx, ny)) * (Math.min(sw, sh)/2);
+    } else {
+      d = Math.min(x - o.x, o.x + sw - x, y - o.y, o.y + sh - y);
+    }
+    const band = CONFIG.feather;
+    if (band <= 0) return d <= 0 ? 1 : 0;
+    const start = -band * (CONFIG.transition + 1) / 2;   // full wobble at or below this
+    if (d <= start) return 1;
+    if (d >= start + band) return 0;
+    const u = (d - start) / band;
+    return 1 - u*u*(3 - 2*u);
+  }
+
+  // ---- grid -------------------------------------------------------------
+  // With a margin, the warp is eased back to zero as it approaches the margin
+  // box. A point sitting on the box is not displaced at all, so the outermost
+  // lines draw perfectly straight, every line terminates exactly on the
+  // boundary, and the mesh closes into a rectangle with visible corners —
+  // the interior still wobbles freely. Clipping could never do this: it cuts
+  // lines off wherever the warp happened to leave them.
+  function edgeEnvelope(x, y){
+    const m = CONFIG.edgeMargin;
+    const grip = CONFIG.edgeGrip;
+    if (m <= 0 || grip <= 0) return 1;
+    const d = Math.min(x - m, (LW - m) - x, y - m, (LH - m) - y);
+    if (d <= 0) return 0;
+    if (d >= grip) return 1;
+    const u = d / grip;
+    return u*u*(3 - 2*u);
+  }
+
+  // the field's gradient at an arbitrary point, for working out what a line
+  // should straighten *to* rather than simply snapping it back to rest
+  const probe = { x: 0, y: 0 }, probeAcc = { x: 0, y: 0 };
+  function gradAt(x, y, t, out){
+    let gx = 0, gy = 0;
+    for (let m = 0; m < waves.length; m++){
+      const wv = waves[m];
+      const c = Math.cos(wv.k*(x*wv.cx + y*wv.cy) + wv.omega*t + wv.phi);
+      gx += wv.gx * c;
+      gy += wv.gy * c;
+    }
+    out.x = gx; out.y = gy;
+    return out;
+  }
+
+  // What the interior of the window straightens to, held constant along each
+  // line so it draws straight:
+  //   rest   — zero. A clean lattice, but with no traceable relation to the
+  //            line outside, since displacement is comparable to the spacing.
+  //   offset — the displacement where the line first crosses into the window,
+  //            so the line is continuous at that edge and merely stops waving.
+  //   mean   — the line's average displacement across the aperture: the noise
+  //            removed from the signal rather than the signal discarded.
+  function lineTarget(line, vertical, t, o, out){
+    out.x = 0; out.y = 0;
+    if (CONFIG.interior === 'rest') return out;
+    // lines that never reach the window are damped at 1 along their whole
+    // length, so their target is never used: don't pay to compute one
+    const near = vertical ? o.x : o.y;
+    const band = CONFIG.feather + 4;
+    const across = vertical ? sw : sh;
+    if (line.pos < near - band || line.pos > near + across + band) return out;
+    const amp = CONFIG.amplitude;
+
+    if (CONFIG.interior === 'offset'){
+      const x = vertical ? line.pos : o.x;
+      const y = vertical ? o.y : line.pos;
+      gradAt(x, y, t, probeAcc);
+      out.x = amp * probeAcc.x;
+      out.y = amp * probeAcc.y;
+      return out;
+    }
+
+    const N = 9;
+    let sx = 0, sy = 0;
+    for (let k = 0; k < N; k++){
+      const u = (k + 0.5) / N;
+      const x = vertical ? line.pos : o.x + u*sw;
+      const y = vertical ? o.y + u*sh : line.pos;
+      gradAt(x, y, t, probe);
+      sx += probe.x; sy += probe.y;
+    }
+    out.x = amp * sx / N;
+    out.y = amp * sy / N;
+    return out;
+  }
+
+  const target = { x: 0, y: 0 };
+
+  // point buffers reused by the variable-width ribbon path
+  let ptX = new Float64Array(1024), ptY = new Float64Array(1024), ptW = new Float64Array(1024);
+
+  function strokeLines(lines, vertical, t, o, ragged, stroke, dropOuter, extent, across){
+    const step = sampleStep;
+    const lo = extent.lo;
+    const hi = extent.hi;
+    const acrossLo = across.lo;
+    const acrossHi = across.hi;
+    const span = hi - lo;
+    const trim = ragged * 0.34 * span;   // most a single end can lose
+    const n = waves.length;
+    const amp = CONFIG.amplitude;
+
+    const dashed = (DASHES[CONFIG.lineStyle] || []).length > 0;
+    const bold = CONFIG.cutoutBold !== 'off';
+    const boldSeparate = bold && CONFIG.boldShape !== CONFIG.dampShape;
+    // a stroke cannot change width along its length, so anything that varies
+    // the weight — the vary style, or bolding inside the mark — is drawn as a
+    // filled ribbon instead
+    const ribbon = CONFIG.lineStyle === 'vary' || bold;
+    const weight = CONFIG.lineWeight;
+
+    if (ribbon) ctx.fillStyle = stroke;
+    else { ctx.strokeStyle = stroke; ctx.lineWidth = weight; }
+
+    // ragged ends read as a torn patch only if the mesh has no straight
+    // framing line, so the outermost line of the set goes with it
+    const first = dropOuter ? 1 : 0;
+    const last = lines.length - (dropOuter ? 1 : 0);
+
+    for (let i = first; i < last; i++){
+      const line = lines[i];
+      const fixed = line.pos;
+      if (fixed < acrossLo - 0.01 || fixed > acrossHi + 0.01) continue;
+      const from = lo + line.t0*trim;
+      const to = hi - line.t1*trim;
+
+      lineTarget(line, vertical, t, o, target);
+      const tx = target.x, ty = target.y;
+
+      for (let m = 0; m < n; m++){
+        const wv = waves[m];
+        phaseBase[m] = (vertical ? wv.k*wv.cx*fixed : wv.k*wv.cy*fixed) + wv.omega*t + wv.phi;
+        phaseInc[m] = vertical ? wv.k*wv.cy : wv.k*wv.cx;
+      }
+
+      // A dash pattern is laid out along the path's arc length, and the wobbly
+      // stretch upstream changes length every frame — which makes the dashes
+      // inside the window crawl even though the geometry there is standing
+      // still. Measuring the length at which the line goes calm and offsetting
+      // the pattern by it anchors the dashes to the window instead.
+      let len = 0, calmAt = 0, foundCalm = false;
+      let lastX = 0, lastY = 0;
+      let np = 0;
+
+      const count = Math.floor((to - from) / step) + 2;
+      if (ribbon && count > ptX.length){
+        ptX = new Float64Array(count * 2);
+        ptY = new Float64Array(count * 2);
+        ptW = new Float64Array(count * 2);
+      }
+
+      if (!ribbon) ctx.beginPath();
+      // walking by a fixed stride leaves the last point short of the end by up
+      // to a stride, which is what stopped the lines meeting at the corners;
+      // dividing the run into equal parts lands exactly on both ends
+      const steps = Math.max(1, Math.ceil((to - from) / step));
+      for (let i = 0; i <= steps; i++){
+        const u = from + (to - from) * (i / steps);
+        let gx = 0, gy = 0;
+        for (let m = 0; m < n; m++){
+          const c = Math.cos(phaseBase[m] + phaseInc[m]*u);
+          gx += waves[m].gx * c;
+          gy += waves[m].gy * c;
+        }
+        const x = vertical ? fixed : u;
+        const y = vertical ? u : fixed;
+        // blend between the field's own displacement and the interior target,
+        // which is constant along the line and so draws it straight
+        const w = damp(x, y, o);
+        let dx = tx + (amp*gx - tx)*w;
+        let dy = ty + (amp*gy - ty)*w;
+        // the envelope scales the whole displacement, not the blend weight, so
+        // a pinned point lands on the boundary in every interior mode
+        const e = edgeEnvelope(x, y);
+        if (e < 1){ dx *= e; dy *= e; }
+        const px = x + dx;
+        const py = y + dy;
+
+        if (ribbon){
+          // 1 out in the field, rising to the full multiple inside the mark
+          let b = 1;
+          if (bold){
+            const inside = 1 - (boldSeparate ? dampFor(CONFIG.boldShape, x, y, o) : w);
+            b = CONFIG.cutoutBold === 'step'
+              ? (inside > 0.5 ? CONFIG.cutoutBoldAmount : 1)
+              : 1 + (CONFIG.cutoutBoldAmount - 1) * inside;
+          }
+          ptX[np] = px; ptY[np] = py; ptW[np] = b; np++;
+        } else if (i === 0){
+          ctx.moveTo(px, py);
+        } else {
+          ctx.lineTo(px, py);
+          if (dashed) len += Math.hypot(px - lastX, py - lastY);
+        }
+        if (dashed && !foundCalm && w < 0.02){ calmAt = len; foundCalm = true; }
+        lastX = px; lastY = py;
+      }
+
+      if (ribbon){
+        // canvas cannot vary a stroke's width along its length, so a
+        // variable-width line is drawn as a filled ribbon: out along one
+        // offset edge, back along the other
+        if (np < 2) continue;
+        const freq = (Math.PI * 5) / Math.max(1, np);
+        const phase = line.t0 * Math.PI * 2;
+        const varyAmp = CONFIG.lineStyle === 'vary' ? CONFIG.thickVary : 0;
+        ctx.beginPath();
+        for (let k = 0; k < np; k++) ribbonPoint(k, np, freq, phase, varyAmp, weight, 1, k === 0);
+        for (let k = np - 1; k >= 0; k--) ribbonPoint(k, np, freq, phase, varyAmp, weight, -1, false);
+        ctx.closePath();
+        ctx.fill();
+      } else {
+        ctx.lineDashOffset = dashed && foundCalm ? -calmAt : 0;
+        ctx.stroke();
+      }
+    }
+    ctx.lineDashOffset = 0;
+  }
+
+  // one edge of the ribbon: offset the point along the local normal by a
+  // half-width that breathes smoothly down the line
+  function ribbonPoint(k, np, freq, phase, varyAmp, weight, side, moveTo){
+    const k0 = k > 0 ? k - 1 : k;
+    const k1 = k < np - 1 ? k + 1 : k;
+    let tx = ptX[k1] - ptX[k0], ty = ptY[k1] - ptY[k0];
+    const L = Math.hypot(tx, ty) || 1;
+    const nx = -ty / L, ny = tx / L;
+    const wob = varyAmp > 0 ? (1 + varyAmp * Math.sin(freq * k + phase)) : 1;
+    const h = Math.max(0.1, weight * wob * ptW[k] / 2);
+    const x = ptX[k] + nx * h * side;
+    const y = ptY[k] + ny * h * side;
+    if (moveTo) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  }
+
+  // The mesh gradient is described once, as plain numbers, and realised
+  // twice: as a canvas gradient for the screen and as a <linearGradient> or
+  // <radialGradient> for the SVG export. One description, so the vector file
+  // cannot disagree with what is on screen.
+  function meshGradientSpec(o){
+    if (CONFIG.meshColour !== 'gradient') return null;
+    const a = CONFIG.lineAlpha * CONFIG.gradientEnd;
+    const cols = [paint('lineColour', '--coral', 'lineAlpha'),
+                  rgba(CONFIG.gradientColour || cssVar('--blue'), a)];
+    if (CONFIG.gradientStops >= 3) cols.push(rgba(CONFIG.gradientColour3 || cssVar('--ink'), a));
+    if (CONFIG.gradientStops >= 4) cols.push(rgba(CONFIG.gradientColour4 || cssVar('--muted'), a));
+    // the mix slides the band the colours run across, so one end can take up
+    // most of the field and the rest only its far edge
+    let p0 = clamp(CONFIG.gradientMix - 0.4, 0, 1);
+    let p1 = clamp(CONFIG.gradientMix + 0.4, 0, 1);
+    if (p1 <= p0) p1 = Math.min(1, p0 + 0.01);
+    const stops = cols.map((col, i) => ({
+      offset: p0 + (p1 - p0) * (i / (cols.length - 1)),
+      col
+    }));
+    if (CONFIG.gradientAxis === 'radial'){
+      // radial gradients are centred on the window, so the colour tracks the mark
+      return { type:'radial', cx:o.x + sw/2, cy:o.y + sh/2,
+               r0:s*0.25, r1:Math.max(LW, LH)*0.75, stops };
+    }
+    if (CONFIG.gradientAxis === 'y') return { type:'linear', x0:0, y0:0, x1:0, y1:LH, stops };
+    return { type:'linear', x0:0, y0:0, x1:LW, y1:0, stops };
+  }
+
+  function baseStroke(o){
+    const spec = meshGradientSpec(o);
+    if (!spec) return paint('lineColour', '--coral', 'lineAlpha');
+    if (recording) return 'url(#meshGrad)';   // the SVG names it in <defs>
+    const g = spec.type === 'radial'
+      ? ctx.createRadialGradient(spec.cx, spec.cy, spec.r0, spec.cx, spec.cy, spec.r1)
+      : ctx.createLinearGradient(spec.x0, spec.y0, spec.x1, spec.y1);
+    spec.stops.forEach(st => g.addColorStop(clamp(st.offset, 0, 1), st.col));
+    return g;
+  }
+
+  // where a family of lines actually starts and ends, once the inset and the
+  // dropped outer lines are accounted for
+  function lineExtent(lines, box, dropOuter){
+    const first = dropOuter ? 1 : 0;
+    const last = lines.length - (dropOuter ? 1 : 0);
+    let lo = null, hi = null;
+    for (let i = first; i < last; i++){
+      const p = lines[i].pos;
+      if (p < box.lo - 0.01 || p > box.hi + 0.01) continue;
+      if (lo === null) lo = p;
+      hi = p;
+    }
+    return lo === null ? box : { lo, hi };
+  }
+
+  function drawGrid(t, o){
+    const dash = DASHES[CONFIG.lineStyle] || [];
+    const base = baseStroke(o);
+    const dropOuter = CONFIG.raggedV > 0 || CONFIG.raggedH > 0;
+    const m = CONFIG.edgeMargin;
+
+    // only meaningful while pinning is on, where it is a safety net; unpinned
+    // the mesh is inset to fit instead, so nothing may be cut off
+    const clipping = m > 0 && CONFIG.edgeGrip > 0;
+    if (clipping){
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(m, m, LW - m*2, LH - m*2);
+      ctx.clip();
+    }
+
+    ctx.lineWidth = CONFIG.lineWeight;
+    // dashes track the stroke weight, but stop scaling once the lines are
+    // heavy or a dashed pattern turns into a row of long slabs
+    ctx.setLineDash(dash.map(v => v * clamp(CONFIG.lineWeight || 1, 0.5, 3)));
+    ctx.lineCap = (CONFIG.lineStyle === 'dotted' || CONFIG.lineStyle === 'sparse') ? 'round' : 'butt';
+    // A vertical line should stop exactly on the outermost horizontal lines,
+    // not on the nominal box, or the corners stand open. So each family's
+    // drawn extent is the position of the other family's outermost lines.
+    const inset = meshInset();
+    const xBox = { lo: gridStart() + inset, hi: gridEnd(LW) - inset };
+    const yBox = { lo: gridStart() + inset, hi: gridEnd(LH) - inset };
+    const xr = CONFIG.alignEnds ? lineExtent(vLines, xBox, dropOuter) : xBox;
+    const yr = CONFIG.alignEnds ? lineExtent(hLines, yBox, dropOuter) : yBox;
+
+    strokeLines(vLines, true,  t, o, CONFIG.raggedV, base, dropOuter, yr, xBox);
+    strokeLines(hLines, false, t, o, CONFIG.raggedH, base, dropOuter, xr, yBox);
+    ctx.setLineDash([]);
+    if (clipping) ctx.restore();
+  }
+
+  // ---- the cut-out ------------------------------------------------------
+  let cutoutImage = null;   // the uploaded <img>
+  let cutoutMask = null;    // preprocessed alpha mask canvas
+
+  function buildMask(img, invert){
+    const w = img.naturalWidth || 512;
+    const h = img.naturalHeight || 512;
+    const c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    const cx = c.getContext('2d', { willReadFrequently: true });
+    cx.drawImage(img, 0, 0, w, h);
+    let data;
+    try { data = cx.getImageData(0, 0, w, h); }
+    catch (e){ return c; }   // can't inspect it: use the image as-is
+    const px = data.data;
+
+    // does the file carry real transparency, or is it ink on a flat ground?
+    let clear = 0;
+    for (let i = 3; i < px.length; i += 4) if (px[i] < 250) clear++;
+    const useAlpha = clear > (px.length/4) * 0.02;
+
+    for (let i = 0; i < px.length; i += 4){
+      const a = useAlpha
+        ? px[i+3]
+        : 255 - (0.2126*px[i] + 0.7152*px[i+1] + 0.0722*px[i+2]);  // dark ink becomes the shape
+      px[i] = px[i+1] = px[i+2] = 0;
+      px[i+3] = invert ? 255 - a : a;
+    }
+    cx.putImageData(data, 0, 0);
+    return c;
+  }
+
+  // ---- the window stamp -------------------------------------------------
+  // The window is the same shape in every frame, so it is composed once
+  // into an offscreen stamp and blitted at the sweep position. Rounding
+  // needs a per-pixel pass, which only this caching makes affordable.
+  let stamp = document.createElement('canvas');
+  let stampPad = 0;
+
+  function scratch(w, h){
+    const c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    return c;
+  }
+
+  // blur the alpha, then drive it back through a steep threshold: sharp
+  // corners come back as arcs of the blur radius, edges stay crisp
+  function roundAlpha(c, radius){
+    if (radius <= 0) return c;
+    const blurred = scratch(c.width, c.height);
+    const bx = blurred.getContext('2d');
+    bx.filter = 'blur(' + (radius * viewScale) + 'px)';
+    bx.drawImage(c, 0, 0);
+    bx.filter = 'none';
+    let data;
+    try { data = bx.getImageData(0, 0, c.width, c.height); }
+    catch (e){ return blurred; }
+    const px = data.data;
+    // The blurred edge ramps over roughly 4 sigma, so the steepness has to
+    // scale with the radius or wide rounding comes back fuzzy. This keeps
+    // the thresholded transition about a pixel and a half wide either way.
+    const k = Math.max(8, 1.5 * radius * viewScale);
+    for (let i = 3; i < px.length; i += 4){
+      const a = px[i] / 255;
+      px[i] = clamp((a - 0.5) * k + 0.5, 0, 1) * 255;
+    }
+    bx.putImageData(data, 0, 0);
+    return blurred;
+  }
+
+  function drawWindowShape(c){
+    c.beginPath();
+    if (CONFIG.windowShape === 'circle'){
+      c.ellipse(stampPad + sw/2, stampPad + sh/2, sw/2, sh/2, 0, 0, Math.PI*2);
+    } else {
+      c.roundRect(stampPad, stampPad, sw, sh,
+        CONFIG.windowShape === 'rounded' ? CONFIG.cornerRadius : 3);
+    }
+  }
+
+  const FONTS = {
+    plex:   "'IBM Plex Sans', system-ui, sans-serif",
+    outfit: "'Outfit', system-ui, sans-serif",
+    mono:   "'IBM Plex Mono', ui-monospace, monospace"
+  };
+
+  // The window is cached into a stamp, so if the webfont is still loading when
+  // that cache is built the fallback gets baked in and never refreshed. Rebuild
+  // once the face is actually available.
+  function withFont(then){
+    const stack = FONTS[CONFIG.cutoutFont] || FONTS.plex;
+    if (!document.fonts || !document.fonts.load){ then(); return; }
+    document.fonts.load(CONFIG.cutoutWeight + ' 100px ' + stack).then(then).catch(then);
+  }
+
+  function drawCutoutShape(c){
+    const cx = stampPad + sw/2, cy = stampPad + sh/2;
+    // the mark keeps square proportions inside a rectangular window, centred
+    const mx = stampPad + (sw - s)/2, my = stampPad + (sh - s)/2;
+    c.save();
+    // scale about the window's centre, then shift by the offset
+    c.translate(cx + CONFIG.cutoutX * sw, cy + CONFIG.cutoutY * sh);
+    c.scale(CONFIG.cutoutScale * CONFIG.cutoutStretch, CONFIG.cutoutScale);
+    c.translate(-cx, -cy);
+    c.fillStyle = '#000';
+    c.strokeStyle = '#000';
+
+    if (CONFIG.cutout === 'text'){
+      const str = CONFIG.cutoutText || '√';
+      const face = 'px ' + (FONTS[CONFIG.cutoutFont] || FONTS.plex);
+      const wt = CONFIG.cutoutWeight + ' ';
+      // start from the single-glyph size, then shrink to fit longer strings
+      let size = s * 0.62;
+      c.font = wt + size + face;
+      const room = Math.min(sw, s * 1.4) * 0.9;
+      const measured = c.measureText(str).width;
+      if (measured > room) size *= room / measured;
+      c.font = wt + size + face;
+      c.textAlign = 'center';
+      c.textBaseline = 'middle';
+      c.fillText(str, cx, cy);
+    } else if (CONFIG.cutout === 'image' && cutoutMask){
+      const box = s * 0.72;
+      const k = Math.min(box / cutoutMask.width, box / cutoutMask.height);
+      const w = cutoutMask.width * k, h = cutoutMask.height * k;
+      c.drawImage(cutoutMask, cx - w/2, cy - h/2, w, h);
+    } else {
+      c.lineJoin = 'miter';
+      c.miterLimit = 10;
+      c.lineCap = 'butt';
+      c.lineWidth = s * CONFIG.strokeWeight;
+      c.beginPath();
+      RADICAL.forEach(([fx, fy], i) => {
+        const x = mx + fx*s, y = my + fy*s;
+        i ? c.lineTo(x, y) : c.moveTo(x, y);
+      });
+      c.stroke();
+    }
+    c.restore();
+  }
+
+  function rebuildStamp(){
+    const grow = Math.max(
+      CONFIG.windowSoftness, CONFIG.windowRounding,
+      CONFIG.cutoutSoftness, CONFIG.cutoutRounding
+    );
+    stampPad = Math.ceil(grow * 3 + 10);
+    const pw = Math.ceil((sw + stampPad*2) * viewScale);
+    const ph = Math.ceil((sh + stampPad*2) * viewScale);
+    if (pw <= 0 || ph <= 0 || !isFinite(pw) || !isFinite(ph)) return;
+
+    stamp = scratch(pw, ph);
+    const sc = stamp.getContext('2d');
+
+    // with the window hidden the cut-out becomes a positive mark instead of a
+    // hole, so each element can be dropped and the rest still reads
+    const rounding = CONFIG.showWindow ? CONFIG.windowRounding : CONFIG.cutoutRounding;
+    const softness = CONFIG.showWindow ? CONFIG.windowSoftness : CONFIG.cutoutSoftness;
+    if (!CONFIG.showWindow && !CONFIG.showCutout){ rebuildShapeField(); return; }
+
+    // 1. the silhouette that carries the colour, rounded then softened
+    let winCanvas = scratch(pw, ph);
+    let wc = winCanvas.getContext('2d');
+    wc.setTransform(viewScale, 0, 0, viewScale, 0, 0);
+    wc.fillStyle = '#000';
+    wc.strokeStyle = '#000';
+    if (CONFIG.showWindow){ drawWindowShape(wc); wc.fill(); }
+    else drawCutoutShape(wc);
+    winCanvas = roundAlpha(winCanvas, rounding);
+
+    // 2. the cut-out silhouette, rounded then softened
+    let cutCanvas = null;
+    if (CONFIG.showWindow && CONFIG.showCutout){
+      cutCanvas = scratch(pw, ph);
+      const cc = cutCanvas.getContext('2d');
+      cc.setTransform(viewScale, 0, 0, viewScale, 0, 0);
+      drawCutoutShape(cc);
+      cutCanvas = roundAlpha(cutCanvas, CONFIG.cutoutRounding);
+    }
+
+    // 3. paint the colour through that silhouette, then punch the cut
+    sc.save();
+    sc.filter = softness > 0 ? 'blur(' + (softness * viewScale) + 'px)' : 'none';
+    sc.drawImage(winCanvas, 0, 0);
+    sc.filter = 'none';
+    sc.globalCompositeOperation = 'source-in';
+    // the colour is flooded through the silhouette, so a gradient here fills
+    // the window itself rather than tinting its edge
+    if (CONFIG.windowFill === 'gradient'){
+      const dir = CONFIG.windowGradDir;
+      let g;
+      if (dir === 'radial'){
+        // centred on the window itself, out to its far corner so the whole
+        // shape is covered whatever its proportions
+        const cx = (stampPad + sw/2) * viewScale;
+        const cy = (stampPad + sh/2) * viewScale;
+        g = sc.createRadialGradient(cx, cy, 0, cx, cy, Math.hypot(sw, sh)/2 * viewScale);
+      } else {
+        g = sc.createLinearGradient(0, 0, dir === 'y' ? 0 : pw, dir === 'x' ? 0 : ph);
+      }
+      g.addColorStop(0, paint('squareColour', '--coral', 'squareAlpha'));
+      g.addColorStop(1, rgba(CONFIG.squareColour2 || cssVar('--blue'), CONFIG.squareAlpha));
+      sc.fillStyle = g;
+    } else {
+      sc.fillStyle = paint('squareColour', '--coral', 'squareAlpha');
+    }
+    sc.fillRect(0, 0, pw, ph);
+    sc.restore();
+
+    if (CONFIG.showWindow && CONFIG.showBorder && CONFIG.borderAlpha > 0
+        && CONFIG.windowSoftness === 0 && CONFIG.windowRounding === 0){
+      sc.save();
+      sc.setTransform(viewScale, 0, 0, viewScale, 0, 0);
+      sc.lineWidth = 2.5;
+      sc.strokeStyle = paint('borderColour', '--blue', 'borderAlpha');
+      drawWindowShape(sc);
+      sc.stroke();
+      sc.restore();
+    }
+
+    if (cutCanvas){
+      sc.save();
+      sc.globalCompositeOperation = 'destination-out';
+      sc.filter = CONFIG.cutoutSoftness > 0
+        ? 'blur(' + (CONFIG.cutoutSoftness * viewScale) + 'px)' : 'none';
+      sc.drawImage(cutCanvas, 0, 0);
+      sc.restore();
+    }
+
+    rebuildShapeField();   // the damping silhouette shares this geometry
+  }
+
+  // ---- frame ------------------------------------------------------------
+  let paused = false;
+  let transparentBg = false;
+  let fieldShift = 0;   // moves the field's clock so a recording starts on cue
+
+  function drawScene(t, o){
+    ctx.clearRect(0, 0, LW, LH);
+    if (!transparentBg){
+      ctx.fillStyle = cssVar('--surface');
+      ctx.fillRect(0, 0, LW, LH);
+    }
+    if (CONFIG.showMesh) drawGrid(reduceMotion ? 0 : t + fieldShift, o);
+    if (CONFIG.showWindow || CONFIG.showCutout){
+      ctx.drawImage(stamp, o.x - stampPad, o.y - stampPad, sw + stampPad*2, sh + stampPad*2);
+    }
+  }
+
+  function frame(t){
+    if (!paused) drawScene(t, windowOrigin(t));
+    requestAnimationFrame(frame);
+  }
+
+  // ---- naming -----------------------------------------------------------
+  // A file name that says what is in the picture: the mark, the container,
+  // the canvas proportion. It is a starting point, not a rule — the field is
+  // editable, and once it has been edited by hand it stops being rewritten.
+  let nameEdited = false;
+  let uploadedName = '';
+
+  function slugify(str){
+    return String(str).toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 28);
+  }
+
+  function markPart(){
+    if (!CONFIG.showCutout) return '';
+    if (CONFIG.cutout === 'radical') return 'radical';
+    if (CONFIG.cutout === 'image') return slugify(uploadedName) || 'custom-mark';
+    const txt = (CONFIG.cutoutText || '').trim();
+    if (!txt) return 'mark';
+    if (/^√+$/.test(txt)) return 'radical';
+    const letters = slugify(txt);
+    if (!letters) return 'symbol';
+    // a wordmark reads differently from a single initial
+    return letters.length > 2 ? 'wordmark-' + letters : letters;
+  }
+
+  function canvasPart(){
+    const r = CONFIG.canvasW / CONFIG.canvasH;
+    let shape;
+    if (Math.abs(r - 1) < 0.02) shape = 'square';
+    else if (r >= 2.2) shape = 'banner';
+    else if (r > 1) shape = 'wide';
+    else if (r <= 0.62) shape = 'story';
+    else shape = 'tall';
+    return shape + '-' + CONFIG.canvasW + 'x' + CONFIG.canvasH;
+  }
+
+  function suggestedName(){
+    const parts = ['rootsquare'];
+    const mark = markPart();
+    if (mark) parts.push(mark);
+    if (CONFIG.showWindow){
+      // the window's own proportion is worth naming now that it can be
+      // anything from a narrow band to the whole canvas
+      const r = CONFIG.windowW / CONFIG.windowH;
+      const full = CONFIG.windowW >= LW - 1 && CONFIG.windowH >= LH - 1;
+      const wide = r > 1.25, tall = r < 0.8;
+      let shape;
+      if (full) shape = 'full-bleed';
+      else if (CONFIG.windowShape === 'circle') shape = (wide || tall) ? 'ellipse-window' : 'circle-window';
+      else if (CONFIG.windowShape === 'rounded') shape = 'rounded-window';
+      else shape = wide ? 'band-window' : tall ? 'column-window' : 'window';
+      parts.push(shape);
+    } else if (CONFIG.showCutout){
+      parts.push('mark-only');
+    }
+    if (!CONFIG.showMesh) parts.push('no-mesh');
+    else if (CONFIG.meshColour === 'gradient') parts.push('gradient-mesh');
+    parts.push(canvasPart());
+    return parts.join('-');
+  }
+
+  function suggestFileName(force){
+    if (nameEdited && !force) return;
+    exName.value = suggestedName();
+    exName.placeholder = exName.value;
+    nameEdited = false;
+  }
+
+  function baseName(){
+    const raw = (exName.value || '').trim() || suggestedName();
+    // slugify caps each descriptive part; a whole name is allowed to be longer
+    const clean = raw.replace(/\.(png|svg|mp4|webm|json)$/i, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 90);
+    return clean || 'rootsquare-logo';
+  }
+
+  // ---- SVG export -------------------------------------------------------
+  // The mesh is replayed through a recorder that stands in for the canvas
+  // context, so the geometry in the SVG comes from exactly the same code that
+  // draws the screen. The window and the cut-out are emitted as real SVG
+  // shapes with a mask for the hole, so the whole file stays vector.
+
+  function svgn(v){
+    if (!isFinite(v)) return '0';
+    return String(Math.round(v * 100) / 100);
+  }
+  function xmlEsc(str){
+    return String(str).replace(/[&<>"']/g, ch => (
+      { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&apos;' }[ch]
+    ));
+  }
+  // SVG readers outside the browser do not all take rgba(), so colour and
+  // opacity are emitted as separate attributes
+  function splitPaint(c){
+    const str = String(c);
+    if (str.indexOf('url(') === 0) return { ref: str, a: 1 };
+    const m = str.match(/rgba?\(([^)]+)\)/);
+    if (!m) return { hex: toHex(str), a: 1 };
+    const p = m[1].split(',').map(v => parseFloat(v));
+    const hex = '#' + p.slice(0, 3)
+      .map(v => clamp(Math.round(v), 0, 255).toString(16).padStart(2, '0')).join('');
+    return { hex, a: p.length > 3 && isFinite(p[3]) ? p[3] : 1 };
+  }
+  function paintAttrs(kind, c){
+    const q = splitPaint(c);
+    const val = q.ref || q.hex;
+    let out = ' ' + kind + '="' + val + '"';
+    if (q.a < 1) out += ' ' + kind + '-opacity="' + svgn(q.a) + '"';
+    return out;
+  }
+
+  // A recorder with the slice of the 2D context API that drawGrid uses.
+  // Anything it is handed becomes a path element instead of pixels.
+  function PathRecorder(){
+    const ops = [];
+    const st = { fillStyle:'#000', strokeStyle:'#000', lineWidth:1, lineDashOffset:0,
+                 lineCap:'butt', lineJoin:'miter', miterLimit:10, dash:[], clip:null };
+    const stack = [];
+    let d = '';
+    const r = {
+      ops,
+      beginPath(){ d = ''; },
+      moveTo(x, y){ d += 'M' + svgn(x) + ' ' + svgn(y); },
+      lineTo(x, y){ d += 'L' + svgn(x) + ' ' + svgn(y); },
+      closePath(){ d += 'Z'; },
+      rect(x, y, w, h){
+        d += 'M' + svgn(x) + ' ' + svgn(y) + 'H' + svgn(x+w) +
+             'V' + svgn(y+h) + 'H' + svgn(x) + 'Z';
+      },
+      clip(){ st.clip = d; },
+      setLineDash(a){ st.dash = a ? a.slice() : []; },
+      getLineDash(){ return st.dash.slice(); },
+      save(){ stack.push(Object.assign({}, st)); },
+      restore(){ const prev = stack.pop(); if (prev) Object.assign(st, prev); },
+      stroke(){ if (d) ops.push({ d, kind:'stroke', s:Object.assign({}, st) }); },
+      fill(){ if (d) ops.push({ d, kind:'fill', s:Object.assign({}, st) }); },
+      // never reached while recording, but harmless to answer
+      createLinearGradient(){ return '#000'; },
+      createRadialGradient(){ return '#000'; }
+    };
+    ['fillStyle','strokeStyle','lineWidth','lineDashOffset','lineCap','lineJoin','miterLimit']
+      .forEach(k => Object.defineProperty(r, k, {
+        get(){ return st[k]; }, set(v){ st[k] = v; }
+      }));
+    return r;
+  }
+
+  // Rounding on canvas is a blur driven back through a steep alpha threshold.
+  // The same two steps exist in SVG as feGaussianBlur and a linear feFuncA,
+  // so the corners come out the same shape rather than merely similar.
+  function shapeFilterDef(id, rounding, softness){
+    if (rounding <= 0 && softness <= 0) return '';
+    let chain = '';
+    if (rounding > 0){
+      const k = Math.max(8, 1.5 * rounding);
+      chain += '<feGaussianBlur stdDeviation="' + svgn(rounding) + '"/>' +
+               '<feComponentTransfer><feFuncA type="linear" slope="' + svgn(k) +
+               '" intercept="' + svgn(0.5 - 0.5 * k) + '"/></feComponentTransfer>';
+    }
+    if (softness > 0) chain += '<feGaussianBlur stdDeviation="' + svgn(softness) + '"/>';
+    return '<filter id="' + id + '" x="-60%" y="-60%" width="220%" height="220%" ' +
+           'filterUnits="objectBoundingBox" color-interpolation-filters="sRGB">' +
+           chain + '</filter>';
+  }
+
+  function windowShapeSVG(attrs){
+    if (CONFIG.windowShape === 'circle'){
+      return '<ellipse cx="' + svgn(sw/2) + '" cy="' + svgn(sh/2) +
+             '" rx="' + svgn(sw/2) + '" ry="' + svgn(sh/2) + '" ' + attrs + '/>';
+    }
+    const rad = CONFIG.windowShape === 'rounded' ? CONFIG.cornerRadius : 3;
+    return '<rect x="0" y="0" width="' + svgn(sw) + '" height="' + svgn(sh) +
+           '" rx="' + svgn(rad) + '" ry="' + svgn(rad) + '" ' + attrs + '/>';
+  }
+
+  // the uploaded mask is black ink on transparent; a luminance mask needs the
+  // ink in the colour that means "keep" or "punch", so it is recoloured here
+  function maskImageURL(ink){
+    if (!cutoutMask) return '';
+    const c = scratch(cutoutMask.width, cutoutMask.height);
+    const cc = c.getContext('2d');
+    cc.drawImage(cutoutMask, 0, 0);
+    cc.globalCompositeOperation = 'source-in';
+    cc.fillStyle = ink;
+    cc.fillRect(0, 0, c.width, c.height);
+    return c.toDataURL('image/png');
+  }
+
+  // The cut-out transform, applied to a point rather than left as an SVG
+  // transform, so the mark can join the window in one compound path.
+  function cutoutXform(x, y){
+    const cx = sw/2, cy = sh/2;
+    const kx = CONFIG.cutoutScale * CONFIG.cutoutStretch, ky = CONFIG.cutoutScale;
+    return [ cx + CONFIG.cutoutX * sw + (x - cx) * kx,
+             cy + CONFIG.cutoutY * sh + (y - cy) * ky ];
+  }
+
+  // The outline of a stroked polyline with miter joins and butt caps, worked
+  // out exactly rather than approximated: the radical then leaves the tool as
+  // an editable shape instead of a stroke hidden inside a mask.
+  function strokeOutline(pts, w){
+    const h = w / 2, n = pts.length;
+    const seg = [];
+    for (let i = 0; i < n - 1; i++){
+      const dx = pts[i+1][0] - pts[i][0], dy = pts[i+1][1] - pts[i][1];
+      const L = Math.hypot(dx, dy) || 1;
+      seg.push({ ux: dx/L, uy: dy/L });
+    }
+    function edge(sign){
+      const out = [];
+      for (let i = 0; i < n; i++){
+        const a = seg[i-1], b = seg[i];
+        const plain = d => [pts[i][0] + sign*h*(-d.uy), pts[i][1] + sign*h*(d.ux)];
+        if (!a){ out.push(plain(b)); continue; }
+        if (!b){ out.push(plain(a)); continue; }
+        let mx = -a.uy - b.uy, my = a.ux + b.ux;
+        const mL = Math.hypot(mx, my);
+        if (mL < 1e-6){ out.push(plain(a)); continue; }
+        mx /= mL; my /= mL;
+        const cosHalf = mx * (-a.uy) + my * (a.ux);
+        // the miter limit is never reached by the radical, but a degenerate
+        // angle must not send the corner off to infinity
+        const len = clamp(h / Math.max(1e-6, cosHalf), h, h * 10);
+        out.push([pts[i][0] + sign*len*mx, pts[i][1] + sign*len*my]);
+      }
+      return out;
+    }
+    const L = edge(1), R = edge(-1);
+    let d = '';
+    L.forEach((q, i) => { d += (i ? 'L' : 'M') + svgn(q[0]) + ' ' + svgn(q[1]); });
+    for (let i = R.length - 1; i >= 0; i--) d += 'L' + svgn(R[i][0]) + ' ' + svgn(R[i][1]);
+    return d + 'Z';
+  }
+
+  // the radical as a closed outline in window coordinates, transform folded in
+  function radicalPathD(){
+    const mx = (sw - s)/2, my = (sh - s)/2;
+    const pts = RADICAL.map(([fx, fy]) => [mx + fx*s, my + fy*s]);
+    const raw = strokeOutline(pts, s * CONFIG.strokeWeight);
+    // re-walk the finished outline through the cut-out's own transform
+    return raw.replace(/([ML])(-?[\d.]+) (-?[\d.]+)/g, (m0, cmd, a, b2) => {
+      const q = cutoutXform(parseFloat(a), parseFloat(b2));
+      return cmd + svgn(q[0]) + ' ' + svgn(q[1]);
+    });
+  }
+
+  // the window outline as a path, optionally shrunk (or grown, with a
+  // negative inset) so a stroked border can be expressed as a filled ring
+  function windowPathD(inset){
+    const x = inset, y = inset, w = sw - inset*2, h = sh - inset*2;
+    if (w <= 0 || h <= 0) return '';
+    if (CONFIG.windowShape === 'circle'){
+      const rx = w/2, ry = h/2, cx = sw/2, cy = sh/2;
+      return 'M' + svgn(cx - rx) + ' ' + svgn(cy) +
+             'A' + svgn(rx) + ' ' + svgn(ry) + ' 0 1 0 ' + svgn(cx + rx) + ' ' + svgn(cy) +
+             'A' + svgn(rx) + ' ' + svgn(ry) + ' 0 1 0 ' + svgn(cx - rx) + ' ' + svgn(cy) + 'Z';
+    }
+    const nominal = CONFIG.windowShape === 'rounded' ? CONFIG.cornerRadius : 3;
+    const r = clamp(nominal - inset, 0, Math.min(w, h)/2);
+    const a = (ex, ey) => 'A' + svgn(r) + ' ' + svgn(r) + ' 0 0 1 ' + svgn(ex) + ' ' + svgn(ey);
+    return 'M' + svgn(x + r) + ' ' + svgn(y) +
+           'L' + svgn(x + w - r) + ' ' + svgn(y) + (r ? a(x + w, y + r) : '') +
+           'L' + svgn(x + w) + ' ' + svgn(y + h - r) + (r ? a(x + w - r, y + h) : '') +
+           'L' + svgn(x + r) + ' ' + svgn(y + h) + (r ? a(x, y + h - r) : '') +
+           'L' + svgn(x) + ' ' + svgn(y + r) + (r ? a(x + r, y) : '') + 'Z';
+  }
+
+  function cutoutSVG(ink){
+    const cx = sw/2, cy = sh/2;
+    const mx = (sw - s)/2, my = (sh - s)/2;
+    const tr = 'translate(' + svgn(cx + CONFIG.cutoutX * sw) + ' ' +
+               svgn(cy + CONFIG.cutoutY * sh) + ') scale(' +
+               svgn(CONFIG.cutoutScale * CONFIG.cutoutStretch) + ' ' +
+               svgn(CONFIG.cutoutScale) + ') translate(' + svgn(-cx) + ' ' + svgn(-cy) + ')';
+    let body;
+    if (CONFIG.cutout === 'text'){
+      const str = CONFIG.cutoutText || '√';
+      const stack = FONTS[CONFIG.cutoutFont] || FONTS.plex;
+      // same fitting rule as the canvas path, measured with the real context
+      let size = s * 0.62;
+      liveCtx.save();
+      liveCtx.font = CONFIG.cutoutWeight + ' ' + size + 'px ' + stack;
+      const room = Math.min(sw, s * 1.4) * 0.9;
+      const measured = liveCtx.measureText(str).width;
+      if (measured > room) size *= room / measured;
+      // Canvas centres the glyphs on a 'middle' baseline; SVG has no keyword
+      // that lands in the same place. Measuring the same string twice, once
+      // from each baseline, gives the exact distance between them, so the
+      // alphabetic baseline can be put where the canvas put its middle one.
+      liveCtx.font = CONFIG.cutoutWeight + ' ' + size + 'px ' + stack;
+      liveCtx.textBaseline = 'middle';
+      const midAsc = liveCtx.measureText(str).actualBoundingBoxAscent;
+      liveCtx.textBaseline = 'alphabetic';
+      const alphaAsc = liveCtx.measureText(str).actualBoundingBoxAscent;
+      const shift = (isFinite(midAsc) && isFinite(alphaAsc))
+        ? alphaAsc - midAsc : size * 0.35;
+      liveCtx.restore();
+      body = '<text x="' + svgn(cx) + '" y="' + svgn(cy + shift) + '" text-anchor="middle" ' +
+             'font-family="' + xmlEsc(stack.replace(/'/g, '')) +
+             '" font-size="' + svgn(size) + '" font-weight="' + CONFIG.cutoutWeight +
+             '" fill="' + ink + '">' + xmlEsc(str) + '</text>';
+    } else if (CONFIG.cutout === 'image' && cutoutMask){
+      const box = s * 0.72;
+      const k = Math.min(box / cutoutMask.width, box / cutoutMask.height);
+      const w = cutoutMask.width * k, h = cutoutMask.height * k;
+      body = '<image href="' + maskImageURL(ink) + '" x="' + svgn(cx - w/2) +
+             '" y="' + svgn(cy - h/2) + '" width="' + svgn(w) + '" height="' + svgn(h) + '"/>';
+    } else {
+      let d = '';
+      RADICAL.forEach(([fx, fy], i) => {
+        d += (i ? 'L' : 'M') + svgn(mx + fx*s) + ' ' + svgn(my + fy*s);
+      });
+      body = '<path d="' + d + '" fill="none" stroke="' + ink + '" stroke-width="' +
+             svgn(s * CONFIG.strokeWeight) +
+             '" stroke-linejoin="miter" stroke-miterlimit="10" stroke-linecap="butt"/>';
+    }
+    return '<g transform="' + tr + '">' + body + '</g>';
+  }
+
+  function buildSVG(transparent, tOverride){
+    const o = restOrigin();
+    const t = tOverride !== undefined ? tOverride : (reduceMotion ? 0 : performance.now());
+    let defs = '', body = '';
+
+    // 1. the mesh, replayed through the recorder
+    let mesh = '';
+    if (CONFIG.showMesh){
+      const rec = PathRecorder();
+      const prev = ctx;
+      ctx = rec; recording = true;
+      try { drawGrid(t, o); }
+      finally { ctx = prev; recording = false; }
+
+      if (rec.ops.length){
+        const first = rec.ops[0];
+        const st = first.s;
+        let attrs = '';
+        if (first.kind === 'fill'){
+          attrs = paintAttrs('fill', st.fillStyle) + ' stroke="none"';
+        } else {
+          attrs = ' fill="none"' + paintAttrs('stroke', st.strokeStyle) +
+                  ' stroke-width="' + svgn(st.lineWidth) + '"' +
+                  ' stroke-linecap="' + st.lineCap + '" stroke-linejoin="round"';
+          if (st.dash.length) attrs += ' stroke-dasharray="' + st.dash.map(svgn).join(' ') + '"';
+        }
+        let paths = '';
+        rec.ops.forEach(op => {
+          const off = op.kind === 'stroke' && op.s.lineDashOffset
+            ? ' stroke-dashoffset="' + svgn(op.s.lineDashOffset) + '"' : '';
+          paths += '<path d="' + op.d + '"' + off + '/>';
+        });
+        let clipAttr = '';
+        if (st.clip){
+          defs += '<clipPath id="meshClip"><path d="' + st.clip + '"/></clipPath>';
+          clipAttr = ' clip-path="url(#meshClip)"';
+        }
+        const spec = meshGradientSpec(o);
+        if (spec) defs += gradientDef('meshGrad', spec);
+        mesh = '<g' + attrs + clipAttr + '>' + paths + '</g>';
+      }
+    }
+
+    // 2. the window. With nothing softened or rounded, and the mark either a
+    // radical or absent, the whole thing is one compound path with an even-odd
+    // fill — a real hole in a real shape, editable anywhere, no mask and no
+    // filter. Everything else falls back to the masked construction.
+    let win = '';
+    const sharp = CONFIG.windowRounding === 0 && CONFIG.windowSoftness === 0
+               && CONFIG.cutoutRounding === 0 && CONFIG.cutoutSoftness === 0;
+    const plainMark = !CONFIG.showCutout || CONFIG.cutout === 'radical';
+
+    if ((CONFIG.showWindow || CONFIG.showCutout) && sharp && plainMark){
+      const markD = CONFIG.showCutout ? radicalPathD() : '';
+      let fillAttrs;
+      if (CONFIG.showWindow && CONFIG.windowFill === 'gradient'){
+        const dir = CONFIG.windowGradDir;
+        const stops = [
+          { offset:0, col: paint('squareColour', '--coral', 'squareAlpha') },
+          { offset:1, col: rgba(CONFIG.squareColour2 || cssVar('--blue'), CONFIG.squareAlpha) }
+        ];
+        defs += gradientDef('winGrad', dir === 'radial'
+          ? { type:'radial', cx:sw/2, cy:sh/2, r0:0, r1:Math.hypot(sw, sh)/2, stops }
+          : { type:'linear', x0:0, y0:0, x1: dir === 'y' ? 0 : sw, y1: dir === 'x' ? 0 : sh, stops });
+        fillAttrs = ' fill="url(#winGrad)"';
+      } else {
+        fillAttrs = paintAttrs('fill', paint('squareColour', '--coral', 'squareAlpha'));
+      }
+
+      // Taking the mark out of the window is a subtraction. Even-odd would
+      // turn any part of the mark that reaches past the window edge into an
+      // extra filled shape instead of nothing, so the hole is cut with a clip
+      // path — one path, one even-odd rule, no mask and no filter anywhere.
+      let clipAttr = '';
+      if (markD){
+        const B = Math.max(sw, sh) + 40;
+        defs += '<clipPath id="markOut" clipPathUnits="userSpaceOnUse">' +
+                '<path clip-rule="evenodd" d="M' + svgn(-B) + ' ' + svgn(-B) +
+                'H' + svgn(sw + B) + 'V' + svgn(sh + B) + 'H' + svgn(-B) + 'Z' +
+                markD + '"/></clipPath>';
+        clipAttr = ' clip-path="url(#markOut)"';
+      }
+
+      let shapes = '';
+      if (CONFIG.showWindow){
+        shapes += '<path d="' + windowPathD(0) + '"' + clipAttr + fillAttrs + '/>';
+        if (CONFIG.showBorder && CONFIG.borderAlpha > 0){
+          // the outline is a filled ring rather than a stroke, cut by the same
+          // clip, so it keeps its full width at the window edge
+          shapes += '<path d="' + windowPathD(-1.25) + windowPathD(1.25) +
+                    '" fill-rule="evenodd"' + clipAttr +
+                    paintAttrs('fill', paint('borderColour', '--blue', 'borderAlpha')) + '/>';
+        }
+      } else if (markD){
+        // a positive mark, cropped to the same box the canvas stamp crops to
+        const P0 = 10;
+        defs += '<clipPath id="stampBox" clipPathUnits="userSpaceOnUse"><rect x="' +
+                svgn(-P0) + '" y="' + svgn(-P0) + '" width="' + svgn(sw + P0*2) +
+                '" height="' + svgn(sh + P0*2) + '"/></clipPath>';
+        shapes += '<path d="' + markD + '" clip-path="url(#stampBox)"' + fillAttrs + '/>';
+      }
+      win = '<g transform="translate(' + svgn(o.x) + ' ' + svgn(o.y) + ')">' + shapes + '</g>';
+
+    } else if (CONFIG.showWindow || CONFIG.showCutout){
+      const grow = Math.max(CONFIG.windowSoftness, CONFIG.windowRounding,
+                            CONFIG.cutoutSoftness, CONFIG.cutoutRounding);
+      const P = Math.ceil(grow * 3 + 10);
+      const rounding = CONFIG.showWindow ? CONFIG.windowRounding : CONFIG.cutoutRounding;
+      const softness = CONFIG.showWindow ? CONFIG.windowSoftness : CONFIG.cutoutSoftness;
+
+      const box = ' maskUnits="userSpaceOnUse" x="' + svgn(-P) + '" y="' + svgn(-P) +
+                  '" width="' + svgn(sw + P*2) + '" height="' + svgn(sh + P*2) +
+                  '" style="color-interpolation:sRGB"';
+
+      const fWin = shapeFilterDef('winF', rounding, softness);
+      defs += fWin;
+      const winFilter = fWin ? ' filter="url(#winF)"' : '';
+
+      // Masks are applied to siblings, never nested one inside the other:
+      // a mask on an element that itself contains a masked child is the first
+      // thing simpler SVG renderers drop, and what they drop here is the mark.
+      const pad = '<rect x="' + svgn(-P) + '" y="' + svgn(-P) + '" width="' + svgn(sw + P*2) +
+                  '" height="' + svgn(sh + P*2) + '" fill="#fff"/>';
+
+      let cutInk = '';
+      if (CONFIG.showWindow && CONFIG.showCutout){
+        const fCut = shapeFilterDef('cutF', CONFIG.cutoutRounding, CONFIG.cutoutSoftness);
+        defs += fCut;
+        cutInk = '<g' + (fCut ? ' filter="url(#cutF)"' : '') + '>' + cutoutSVG('#000') + '</g>';
+      }
+
+      // the silhouette the colour is flooded through, with the mark already
+      // taken out of it — one mask, one element
+      defs += '<mask id="winSil"' + box + '><g' + winFilter + '>' +
+              (CONFIG.showWindow ? windowShapeSVG('fill="#fff"') : cutoutSVG('#fff')) +
+              '</g>' + cutInk + '</mask>';
+
+      // the outline is a sibling with its own mask, so it keeps its full
+      // width at the edge and is still cut by the mark
+      let punch = '';
+      if (cutInk){
+        defs += '<mask id="cutMask"' + box + '>' + pad + cutInk + '</mask>';
+        punch = ' mask="url(#cutMask)"';
+      }
+
+      let fillAttrs;
+      if (CONFIG.windowFill === 'gradient'){
+        const dir = CONFIG.windowGradDir;
+        const stops = [
+          { offset:0, col: paint('squareColour', '--coral', 'squareAlpha') },
+          { offset:1, col: rgba(CONFIG.squareColour2 || cssVar('--blue'), CONFIG.squareAlpha) }
+        ];
+        const spec = dir === 'radial'
+          ? { type:'radial', cx:sw/2, cy:sh/2, r0:0, r1:Math.hypot(sw, sh)/2, stops }
+          : { type:'linear', x0:-P, y0:-P,
+              x1: dir === 'y' ? -P : sw + P, y1: dir === 'x' ? -P : sh + P, stops };
+        defs += gradientDef('winGrad', spec);
+        fillAttrs = ' fill="url(#winGrad)"';
+      } else {
+        fillAttrs = paintAttrs('fill', paint('squareColour', '--coral', 'squareAlpha'));
+      }
+
+      let inner = '<rect x="' + svgn(-P) + '" y="' + svgn(-P) + '" width="' + svgn(sw + P*2) +
+                  '" height="' + svgn(sh + P*2) + '"' + fillAttrs + ' mask="url(#winSil)"/>';
+
+      // the outline is drawn over the filled shape, at full width, and only
+      // then cut by the mark — exactly the order the canvas stamp uses
+      if (CONFIG.showWindow && CONFIG.showBorder && CONFIG.borderAlpha > 0
+          && CONFIG.windowSoftness === 0 && CONFIG.windowRounding === 0){
+        inner += '<g' + punch + '>' + windowShapeSVG('fill="none" stroke-width="2.5"' +
+                 paintAttrs('stroke', paint('borderColour', '--blue', 'borderAlpha'))) + '</g>';
+      }
+
+      win = '<g transform="translate(' + svgn(o.x) + ' ' + svgn(o.y) + ')">' + inner + '</g>';
+    }
+
+    if (!transparent){
+      body += '<rect x="0" y="0" width="' + svgn(LW) + '" height="' + svgn(LH) +
+              '" fill="' + toHex(cssVar('--surface')) + '"/>';
+    }
+    body += mesh + win;
+
+    return '<?xml version="1.0" encoding="UTF-8"?>\n' +
+      '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ' +
+      'width="' + CONFIG.canvasW + '" height="' + CONFIG.canvasH + '" ' +
+      'viewBox="0 0 ' + svgn(LW) + ' ' + svgn(LH) + '">\n' +
+      '<defs>' + defs + '</defs>\n' + body + '\n</svg>\n';
+  }
+
+  function gradientDef(id, spec){
+    let stops = '';
+    if (spec.type === 'radial'){
+      // canvas starts a radial gradient at an inner radius; SVG starts at the
+      // centre, so the stops are remapped onto the outer radius instead
+      const scaleOff = off => spec.r1 > 0 ? (spec.r0 + off * (spec.r1 - spec.r0)) / spec.r1 : off;
+      const firstCol = spec.stops.length ? spec.stops[0].col : '#000';
+      stops += stopEl(0, firstCol);
+      spec.stops.forEach(st => { stops += stopEl(clamp(scaleOff(st.offset), 0, 1), st.col); });
+      return '<radialGradient id="' + id + '" gradientUnits="userSpaceOnUse" cx="' +
+        svgn(spec.cx) + '" cy="' + svgn(spec.cy) + '" r="' + svgn(spec.r1) + '">' +
+        stops + '</radialGradient>';
+    }
+    spec.stops.forEach(st => { stops += stopEl(clamp(st.offset, 0, 1), st.col); });
+    return '<linearGradient id="' + id + '" gradientUnits="userSpaceOnUse" x1="' +
+      svgn(spec.x0) + '" y1="' + svgn(spec.y0) + '" x2="' + svgn(spec.x1) +
+      '" y2="' + svgn(spec.y1) + '">' + stops + '</linearGradient>';
+  }
+  function stopEl(offset, col){
+    const q = splitPaint(col);
+    return '<stop offset="' + svgn(offset) + '" stop-color="' + (q.hex || '#000') +
+           '"' + (q.a < 1 ? ' stop-opacity="' + svgn(q.a) + '"' : '') + '/>';
+  }
+
+  // ---- export -----------------------------------------------------------
+  // Two routes out: the claude.ai viewer grants saving through its own
+  // downloads capability (the viewer confirms each file); opened as a
+  // local file, the page falls back to an ordinary download link.
+  const hosted = !!(window.claude && typeof window.claude.use === 'function');
+  let downloadsApi = null;
+  if (hosted){
+    window.claude.use('downloads')
+      .then(api => { downloadsApi = api; })
+      .catch(() => { downloadsApi = null; });
+  }
+
+  const wait = ms => new Promise(res => setTimeout(res, ms));
+
+  async function deliver(blob, name, retried){
+    if (downloadsApi){
+      try {
+        await downloadsApi.save({ filename: name, data: blob });
+        return 'saved';
+      } catch (err){
+        const code = err && err.code;
+        if (code === 'declined') return 'save cancelled';
+        if (code === 'too_large') return 'file too large to save';
+        if (code === 'rate_limited'){
+          // a sidecar follows its media file closely; give the host a moment
+          if (retried) return 'a save prompt is already open';
+          await wait(1400);
+          return deliver(blob, name, true);
+        }
+        if (code === 'rejected_extension') return 'that file type cannot be saved here';
+        return 'save unavailable here';
+      }
+    }
+    if (hosted) return 'open the downloaded file to save';
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+    return 'saved';
+  }
+
+  // ---- the parameters that travel with every file -----------------------
+  // Anything downloaded is paired with a text file of the same name holding
+  // the full parameter set, so the same picture can be made again later.
+  function sidecarText(mediaName, extra){
+    const out = {
+      _file: mediaName,
+      _saved: new Date().toISOString(),
+      _restore: 'Paste this whole block into the Parameters box at the foot of the logo tool and press Apply. Keys beginning with an underscore are notes and are ignored on the way back in.'
+    };
+    Object.keys(extra || {}).forEach(k => {
+      if (extra[k] !== undefined) out['_' + k] = extra[k];
+    });
+    Object.assign(out, settingsObject());
+    return JSON.stringify(out, null, 2);
+  }
+
+  async function deliverPair(blob, mediaName, extra){
+    const first = await deliver(blob, mediaName);
+    if (first !== 'saved') return first;
+    const stem = mediaName.replace(/\.[^.]+$/, '');
+    const text = sidecarText(mediaName, extra);
+    const second = await deliver(new Blob([text], { type: 'application/json' }), stem + '.json');
+    return second === 'saved'
+      ? 'saved ' + mediaName + ' + ' + stem + '.json'
+      : 'saved ' + mediaName + ' — parameters: ' + second;
+  }
+
+  exScale.addEventListener('change', updateDims);
+  exName.addEventListener('input', () => { nameEdited = exName.value.trim().length > 0; });
+  exNameAuto.addEventListener('click', () => { nameEdited = false; suggestFileName(true); });
+
+  // The field never stops drifting, so a still taken "now" is a different
+  // picture every time. The first save pins the moment it was taken, and
+  // everything after it — the other formats, a re-export, a saved parameter
+  // file pasted back in a week — lands on that same frame.
+  function stillTime(){
+    if (!(CONFIG.stillPhase > 0)){
+      CONFIG.stillPhase = Math.round(performance.now());
+      syncAll();
+    }
+    return CONFIG.stillPhase;
+  }
+
+  function busy(on){
+    savePngBtn.disabled = on;
+    saveSvgBtn.disabled = on;
+    copySvgBtn.disabled = on;
+    recordBtn.disabled = on;
+  }
+  function clearStatusSoon(){
+    setTimeout(() => { exportStatus.textContent = ''; }, 6000);
+  }
+
+  savePngBtn.addEventListener('click', () => {
+    const mult = parseInt(exScale.value, 10);
+    const targetW = CONFIG.canvasW * mult;
+    const wasTransparent = transparentBg;
+    const clear = exBackground.value === 'transparent';
+    paused = true;
+    transparentBg = clear;
+    applyScale(targetW / LW);
+    const shot = stillTime() - fieldShift;        // the pinned moment
+    drawScene(shot, restOrigin());                // where the sweep settles
+    exportStatus.textContent = 'rendering ' + targetW + 'px…';
+    canvas.toBlob(async blob => {
+      transparentBg = wasTransparent;
+      applyScale(dpr);
+      paused = false;
+      if (!blob){ exportStatus.textContent = 'export failed'; clearStatusSoon(); return; }
+      const name = baseName() + (clear ? '-transparent' : '') +
+                   (mult > 1 ? '@' + mult + 'x' : '') + '.png';
+      busy(true);
+      exportStatus.textContent = 'saving…';
+      exportStatus.textContent = await deliverPair(blob, name, {
+        format: 'PNG',
+        pixels: (CONFIG.canvasW*mult) + ' x ' + (CONFIG.canvasH*mult),
+        background: clear ? 'transparent' : 'opaque'
+      });
+      busy(false);
+      clearStatusSoon();
+    }, 'image/png');
+  });
+
+  saveSvgBtn.addEventListener('click', async () => {
+    const clear = exBackground.value === 'transparent';
+    exportStatus.textContent = 'building vector…';
+    busy(true);
+    let text;
+    try { text = buildSVG(clear, reduceMotion ? 0 : stillTime()); }
+    catch (err){
+      exportStatus.textContent = 'vector export failed';
+      busy(false); clearStatusSoon(); return;
+    }
+    const name = baseName() + (clear ? '-transparent' : '') + '.svg';
+    exportStatus.textContent = await deliverPair(
+      new Blob([text], { type: 'image/svg+xml' }), name, {
+        format: 'SVG (vector, resolution independent)',
+        artboard: CONFIG.canvasW + ' x ' + CONFIG.canvasH,
+        background: clear ? 'transparent' : 'opaque',
+        frame: 'the resting frame, window centred'
+      });
+    busy(false);
+    clearStatusSoon();
+  });
+
+  // Straight onto the clipboard, so the vector can be pasted into Figma or
+  // Illustrator without going near the downloads folder. The async clipboard
+  // needs a secure context and permission, neither of which is guaranteed
+  // inside an embedded frame, so a hidden textarea stands behind it.
+  async function toClipboard(text){
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      try { await navigator.clipboard.writeText(text); return true; }
+      catch (e){ /* fall through to the older route */ }
+    }
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, text.length);
+      const ok = document.execCommand('copy');
+      ta.remove();
+      return ok;
+    } catch (e){ return false; }
+  }
+
+  copySvgBtn.addEventListener('click', async () => {
+    const clear = exBackground.value === 'transparent';
+    busy(true);
+    exportStatus.textContent = 'building vector…';
+    let text;
+    try { text = buildSVG(clear, reduceMotion ? 0 : stillTime()); }
+    catch (err){
+      exportStatus.textContent = 'vector export failed';
+      busy(false); clearStatusSoon(); return;
+    }
+    const ok = await toClipboard(text);
+    exportStatus.textContent = ok
+      ? 'SVG copied — ' + Math.round(text.length/1024) + ' KB, paste into any vector editor'
+      : 'clipboard blocked here — use Save SVG instead';
+    busy(false);
+    clearStatusSoon();
+  });
+
+  // MP4 with H.264 inside is the one that opens everywhere — QuickTime,
+  // Premiere, Keynote, phones. Some browsers will happily hand back an .mp4
+  // with VP9 inside instead, which plays in browsers and nowhere else, so the
+  // named codec is asked for first and the bare type only trusted where VP9
+  // recording is absent (Safari), where it does mean H.264.
+  const H264_TYPES = ['video/mp4;codecs=avc1.42E01E', 'video/mp4;codecs=avc1.4D401F',
+                      'video/mp4;codecs=avc1', 'video/mp4;codecs=h264'];
+  const WEBM_TYPES = ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'];
+
+  function pickRecorder(pref){
+    const supported = t => MediaRecorder.isTypeSupported(t);
+    const mp4 = [];
+    H264_TYPES.forEach(t => { if (supported(t)) mp4.push(t); });
+    if (!mp4.length && supported('video/mp4') && !supported('video/webm;codecs=vp9')){
+      mp4.push('video/mp4');
+    }
+    const webm = WEBM_TYPES.filter(supported);
+    const order = pref === 'webm' ? webm.concat(mp4) : mp4.concat(webm);
+    if (!order.length) return null;
+    const type = order[0];
+    return { type, ext: type.indexOf('mp4') >= 0 ? 'mp4' : 'webm' };
+  }
+
+  // read the container's brand list back, so what the file actually is can be
+  // reported rather than assumed
+  async function sniffVideo(blob){
+    try {
+      const head = new Uint8Array(await blob.slice(0, 64).arrayBuffer());
+      let ascii = '';
+      for (let i = 0; i < head.length; i++){
+        const ch = head[i];
+        ascii += (ch >= 32 && ch < 127) ? String.fromCharCode(ch) : '.';
+      }
+      if (ascii.indexOf('ftyp') < 0) return null;
+      if (/avc1|mp42|M4V|isom.*avc/.test(ascii) && ascii.indexOf('vp09') < 0) return 'H.264';
+      if (ascii.indexOf('vp09') >= 0) return 'VP9';
+      if (ascii.indexOf('av01') >= 0) return 'AV1';
+      return null;
+    } catch (e){ return null; }
+  }
+
+  recordBtn.addEventListener('click', () => {
+    if (typeof MediaRecorder === 'undefined'){
+      exportStatus.textContent = 'recording not supported here';
+      return;
+    }
+    const chosen = pickRecorder(exVideoFormat.value);
+    if (!chosen){
+      exportStatus.textContent = 'no video encoder available';
+      return;
+    }
+    const clear = exBackground.value === 'transparent';
+    const wasTransparent = transparentBg;
+    transparentBg = clear;
+    const duration = axis === 'none' ? 4000 : CONFIG.enterMs + CONFIG.settleMs + 900;
+
+    // encode at a modest size: a 60fps full-size encode drops most frames
+    applyScale(parseInt(exVideoSize.value, 10) / LH);
+    const stream = canvas.captureStream(30);
+    const rec = new MediaRecorder(stream, { mimeType: chosen.type, videoBitsPerSecond: 6000000 });
+    const chunks = [];
+    rec.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+    rec.onstop = async () => {
+      transparentBg = wasTransparent;
+      fieldShift = 0;
+      applyScale(dpr);
+      exportStatus.textContent = 'encoding…';
+      const blob = new Blob(chunks, { type: chosen.type.split(';')[0] });
+      const codec = chosen.ext === 'mp4' ? await sniffVideo(blob) : 'VP8/VP9';
+      const name = baseName() + (clear && chosen.ext === 'webm' ? '-transparent' : '') +
+                   '-' + exVideoSize.value + 'p.' + chosen.ext;
+      const odd = chosen.ext === 'mp4' && codec === 'VP9';
+      exportStatus.textContent = await deliverPair(blob, name, {
+        format: chosen.ext.toUpperCase() + (codec ? ' / ' + codec : '') + ' (' + chosen.type + ')',
+        height: exVideoSize.value + ' px, 30 fps',
+        seconds: (duration/1000).toFixed(1),
+        background: clear
+          ? (chosen.ext === 'webm' ? 'transparent'
+             : 'MP4 carries no transparency; this frame is flattened onto the background')
+          : 'opaque',
+        note: odd
+          ? 'This browser wrote VP9 inside the MP4 container. It plays in browsers but not in QuickTime, Premiere or Keynote — re-record in Chrome, or convert it.'
+          : undefined
+      });
+      if (odd) exportStatus.textContent += ' — VP9 inside MP4, browser playback only';
+      busy(false);
+      clearStatusSoon();
+    };
+
+    sweepStart = performance.now();   // record the sweep from the top
+    fieldShift = stillTime() - sweepStart;   // and the field from the pinned moment
+    busy(true);
+    rec.start();
+    const began = performance.now();
+    (function tick(){
+      const left = duration - (performance.now() - began);
+      if (left <= 0){ rec.stop(); return; }
+      exportStatus.textContent = 'recording ' + (left/1000).toFixed(1) + 's…';
+      setTimeout(tick, 100);
+    })();
+  });
+
+  // ---- parameter panel --------------------------------------------------
+  const CONTROLS = [
+    { group:'Canvas', type:'select', key:'canvasPreset', label:'Preset', transient:true,
+      options:CANVAS_PRESETS, onChange:v => {
+        const [w, h] = v.split('x').map(Number);
+        CONFIG.canvasW = w; CONFIG.canvasH = h;
+        rebuildCanvas(); syncAll();
+      } },
+    { group:'Canvas', type:'number', key:'canvasW', label:'Width',  min:128, max:4096, step:1, unit:'px', rebuild:'canvas' },
+    { group:'Canvas', type:'number', key:'canvasH', label:'Height', min:128, max:4096, step:1, unit:'px', rebuild:'canvas' },
+
+    { group:'Elements', type:'checkbox', key:'showMesh',   label:'Mesh' },
+    { group:'Elements', type:'checkbox', key:'showWindow', label:'Window', rebuild:'stamp' },
+    { group:'Elements', type:'checkbox', key:'showCutout', label:'Cut-out', rebuild:'stamp' },
+    { group:'Elements', type:'checkbox', key:'showBorder', label:'Window outline', rebuild:'stamp',
+      showIf:() => CONFIG.showWindow },
+    { group:'Elements', type:'note', text:'Turn the window off and the cut-out is drawn as a positive mark rather than a hole. The field still straightens where the window sits even when it is hidden, so the mesh alone can carry the idea.' },
+
+    { group:'Cut-out', type:'select', key:'cutout', label:'Shape',
+      options:[['radical','Built-in radical'],['text','Typed symbol'],['image','Uploaded image']] },
+    { group:'Cut-out', type:'text', key:'cutoutText', label:'Symbol', maxLength:32,
+      placeholder:'√  ∑π∞  RS  RootSquare', showIf:() => CONFIG.cutout === 'text' },
+    { group:'Cut-out', type:'select', key:'cutoutFont', label:'Typeface', rebuild:'font',
+      showIf:() => CONFIG.cutout === 'text',
+      options:[['plex','IBM Plex Sans'],['outfit','Outfit'],['mono','IBM Plex Mono']] },
+    { group:'Cut-out', type:'range', key:'cutoutWeight', label:'Weight', min:100, max:900, step:100,
+      rebuild:'font', showIf:() => CONFIG.cutout === 'text' },
+    { group:'Cut-out', type:'note', showIf:() => CONFIG.cutout === 'text',
+      text:'Outfit ships Latin and Latin Extended only. It has no \u221A, so a typed radical falls back to another face; use the built-in radical shape for the symbol and Outfit for wordmarks.' },
+    { group:'Cut-out', type:'file', key:'cutoutFile', label:'Image or SVG',
+      showIf:() => CONFIG.cutout === 'image' },
+    { group:'Cut-out', type:'checkbox', key:'cutoutInvert', label:'Invert image',
+      showIf:() => CONFIG.cutout === 'image' },
+    { group:'Cut-out', type:'range', key:'cutoutScale', label:'Cut-out size', min:0.2, max:1.8, step:0.05, pct:true, rebuild:'stamp' },
+    { group:'Cut-out', type:'range', key:'cutoutStretch', label:'Width stretch', min:0.25, max:3, step:0.05, pct:true, rebuild:'stamp' },
+    { group:'Cut-out', type:'range', key:'cutoutX', label:'Offset across', min:-0.5, max:0.5, step:0.01, pct:true, rebuild:'stamp' },
+    { group:'Cut-out', type:'range', key:'cutoutY', label:'Offset down', min:-0.5, max:0.5, step:0.01, pct:true, rebuild:'stamp' },
+    { group:'Cut-out', type:'range', key:'strokeWeight', label:'Radical weight', min:0.03, max:0.24, step:0.0025, pct:true,
+      showIf:() => CONFIG.cutout === 'radical', rebuild:'stamp' },
+    { group:'Cut-out', type:'range', key:'cutoutRounding', label:'Corner rounding', min:0, max:40, step:0.5, unit:'px', rebuild:'stamp' },
+    { group:'Cut-out', type:'range', key:'cutoutSoftness', label:'Edge softness', min:0, max:24, step:0.5, unit:'px', rebuild:'stamp' },
+
+    { group:'Window', type:'select', key:'windowShape', label:'Shape', rebuild:'stamp',
+      options:[['square','Rectangle'],['rounded','Rounded rectangle'],['circle','Ellipse']] },
+    { group:'Window', type:'range', key:'cornerRadius', label:'Corner radius', min:0,
+      max:() => Math.round(Math.min(CONFIG.windowW, CONFIG.windowH) / 2), step:2, unit:'px',
+      showIf:() => CONFIG.windowShape === 'rounded', rebuild:'stamp' },
+    { group:'Window', type:'range', key:'windowW', label:'Window width',  min:20, max:() => Math.round(LW), step:5, unit:'px', rebuild:'geometry' },
+    { group:'Window', type:'range', key:'windowH', label:'Window height', min:20, max:() => Math.round(LH), step:5, unit:'px', rebuild:'geometry' },
+    { group:'Window', type:'note', text:'Width and height are set separately, so one shape covers all three cases: equal values give a square (or a circle), unequal ones a rectangle (or an ellipse). Both run from 20px up to the full canvas, so the window can be a narrow band, a tall column, or the whole field \u2014 at full size every line is straightened and the mesh outside disappears. The mark keeps square proportions and follows the shorter side.' },
+    { group:'Window', type:'range', key:'windowRounding', label:'Corner rounding', min:0, max:60, step:0.5, unit:'px', rebuild:'stamp' },
+    { group:'Window', type:'range', key:'windowSoftness', label:'Edge softness', min:0, max:24, step:0.5, unit:'px', rebuild:'stamp' },
+    { group:'Window', type:'range', key:'feather', label:'Damping band', min:0, max:130, step:2, unit:'px', rebuild:'stamp' },
+
+    { group:'Resolution', type:'select', key:'interior', label:'Interior',
+      options:[['rest','Rest lattice'],['offset','Keep offset'],['mean','Local mean']] },
+    { group:'Resolution', type:'select', key:'dampShape', label:'Calm follows', rebuild:'stamp',
+      options:[['window','The window'],['cutout','The cut-out shape']] },
+    { group:'Resolution', type:'range', key:'transition', label:'Transition', min:-1, max:1, step:0.05,
+      fmt:v => v <= -0.6 ? 'hidden' : (v >= 0.6 ? 'outside' : 'at edge') },
+    { group:'Resolution', type:'note', text:'Interior sets what the lines straighten <em>to</em>. Rest snaps them to the nominal lattice: cleanest, but with displacement close to the line spacing nothing ties a line inside to the same line outside. Keep offset holds the displacement the line had where it entered, so it stays continuous and merely stops waving. Local mean averages the displacement across the aperture: the noise is removed rather than the signal replaced. Calm follows chooses whether the whole window holds the field flat or only the cutout does; in the latter case, the lines straighten along the cutout\'s own outline. Transition slides the band across that edge, so the bend into alignment is hidden or visible.' },
+
+    { group:'Field', type:'range', key:'waveCount',   label:'Wave count',        min:2,    max:12,    step:1,      rebuild:'field' },
+    { group:'Field', type:'range', key:'wavelength',  label:'Base wavelength',   min:160,  max:900,   step:10,     unit:'px', rebuild:'field' },
+    { group:'Field', type:'range', key:'amplitude',   label:'Warp amplitude',    min:0,    max:700,   step:10 },
+    { group:'Field', type:'range', key:'driftPeriod', label:'Drift period',      min:1500, max:16000, step:100,    unit:'ms', rebuild:'field' },
+    { group:'Field', type:'range', key:'falloff',     label:'Amplitude falloff', min:0.8,  max:2.6,   step:0.05,   rebuild:'field' },
+    { group:'Field', type:'number', key:'fieldSeed',  label:'Seed',              min:1,    max:999999, step:1,     rebuild:'seed' },
+    { group:'Field', type:'note', text:'The seed fixes every random draw: the wave headings, the phases, and the ragged trims. Two exports with the same seed and the same parameters are identical, which is what makes a saved parameter file worth keeping. Re-seed field deals a new one.' },
+    { group:'Field', type:'number', key:'stillPhase', label:'Still frame',       min:0,    max:99999999, step:1,   unit:'ms' },
+    { group:'Field', type:'note', text:'A still frame is the moment in the field\u2019s motion at which PNG and SVG are taken. Leave it at 0, and the first save pins the moment you pressed it here, so the PNG, the SVG, and any later re-export all show the same picture. Type 0 again to take a fresh moment. Recordings begin from this moment too.' },
+
+    { group:'Grid', type:'range', key:'spacing',    label:'Line spacing', min:3, max:140, step:1, unit:'px', rebuild:'grid' },
+    { group:'Grid', type:'range', key:'lineWeight', label:'Line weight',  min:0.2, max:16, step:0.1, unit:'px' },
+    { group:'Grid', type:'select', key:'lineStyle', label:'Line style',
+      options:[['solid','Solid'],['vary','Solid, varying width'],['dotted','Dotted'],['dashed','Dashed'],['dashdot','Dash-dot'],['sparse','Sparse dots']] },
+    { group:'Grid', type:'range', key:'thickVary', label:'Width variation', min:0, max:1.6, step:0.05, pct:true,
+      showIf:() => CONFIG.lineStyle === 'vary' },
+    { group:'Grid', type:'range', key:'raggedV', label:'Ragged — vertical', min:0, max:1, step:0.02, pct:true },
+    { group:'Grid', type:'range', key:'raggedH', label:'Ragged — horizontal', min:0, max:1, step:0.02, pct:true },
+    { group:'Grid', type:'select', key:'cutoutBold', label:'Bold through cut-out',
+      options:[['off','Off'],['ramp','Gradient'],['step','Step']] },
+    { group:'Grid', type:'range', key:'cutoutBoldAmount', label:'Bold amount', min:1, max:8, step:0.1,
+      fmt:v => '\u00d7' + v.toFixed(1), showIf:() => CONFIG.cutoutBold !== 'off' },
+    { group:'Grid', type:'select', key:'boldShape', label:'Bolding follows', rebuild:'stamp',
+      showIf:() => CONFIG.cutoutBold !== 'off',
+      options:[['cutout','The cut-out shape'],['window','The window']] },
+    { group:'Grid', type:'note', text:'Bolding follows its own silhouette, independent of what the damping follows: the cut-out shape thickens the lines only inside the mark, the window thickens them across the whole window. Bolded lines are drawn as ribbons, so dash patterns do not apply while it is on.',
+      showIf:() => CONFIG.cutoutBold !== 'off' },
+    { group:'Grid', type:'checkbox', key:'alignEnds', label:'Align mesh ends' },
+    { group:'Grid', type:'range', key:'edgeMargin', label:'Edge margin', min:0, max:220, step:2, unit:'px', rebuild:'grid' },
+    { group:'Grid', type:'range', key:'edgeGrip', label:'Edge pinning', min:0, max:220, step:2, unit:'px',
+      showIf:() => CONFIG.edgeMargin > 0 },
+    { group:'Grid', type:'note', text:'Edge pinning eases the warp back to nothing at the margin box, so the outermost lines run dead straight and the mesh closes into a rectangle with real corners. Set it to zero and the mesh is instead held clear of the box by the field\'s own maximum displacement, so the boundary wobbles freely but the whole patch stays visible at any field strength. Align mesh ends stops every line exactly on the outermost line it crosses, so the four corners close and a paused mesh reads as a true rectangle. Ragging drops the outermost line on each side, since a straight framing line undoes the torn look.' },
+
+    { group:'Colour', type:'colour', key:'lineColour',   alphaKey:'lineAlpha',   themeVar:'--coral', label:'Lines' },
+    { group:'Colour', type:'select', key:'meshColour', label:'Mesh colour',
+      options:[['single','Single colour'],['gradient','Colour gradient']] },
+    { group:'Colour', type:'range', key:'gradientStops', label:'Gradient colours', min:2, max:4, step:1,
+      showIf:() => CONFIG.meshColour === 'gradient' },
+    { group:'Colour', type:'select', key:'gradientAxis', label:'Gradient direction', showIf:() => CONFIG.meshColour === 'gradient',
+      options:[['radial','Radial from window'],['x','Left to right'],['y','Top to bottom']] },
+    { group:'Colour', type:'colour', key:'gradientColour', alphaKey:'gradientEnd', themeVar:'--blue', label:'Gradient colour 2',
+      showIf:() => CONFIG.meshColour === 'gradient' },
+    { group:'Colour', type:'colour', key:'gradientColour3', themeVar:'--ink', label:'Gradient colour 3', noAlpha:true,
+      showIf:() => CONFIG.meshColour === 'gradient' && CONFIG.gradientStops >= 3 },
+    { group:'Colour', type:'colour', key:'gradientColour4', themeVar:'--muted', label:'Gradient colour 4', noAlpha:true,
+      showIf:() => CONFIG.meshColour === 'gradient' && CONFIG.gradientStops >= 4 },
+    { group:'Colour', type:'range', key:'gradientMix', label:'Mix', min:0, max:1, step:0.02,
+      fmt:v => Math.round((1-v)*100) + '/' + Math.round(v*100), showIf:() => CONFIG.meshColour === 'gradient' },
+    { group:'Colour', type:'note', text:'The colours run in order across the field. Mix slides the band they cross in, so the first colour can hold most of the field and the rest crowd into its far edge.',
+      showIf:() => CONFIG.meshColour === 'gradient' },
+
+    { group:'Colour', type:'select', key:'windowFill', label:'Window fill', rebuild:'stamp',
+      options:[['solid','Solid'],['gradient','Two-colour gradient']] },
+    { group:'Colour', type:'colour', key:'squareColour2', themeVar:'--blue', label:'Window colour 2', noAlpha:true,
+      rebuild:'stamp', showIf:() => CONFIG.windowFill === 'gradient' },
+    { group:'Colour', type:'select', key:'windowGradDir', label:'Window fill direction', rebuild:'stamp',
+      showIf:() => CONFIG.windowFill === 'gradient',
+      options:[['y','Top to bottom'],['x','Left to right'],['diag','Diagonal'],['radial','Radial from centre']] },
+    { group:'Colour', type:'colour', key:'squareColour', alphaKey:'squareAlpha', themeVar:'--coral', label:'Window', rebuild:'stamp' },
+    { group:'Colour', type:'colour', key:'borderColour', alphaKey:'borderAlpha', themeVar:'--blue',  label:'Border', rebuild:'stamp' },
+
+    { group:'Sweep', type:'range', key:'sweepFrom',   label:'Start at',  min:-0.15, max:1.15, step:0.01, pct:true },
+    { group:'Sweep', type:'range', key:'sweepTurn',   label:'Turn at',   min:-0.15, max:1.15, step:0.01, pct:true },
+    { group:'Sweep', type:'range', key:'sweepSettle', label:'Settle at', min:-0.15, max:1.15, step:0.01, pct:true },
+    { group:'Sweep', type:'range', key:'enterMs',  label:'Start to turn', min:200, max:20000, step:100, unit:'ms' },
+    { group:'Sweep', type:'range', key:'settleMs', label:'Turn to rest',  min:100, max:8000,  step:100, unit:'ms' },
+    { group:'Sweep', type:'note', text:'Sweep positions read 0% for the window sitting entirely off the near side, 100% for entirely off the far side, and 50% for dead centre \u2014 so a start above 100% begins off-frame. Set the start below the turn and the sweep runs the other way.' }
+  ];
+
+  const groupsEl = document.getElementById('groups');
+  const rows = [];
+
+  function formatValue(c){
+    const v = CONFIG[c.type === 'colour' ? c.alphaKey : c.key];
+    if (c.fmt) return c.fmt(v);
+    if (c.pct || c.type === 'colour') return Math.round(v*1000)/10 + '%';
+    const shown = c.step < 1 ? v.toFixed(2) : Math.round(v);
+    return shown + (c.unit ? ' ' + c.unit : '');
+  }
+
+  // A control's bounds can be a number or a function of the current canvas,
+  // so the window can be sized right up to the edges however the canvas is
+  // shaped. Everything that reads a bound goes through these.
+  function ctlMin(c){ return typeof c.min === 'function' ? c.min() : c.min; }
+  function ctlMax(c){ return typeof c.max === 'function' ? c.max() : c.max; }
+
+  function applyRebuild(c){
+    if (c.rebuild === 'field') seedField();
+    if (c.rebuild === 'seed'){ seedField(); rebuildGrid(); }
+    if (c.rebuild === 'grid') rebuildGrid();
+    if (c.rebuild === 'geometry'){ rebuildGeometry(); rebuildStamp(); }
+    if (c.rebuild === 'stamp') rebuildStamp();
+    if (c.rebuild === 'font') withFont(rebuildStamp);
+    if (c.rebuild === 'canvas') rebuildCanvas();
+  }
+
+  function refreshRows(){
+    rows.forEach(r => { if (r.control.showIf) r.el.hidden = !r.control.showIf(); });
+  }
+
+  (function buildPanel(){
+    const groups = new Map();
+    CONTROLS.forEach(c => {
+      if (!groups.has(c.group)){
+        const g = document.createElement('div');
+        g.className = 'pgroup';
+        const h = document.createElement('h3');
+        h.textContent = c.group;
+        g.appendChild(h);
+        groupsEl.appendChild(g);
+        groups.set(c.group, g);
+      }
+
+      if (c.type === 'note'){
+        const note = document.createElement('p');
+        note.className = 'hint';
+        note.innerHTML = c.text;
+        groups.get(c.group).appendChild(note);
+        rows.push({ el: note, control: c, sync: () => {} });
+        return;
+      }
+
+      const row = document.createElement('div');
+      row.className = 'prow';
+      const id = 'p_' + c.key;
+      const label = document.createElement('label');
+      label.setAttribute('for', id);
+      label.textContent = c.label;
+
+      const field = document.createElement('div');
+      field.className = 'field';
+      const out = document.createElement('output');
+      let sync = () => {};
+
+      if (c.type === 'range'){
+        const input = document.createElement('input');
+        input.type = 'range'; input.id = id;
+        input.step = c.step;
+        input.value = CONFIG[c.key];
+
+        // the readout is an editable field, so a value can be typed exactly
+        // rather than hunted for with the slider. Percentage controls read
+        // and write in whole percent; everything else in its own unit.
+        const cell = document.createElement('div');
+        cell.className = 'valcell';
+        const num = document.createElement('input');
+        num.type = 'number';
+        num.step = c.pct ? 1 : c.step;
+        const bounds = () => {
+          const lo = ctlMin(c), hi = ctlMax(c);
+          input.min = lo; input.max = hi;
+          num.min = c.pct ? lo*100 : lo;
+          num.max = c.pct ? hi*100 : hi;
+        };
+        bounds();
+        const unit = document.createElement('span');
+        unit.className = 'unit';
+        unit.textContent = c.pct ? '%' : (c.unit || '');
+        cell.append(num, unit);
+
+        const shown = () => {
+          const v = CONFIG[c.key];
+          if (c.pct) return Math.round(v * 1000) / 10;
+          return c.step < 1 ? Math.round(v * 100) / 100 : Math.round(v);
+        };
+        const refresh = () => {
+          num.value = shown();
+          if (c.fmt) row.title = c.label + ': ' + c.fmt(CONFIG[c.key]);
+        };
+
+        const commit = (v) => {
+          CONFIG[c.key] = clamp(v, ctlMin(c), ctlMax(c));
+          input.value = CONFIG[c.key];
+          refresh();
+          applyRebuild(c);
+          refreshRows();   // some rows appear only once a value leaves zero
+          writeSettings();
+          if (c.key === 'waveCount') setNote();
+        };
+
+        input.addEventListener('input', () => commit(parseFloat(input.value)));
+        num.addEventListener('change', () => {
+          const raw = parseFloat(num.value);
+          if (!isFinite(raw)){ refresh(); return; }
+          commit(c.pct ? raw / 100 : raw);
+        });
+
+        field.appendChild(input);
+        refresh();
+        sync = () => { bounds(); input.value = CONFIG[c.key]; refresh(); };
+        row.append(label, field, cell);
+        groups.get(c.group).appendChild(row);
+        rows.push({ el: row, control: c, sync });
+        return;
+
+      } else if (c.type === 'number'){
+        const input = document.createElement('input');
+        input.type = 'number'; input.id = id;
+        input.min = ctlMin(c); input.max = ctlMax(c); input.step = c.step;
+        input.value = CONFIG[c.key];
+        const commit = () => {
+          const v = clamp(parseInt(input.value, 10) || ctlMin(c), ctlMin(c), ctlMax(c));
+          CONFIG[c.key] = v;
+          input.value = v;
+          out.textContent = formatValue(c);
+          applyRebuild(c);
+          writeSettings();
+        };
+        input.addEventListener('change', commit);
+        field.appendChild(input);
+        out.textContent = formatValue(c);
+        sync = () => { input.value = CONFIG[c.key]; out.textContent = formatValue(c); };
+
+      } else if (c.type === 'select'){
+        const sel = document.createElement('select');
+        sel.id = id;
+        c.options.forEach(([v, text]) => {
+          const opt = document.createElement('option');
+          opt.value = v; opt.textContent = text;
+          sel.appendChild(opt);
+        });
+        if (!c.transient) sel.value = CONFIG[c.key];
+        sel.addEventListener('change', () => {
+          if (c.onChange){ c.onChange(sel.value); return; }
+          CONFIG[c.key] = sel.value;
+          applyRebuild(c);
+          refreshRows();
+          writeSettings();
+        });
+        field.appendChild(sel);
+        if (!c.transient) sync = () => { sel.value = CONFIG[c.key]; };
+
+      } else if (c.type === 'text'){
+        const input = document.createElement('input');
+        input.type = 'text'; input.id = id;
+        input.value = CONFIG[c.key];
+        input.placeholder = c.placeholder || '';
+        input.maxLength = c.maxLength || 8;
+        input.addEventListener('input', () => {
+          CONFIG[c.key] = input.value;
+          withFont(rebuildStamp);
+          writeSettings();
+        });
+        field.appendChild(input);
+        sync = () => { input.value = CONFIG[c.key]; };
+
+      } else if (c.type === 'file'){
+        const input = document.createElement('input');
+        input.type = 'file'; input.id = id;
+        input.accept = 'image/*,.svg';
+        input.addEventListener('change', () => {
+          const file = input.files && input.files[0];
+          if (!file) return;
+          uploadedName = (file.name || '').replace(/\.[^.]+$/, '');
+          const reader = new FileReader();
+          reader.onload = () => {
+            const img = new Image();
+            img.onload = () => {
+              cutoutImage = img;
+              cutoutMask = buildMask(img, CONFIG.cutoutInvert);
+              CONFIG.cutout = 'image';
+              rebuildStamp();
+              syncAll();
+              refreshRows();
+            };
+            img.src = reader.result;
+          };
+          reader.readAsDataURL(file);
+        });
+        field.appendChild(input);
+
+      } else if (c.type === 'checkbox'){
+        const input = document.createElement('input');
+        input.type = 'checkbox'; input.id = id;
+        input.checked = CONFIG[c.key];
+        input.addEventListener('change', () => {
+          CONFIG[c.key] = input.checked;
+          if (c.key === 'cutoutInvert' && cutoutImage){
+            cutoutMask = buildMask(cutoutImage, CONFIG.cutoutInvert);
+            rebuildStamp();
+          }
+          applyRebuild(c);
+          refreshRows();
+          writeSettings();
+        });
+        field.appendChild(input);
+        sync = () => { input.checked = CONFIG[c.key]; };
+
+      } else if (c.type === 'colour'){
+        const swatch = document.createElement('input');
+        swatch.type = 'color'; swatch.id = id;
+        swatch.addEventListener('input', () => {
+          CONFIG[c.key] = swatch.value;
+          applyRebuild(c);
+          writeSettings();
+        });
+        // palette entries share the mesh's opacity, so they get a swatch only
+        if (c.noAlpha){
+          field.append(swatch);
+          sync = () => { swatch.value = CONFIG[c.key] || toHex(cssVar(c.themeVar)); };
+        } else {
+          const alpha = document.createElement('input');
+          alpha.type = 'range';
+          alpha.min = 0; alpha.max = 1; alpha.step = 0.05;
+          alpha.value = CONFIG[c.alphaKey];
+          alpha.setAttribute('aria-label', c.label + ' opacity');
+          alpha.addEventListener('input', () => {
+            CONFIG[c.alphaKey] = parseFloat(alpha.value);
+            out.textContent = formatValue(c);
+            applyRebuild(c);
+            writeSettings();
+          });
+          field.append(swatch, alpha);
+          out.textContent = formatValue(c);
+          sync = () => {
+            swatch.value = CONFIG[c.key] || toHex(cssVar(c.themeVar));
+            alpha.value = CONFIG[c.alphaKey];
+            out.textContent = formatValue(c);
+          };
+        }
+      }
+
+      row.append(label, field, out);
+      groups.get(c.group).appendChild(row);
+      rows.push({ el: row, control: c, sync });
+    });
+  })();
+
+  function syncAll(){ rows.forEach(r => r.sync()); updateDims(); writeSettings(); }
+
+  // while the box carries unapplied edits, control changes must not clobber
+  // what is being typed
+  let settingsDirty = false;
+  function settingsNote(msg){ settingsStatus.textContent = msg; }
+
+  // the single description of the current look — the panel writes it into the
+  // box, and every download carries a copy of it in a text file alongside
+  function settingsObject(){
+    const out = {};
+    CONTROLS.forEach(c => {
+      if (c.type === 'file' || c.type === 'note' || c.transient) return;
+      if (c.type === 'colour'){
+        if (CONFIG[c.key]) out[c.key] = CONFIG[c.key];
+        if (!c.noAlpha) out[c.alphaKey] = CONFIG[c.alphaKey];
+      } else {
+        out[c.key] = CONFIG[c.key];
+      }
+    });
+    out.axis = axis;
+    return out;
+  }
+
+  function writeSettings(){
+    if (settingsDirty) return;
+    settingsBox.value = JSON.stringify(settingsObject(), null, 2);
+    suggestFileName();
+  }
+
+  resetBtn.addEventListener('click', () => {
+    Object.assign(CONFIG, DEFAULTS);
+    seedField();
+    rebuildCanvas();
+    settingsDirty = false;
+    syncAll(); refreshRows(); setNote();
+    settingsNote('reset to defaults');
+  });
+
+  // ---- reading the JSON back in -----------------------------------------
+  const CONTROL_BY_KEY = new Map();
+  CONTROLS.forEach(c => {
+    if (c.type === 'note' || c.type === 'file' || c.transient) return;
+    CONTROL_BY_KEY.set(c.key, c);
+    if (c.type === 'colour' && !c.noAlpha) CONTROL_BY_KEY.set(c.alphaKey, { type:'alpha', min:0, max:1 });
+  });
+  const FIELD_KEYS = ['waveCount', 'wavelength', 'driftPeriod', 'falloff', 'fieldSeed'];
+
+  function applySettings(){
+    let parsed;
+    try { parsed = JSON.parse(settingsBox.value); }
+    catch (e){ settingsNote('not valid JSON'); return; }
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)){
+      settingsNote('expected a JSON object'); return;
+    }
+
+    let applied = 0, ignored = 0, reseed = false;
+
+    // The canvas goes first and on its own: window sizes are clamped against
+    // the logical canvas, so applying them in key order would measure them
+    // against whatever canvas was on screen a moment ago.
+    ['canvasW', 'canvasH'].forEach(key => {
+      const n = Number(parsed[key]);
+      const c = CONTROL_BY_KEY.get(key);
+      if (c && isFinite(n)) CONFIG[key] = clamp(n, ctlMin(c), ctlMax(c));
+    });
+    recomputeLogicalSize();
+
+    Object.keys(parsed).forEach(key => {
+      const v = parsed[key];
+
+      if (key.charAt(0) === '_') return;   // notes written into a sidecar file
+
+      if (key === 'axis'){
+        if (v === 'x' || v === 'y' || v === 'none'){ setAxis(v); applied++; }
+        else ignored++;
+        return;
+      }
+
+      const c = CONTROL_BY_KEY.get(key);
+      if (!c){ ignored++; return; }
+
+      if (c.type === 'range' || c.type === 'number' || c.type === 'alpha'){
+        const n = Number(v);
+        if (!isFinite(n)){ ignored++; return; }
+        CONFIG[key] = clamp(n, ctlMin(c), ctlMax(c));
+      } else if (c.type === 'select'){
+        if (!c.options.some(o => o[0] === v)){ ignored++; return; }
+        CONFIG[key] = v;
+      } else if (c.type === 'checkbox'){
+        CONFIG[key] = !!v;
+      } else if (c.type === 'colour'){
+        CONFIG[key] = (typeof v === 'string' && /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(v)) ? toHex(v) : null;
+      } else if (c.type === 'text'){
+        CONFIG[key] = String(v).slice(0, c.maxLength || 8);
+      } else { ignored++; return; }
+
+      applied++;
+      if (FIELD_KEYS.indexOf(key) >= 0) reseed = true;
+    });
+
+    if (reseed) seedField();
+    rebuildCanvas();               // geometry, grid, scale and stamp all follow
+    settingsDirty = false;
+    syncAll(); refreshRows(); setNote();
+    settingsNote('applied ' + applied + (ignored ? ', ' + ignored + ' ignored' : ''));
+  }
+
+  settingsBox.addEventListener('input', () => { settingsDirty = true; settingsNote('edited'); });
+  settingsBox.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter'){ e.preventDefault(); applySettings(); }
+  });
+  applyBtn.addEventListener('click', applySettings);
+
+  // ---- transport --------------------------------------------------------
+  function setNote(){
+    if (reduceMotion){ motionNote.textContent = 'Reduced motion: field and window frozen'; return; }
+    const label = axis === 'none'
+      ? 'window parked at centre'
+      : (axis === 'x' ? 'sweep: enters right, crosses left, centres' : 'sweep: enters bottom, crosses top, centres');
+    motionNote.textContent = CONFIG.waveCount + '-wave field, ' + label;
+  }
+
+  function setAxis(v){
+    axis = v;
+    segButtons.forEach(b => b.classList.toggle('is-on', b.dataset.axis === v));
+    sweepStart = performance.now();
+    setNote();
+  }
+
+  segButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      setAxis(btn.dataset.axis);
+      writeSettings();
+    });
+  });
+
+  replayBtn.addEventListener('click', () => { sweepStart = performance.now(); });
+  reseedBtn.addEventListener('click', () => {
+    // a new seed re-deals the field and the per-line ragged trims together,
+    // and lands in the saved parameters so this exact look can be got back
+    CONFIG.fieldSeed = 1 + Math.floor(Math.random() * 999999);
+    seedField();
+    rebuildGrid();
+    syncAll();
+    suggestFileName();
+  });
+
+  // test hook: render the same rest frame both ways for comparison
+  window.__svgProbe = function(){
+    const t = performance.now();
+    paused = true;
+    drawScene(reduceMotion ? 0 : t, restOrigin());
+    const png = canvas.toDataURL('image/png');
+    const svg = buildSVG(false, reduceMotion ? 0 : t);
+    paused = false;
+    return { svg, png };
+  };
+
+  rebuildCanvas();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => rebuildStamp());
+  syncAll();
+  refreshRows();
+  setNote();
+  requestAnimationFrame(frame);
+})();
+</script>

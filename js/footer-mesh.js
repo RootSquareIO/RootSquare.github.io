@@ -15,6 +15,37 @@
   const ctx = canvas.getContext('2d');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // The caption tracks the cursor while hovering (it's display-only —
+  // pointer-events:none — so it never intercepts the click below).
+  // Clicking or tapping the mesh itself, or pressing Enter/Space once
+  // tabbed to it, goes straight to the public logo generator.
+  (function initLegend(){
+    const legend = document.getElementById('meshLegend');
+    const wrap = canvas.parentElement;
+    if (!legend || !wrap) return;
+    const href = legend.getAttribute('href');
+    function moveTo(clientX, clientY){
+      const r = wrap.getBoundingClientRect();
+      legend.style.left = (clientX - r.left) + 'px';
+      legend.style.top = (clientY - r.top) + 'px';
+    }
+    function show(e){ moveTo(e.clientX, e.clientY); legend.classList.add('is-visible'); }
+    function hide(){ legend.classList.remove('is-visible'); }
+    function go(e){ e.preventDefault(); window.location.href = href; }
+    canvas.addEventListener('mouseenter', show);
+    canvas.addEventListener('mousemove', show);
+    canvas.addEventListener('mouseleave', hide);
+    canvas.addEventListener('click', go);
+    canvas.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' ') go(e);
+    });
+    canvas.addEventListener('focus', function(){
+      legend.style.left = '50%'; legend.style.top = '0px';
+      legend.classList.add('is-visible');
+    });
+    canvas.addEventListener('blur', hide);
+  })();
+
   // ===== CONFIG — the exact parameter set requested for the footer mark ===
   const CONFIG = {
     canvasW: 1200, canvasH: 400,
