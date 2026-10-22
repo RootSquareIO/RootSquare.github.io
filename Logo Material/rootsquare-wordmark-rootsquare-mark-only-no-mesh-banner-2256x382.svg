@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2256" height="382" viewBox="0 0 3779.69 640">
+<defs><mask id="winSil" maskUnits="userSpaceOnUse" x="-10" y="-10" width="640" height="270" style="color-interpolation:sRGB"><g><g transform="translate(310 110) scale(1.8 1.8) translate(-310 -125)"><text x="310" y="141.73" text-anchor="middle" font-family="Outfit, system-ui, sans-serif" font-size="56.95" font-weight="800" fill="#fff">RootSquare</text></g></g></mask><linearGradient id="winGrad" gradientUnits="userSpaceOnUse" x1="-10" y1="-10" x2="630" y2="260"><stop offset="0" stop-color="#f55d23"/><stop offset="1" stop-color="#f53d27"/></linearGradient></defs>
+<rect x="0" y="0" width="3779.69" height="640" fill="#ffffff"/><g transform="translate(1579.84 195)"><rect x="-10" y="-10" width="640" height="270" fill="url(#winGrad)" mask="url(#winSil)"/></g>
+</svg>

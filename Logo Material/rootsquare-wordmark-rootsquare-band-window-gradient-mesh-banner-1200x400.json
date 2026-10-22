@@ -1,0 +1,89 @@
+Guide
+Scholarly Writing
+Designing Semi-Structured Interviews: A Practical Guide
+How to build an interview guide for semi-structured qualitative research: writing the question backbone, designing probes, balancing structure with flexibility, and piloting before fieldwork.
+
+Written and maintained by CASRAI Editorial Board
+
+Last updated 23 August 2026
+
+X
+LinkedIn
+Facebook
+
+Copy link
+A semi-structured interview sits between two extremes: the fully structured interview, which reads a fixed script in a fixed order, and the unstructured or narrative interview, which works from no predetermined question set at all. As CASRAI’s overview of qualitative data collection techniques defines it, a semi-structured interview is built around a predetermined guide of open-ended questions but conducted flexibly — the interviewer can probe an unexpected answer, reorder questions, or drop ones that no longer fit the conversation. That flexibility is the method’s main strength and its main design challenge: too much structure and the interview collapses into a spoken questionnaire that forecloses the unanticipated; too little and the resulting data is inconsistent across participants and hard to analyze comparatively.
+
+This guide covers the practical mechanics of building that guide well: how to draft the question backbone, how to design probes, how much structure to build in, and how to pilot before real fieldwork. It assumes you already know what qualitative research is and does — for that grounding, see CASRAI’s Qualitative Research term and, for how the resulting interviews get written up, the guide to writing the methodology section of a qualitative research paper. It does not re-cover interview technique in general (rapport-building, active listening) or transcription and coding, which belong to data collection and analysis respectively.
+
+What an Interview Guide Actually Is
+An interview guide is not a script and not a topic list. It is a structured document that typically contains, at minimum: a short scripted opening (purpose of the study, confidentiality/consent reminders, expected length), a small number of core open-ended questions organized in a logical sequence, and planned probes attached to each core question. Kvale and Brinkmann’s widely used framing of the semi-structured ‘life-world’ interview describes it as a flexible guide of open-ended questions through which knowledge is co-constructed in dialogue between interviewer and participant, in contrast to the fixed script of a structured interview (Kvale, S. & Brinkmann, S., InterViews: Learning the Craft of Qualitative Research Interviewing, 3rd ed., SAGE, 2015). That co-construction is why the guide has to be designed to be departed from — a good guide anticipates where the conversation will need room to move, rather than trying to eliminate that movement.
+
+Distinguish the guide itself from an interview schedule, a term some methods texts use for a stricter, closer-to-verbatim version of the same idea; on casrai.org, and in most qualitative-methods usage, the two terms are used loosely interchangeably for the semi-structured case, but a schedule implies less latitude to depart from wording than a guide does. Whichever term a given study or journal uses, what matters for design purposes is the same: how much of the interview is fixed in advance, and how much is left open.
+
+Building the Question Backbone
+The backbone is the small set of core questions every participant is asked, in roughly the same form and (usually) roughly the same order. Three design decisions determine most of its quality:
+
+1. Anchor each question to the research question, not to a topic
+Every backbone question should trace back to a specific element of the study’s research question or conceptual framework. A common failure mode is drafting questions from a general topic list (‘ask about their experience with X’) rather than from what the analysis will actually need to say. If a question’s answer wouldn’t change what gets written in the findings, it usually doesn’t belong in the backbone.
+
+2. Order from broad and easy to narrow and sensitive
+Conventional practice opens with a broad, low-stakes, easy-to-answer question that lets the participant start talking and settle into the interview, then moves toward more specific or potentially sensitive questions once rapport is established, and closes with a broad wrap-up question (‘is there anything else you think is important that I haven’t asked about?’). This ordering is a design choice, not a rigid rule — semi-structured practice explicitly allows reordering in the moment when the conversation naturally reaches a later topic early.
+
+3. Keep the backbone short
+Most published semi-structured interview guides for a single sitting (45–90 minutes) work from somewhere around 6–12 core questions, not counting probes. A longer list pushes interviewers toward reading through it mechanically rather than listening and adapting, which undermines the method’s basic premise. If a topic genuinely needs more coverage than that, it is usually a sign the guide is trying to do the work of two separate interviews, or that some questions should move to a shorter follow-up.
+
+Designing Probes
+A probe is a planned follow-up attached to a core question, used to go deeper into an answer without introducing a new topic. Probes do most of the work of making a semi-structured interview genuinely different from a structured one, because they are where the interviewer responds to what the participant actually said rather than what was anticipated. Three probe types are worth planning explicitly in the guide, even though not every one will be used in every interview:
+
+Elaboration probes — general invitations to say more (‘can you tell me more about that?’, ‘what did that look like in practice?’), used whenever an answer is thinner than the topic warrants.
+Clarification probes — targeted at a specific word or claim the participant used (‘when you say X, what do you mean by that?’), used to resolve ambiguity before it becomes an interpretation problem at analysis.
+Example/specificity probes — requests for a concrete instance (‘can you walk me through a specific time that happened?’), used to move an answer from a general claim toward the kind of detailed, situated account qualitative analysis depends on.
+A guide that lists two or three likely probes under each core question, without trying to anticipate every possible answer, tends to work better in practice than either a guide with no planned probes at all (which pushes improvisation onto the interviewer in real time, unevenly across a study) or one that tries to script probes for every contingency (which reintroduces the rigidity semi-structuring is meant to avoid).
+
+How Much Structure Is Enough
+There is no fixed ratio, but the underlying design question is consistent across studies: how much does the analysis plan require comparability across participants, versus how much does the research question require following participants into territory the researcher didn’t anticipate? A study aiming for thematic comparison across a fairly homogeneous sample (for example, comparing how different staff roles describe the same institutional process) generally needs a tighter, more consistently applied backbone. A study exploring lived experience in an under-studied area, where the research question is itself partly exploratory, generally needs a looser backbone and more room for the guide to be reshaped between early and later interviews as the researcher learns what matters. Framing the guide as an evolving instrument — reviewed and adjusted after the first few interviews, once it’s clear which questions are producing rich data and which are falling flat — is standard, documented practice, not a deviation from rigor, provided the changes and their rationale are recorded for the methods section.
+
+Piloting the Guide
+Piloting a semi-structured interview guide is not the same as pilot-testing a survey instrument for psychometric properties; the goal is practical, not statistical. A short pilot round (often just one to three interviews, sometimes with colleagues or accessible participants rather than the target sample) is used to check:
+
+Whether questions are understood as intended, or produce confused/off-topic answers.
+Realistic interview length against the length actually planned and disclosed in the consent process.
+Whether the ordering holds up in practice or creates awkward jumps between topics.
+Whether any question is leading, double-barreled, or otherwise likely to bias the answer.
+Whether planned probes are actually useful, or whether the real conversation needs different follow-ups than anticipated.
+Findings from a pilot typically lead to revised wording, dropped or merged questions, and adjusted probes — and, if the changes are substantive, that revision is itself worth a sentence in the methods section, since reviewers using reporting checklists will expect to see that the instrument was checked before full fieldwork rather than assumed to work.
+
+Documenting the Design for the Methods Section
+Two reporting checklists endorsed by the EQUATOR Network are the standard reference points for how much detail a methods section needs about the interview guide itself: COREQ (Consolidated Criteria for Reporting Qualitative Research), a 32-item checklist from Tong, Sainsbury and Craig aimed specifically at interview and focus-group studies and most common in health and clinical qualitative research, and SRQR (Standards for Reporting Qualitative Research, O’Brien et al.), a 21-item checklist that applies more generally across qualitative designs. Both expect, at minimum, a statement of whether and how the guide was developed and piloted, and COREQ specifically expects disclosure of interview duration and whether interviews were repeated with the same participant. For the full mechanics of writing that section — sampling, saturation, trustworthiness, and reflexivity alongside data collection — see CASRAI’s guide to writing the methodology section of a qualitative research paper.
+
+Common Design Mistakes
+Leading and double-barreled questions
+A question that assumes its own conclusion (‘what made the training so effective?’) or bundles two questions into one (‘how did you feel about the process and its outcome?’) produces answers that are hard to interpret cleanly. Draft each backbone question so it can be answered honestly in the negative, and keep one idea per question.
+
+Confusing a topic guide with an interview guide
+A list of topics to cover is not the same instrument as a list of questions with planned probes. Topic lists tend to produce inconsistent phrasing across interviews (each interviewer, or the same interviewer on different days, phrases the topic differently), which weakens comparability at analysis. Writing out actual question wording, even knowing it will sometimes be departed from, disciplines the design process in a way a topic list does not.
+
+Treating the guide as fixed after the first draft
+Because semi-structured interviewing explicitly allows the guide to evolve, treating the first draft as final — skipping the pilot, or refusing to revise mid-study when a question is clearly not working — gives up one of the method’s actual advantages over a structured instrument.
+
+Conflating guide design with sampling and saturation decisions
+How many interviews a study needs, and when to stop, is a sampling and saturation question, not an interview-guide-design question — covered in the sampling and saturation section of CASRAI’s methodology-section guide, not here.
+
+Frequently Asked Questions
+How many questions should a semi-structured interview guide have?
+Most guides for a single 45–90 minute interview work from roughly 6–12 core questions, not counting probes. More than that usually signals the guide is trying to cover too much ground for one sitting.
+
+What is the difference between an interview guide and an interview schedule?
+The terms are often used interchangeably for semi-structured interviews. Where a distinction is drawn, ‘schedule’ implies wording closer to verbatim script, while ‘guide’ more clearly signals latitude to reorder, drop, and probe beyond the written text.
+
+Do I need to pilot my interview guide even for a small qualitative study?
+Yes — piloting even one or two interviews before full fieldwork is standard practice and catches wording, ordering, and length problems that are expensive to discover mid-study. Reporting checklists such as COREQ expect the methods section to state whether and how the guide was developed and tested.
+
+Can I change my interview guide partway through data collection?
+Yes, and doing so deliberately — based on what early interviews reveal — is consistent with, not a deviation from, semi-structured method. Document the change and the reasoning for the methods section.
+
+What is the difference between a probe and a new question?
+A probe follows up on something the participant already raised, going deeper into the same topic (elaboration, clarification, or a request for a concrete example). A new question introduces a topic the participant hasn’t raised. Planned probes belong in the guide; entirely new questions introduced mid-interview should be used sparingly and noted afterward.
+
+Background reading: Delphi method — The Delphi method builds expert consensus through anonymous, iterated rounds of rating and feedback. This guide covers round structure, panel selection, how consensus is measured, stopping rules, and modified/real-time variants, with a worked example.
