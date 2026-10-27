@@ -1,0 +1,253 @@
+path,format,width,height,units,colour_mode,bytes,sha256
+01_logos/lockup-horizontal/black/digital/rootsquare_lockup-horizontal_black_rgb.svg,svg,4317.01,1000,user units,RGB,4477,556862ae94caa701800c3f4137042c676535712d43f06125fbedec8a9c48105a
+01_logos/lockup-horizontal/black/digital/rootsquare_lockup-horizontal_black_rgb_1024.png,png,1024,237,px,RGB + alpha,14310,d79386c8181d3d5767aa5c8a0b8749e1240772abb4e5312b754f0351c0c64c1a
+01_logos/lockup-horizontal/black/digital/rootsquare_lockup-horizontal_black_rgb_2048.png,png,2048,474,px,RGB + alpha,31800,18a5536a3dcb50b881e36695c82a89b2e6c1fefba095448d88ecd7a48bdb43ab
+01_logos/lockup-horizontal/black/digital/rootsquare_lockup-horizontal_black_rgb_256.png,png,256,59,px,RGB + alpha,3119,d087f4079e1c1efdfd57c59a7dee6d6eac1b76771316bbb7d3ff75be813502c8
+01_logos/lockup-horizontal/black/digital/rootsquare_lockup-horizontal_black_rgb_512.png,png,512,119,px,RGB + alpha,6563,0f04b5e5ae9b76c9c9c7792cabcff4400d73dfce335557baf24ecd8383369711
+01_logos/lockup-horizontal/black/print/rootsquare_lockup-horizontal_black_cmyk-fogra39.pdf,pdf,100,23.2,mm,CMYK (DeviceCMYK),5850,517c942a6a55af7409da0ce3a59264eb0cc09c359b43fc079600904ac5e2386a
+01_logos/lockup-horizontal/black/print/rootsquare_lockup-horizontal_black_cmyk-swop.pdf,pdf,100,23.2,mm,CMYK (DeviceCMYK),5855,bb877fed821c5028a3e16f15f590f1679f49a5561ff72c7197e0f8f22d77c58c
+01_logos/lockup-horizontal/black/print/rootsquare_lockup-horizontal_black_rgb.eps,eps,100.2,23.3,mm,RGB,10723,a61eae958e041d89106b0d8bb9c7139c570afc2d9ad749b446d5b784f40e70f3
+01_logos/lockup-horizontal/black/print/rootsquare_lockup-horizontal_black_rgb.pdf,pdf,100,23.2,mm,RGB,4054,da18124d8287c34ebcdc51d7cf1dc3ef067cf81c76b9a767ff4adf776389a0a3
+01_logos/lockup-horizontal/colour/digital/rootsquare_lockup-horizontal_colour_rgb.svg,svg,4317.01,1000,user units,RGB,4875,e336f7b0a0ed9dab72d6cd3b0b4c4175b8be288886cfdc239dba370be4c1b1e5
+01_logos/lockup-horizontal/colour/digital/rootsquare_lockup-horizontal_colour_rgb_1024.png,png,1024,237,px,RGB + alpha,25248,9650d5d019871f1e9f60d63df8d8551ec5c112062d0926c155eb0b3d28680426
+01_logos/lockup-horizontal/colour/digital/rootsquare_lockup-horizontal_colour_rgb_2048.png,png,2048,474,px,RGB + alpha,56089,1bd165e784a4b9c61864de9a8c9d634044eac334f9693513bb0c81b55cc0d634
+01_logos/lockup-horizontal/colour/digital/rootsquare_lockup-horizontal_colour_rgb_256.png,png,256,59,px,RGB + alpha,5510,e0b607eb99dac2e4b530d1dfd02f424fdecea16ff9b1fc1dc16fa9ff67fa20d9
+01_logos/lockup-horizontal/colour/digital/rootsquare_lockup-horizontal_colour_rgb_512.png,png,512,119,px,RGB + alpha,11656,a63daf5105086c98031455f8b7229b4fdd9ae82eaeb56306e705898936e26a0c
+01_logos/lockup-horizontal/colour/print/rootsquare_lockup-horizontal_colour_cmyk-fogra39.pdf,pdf,100,23.2,mm,CMYK (DeviceCMYK),6301,04b3fe78e9d2e8b199dc881fbc62ab1cc771bae8987f5d58e74bd35653066b73
+01_logos/lockup-horizontal/colour/print/rootsquare_lockup-horizontal_colour_cmyk-swop.pdf,pdf,100,23.2,mm,CMYK (DeviceCMYK),6308,5ff622cb883e9dbd7a0b0c3d7dbe5b1adf788705308419098503cbbeb516ea37
+01_logos/lockup-horizontal/colour/print/rootsquare_lockup-horizontal_colour_rgb.eps,eps,100.2,23.3,mm,RGB,11456,bfa109a53f92a761dd89604597ee9b5f77988a56d1b971dcfc62914a78e3f29c
+01_logos/lockup-horizontal/colour/print/rootsquare_lockup-horizontal_colour_rgb.pdf,pdf,100,23.2,mm,RGB,4749,4306c6215522cfc4ac5dc612d2cb20b580fa0acb5ece0111325987af14f9f2c5
+01_logos/lockup-horizontal/flat/digital/rootsquare_lockup-horizontal_flat_rgb.svg,svg,4317.01,1000,user units,RGB,4476,7b1bc3b7f311139792734a8b09ee026c2b293a8035b8ca179e0cd01f08d51f84
+01_logos/lockup-horizontal/flat/digital/rootsquare_lockup-horizontal_flat_rgb_1024.png,png,1024,237,px,RGB + alpha,20236,b6d86b8c5612bd797f48f593dac134d06ebb6776cf123b5fe2ca47c57d24c175
+01_logos/lockup-horizontal/flat/digital/rootsquare_lockup-horizontal_flat_rgb_2048.png,png,2048,474,px,RGB + alpha,43252,426f5231f4c01ffc01f5ecb7bbfbd5ef6e27f05386455a7f7f2e2e08436c27a6
+01_logos/lockup-horizontal/flat/digital/rootsquare_lockup-horizontal_flat_rgb_256.png,png,256,59,px,RGB + alpha,4803,1eda286fc7213fd744524a0deda395000c3dde460465bca317ad555419954c5a
+01_logos/lockup-horizontal/flat/digital/rootsquare_lockup-horizontal_flat_rgb_512.png,png,512,119,px,RGB + alpha,9895,73996f5da363bdab6cf050dc330df5aa4a9baa0b0fb481fa93e6719b9f03c640
+01_logos/lockup-horizontal/flat/print/rootsquare_lockup-horizontal_flat_cmyk-fogra39.pdf,pdf,100,23.2,mm,CMYK (DeviceCMYK),5761,8dccf2f93f041a9de681270e5601fec2a3a6851486d5be788d47fe1765fd4d57
+01_logos/lockup-horizontal/flat/print/rootsquare_lockup-horizontal_flat_cmyk-swop.pdf,pdf,100,23.2,mm,CMYK (DeviceCMYK),5765,086ab3c20b29aa807d2d3a33fb78f86144377401cfa3934707c331036710e7db
+01_logos/lockup-horizontal/flat/print/rootsquare_lockup-horizontal_flat_rgb.eps,eps,100.2,23.3,mm,RGB,10750,5f11f89bd831dabbe4c6977c40247787df3ab843fe83a70c7aee34241e7abd67
+01_logos/lockup-horizontal/flat/print/rootsquare_lockup-horizontal_flat_rgb.pdf,pdf,100,23.2,mm,RGB,4067,291fed1d5575a23f427471c6404e0ed6bc31a3d7e27b78a168147e17ee7568f2
+01_logos/lockup-horizontal/white/digital/rootsquare_lockup-horizontal_white_rgb.svg,svg,4317.01,1000,user units,RGB,4477,7c4dd2618e8329b01ca43d13107b622351f4aab76663af4cf0b1248c325e208b
+01_logos/lockup-horizontal/white/digital/rootsquare_lockup-horizontal_white_rgb_1024.png,png,1024,237,px,RGB + alpha,16162,de58eb3c98d46aae7c94d7e44cff42603ca07970d8a3be158d7ffcb4ebb4cacd
+01_logos/lockup-horizontal/white/digital/rootsquare_lockup-horizontal_white_rgb_2048.png,png,2048,474,px,RGB + alpha,34706,c932cb82699ace1996f2b08eca5f36bc74bc19bed93968f56adf7968f8675198
+01_logos/lockup-horizontal/white/digital/rootsquare_lockup-horizontal_white_rgb_256.png,png,256,59,px,RGB + alpha,3544,3069e0fa69c1b0ef9023f866d28e17b5e7ef8153ebffc52d8751541de8e83d1a
+01_logos/lockup-horizontal/white/digital/rootsquare_lockup-horizontal_white_rgb_512.png,png,512,119,px,RGB + alpha,7652,08c484d102e509c4ceb09645b60efae654d89630ad0686fa84495ed599b45b69
+01_logos/lockup-horizontal/white/print/rootsquare_lockup-horizontal_white_cmyk-fogra39.pdf,pdf,100,23.2,mm,CMYK (DeviceCMYK),6238,8cbe1d5f5f5b80154ef5fc3f0c81cf892af9ff1e297593ec90c6cebe5cf536e3
+01_logos/lockup-horizontal/white/print/rootsquare_lockup-horizontal_white_cmyk-swop.pdf,pdf,100,23.2,mm,CMYK (DeviceCMYK),6243,7eed6250c117dc60a988057808d3a59b15d1c9b1d22dc29af3a99ffe487f79b5
+01_logos/lockup-horizontal/white/print/rootsquare_lockup-horizontal_white_rgb.eps,eps,100.2,23.3,mm,RGB,10723,1d9079a57bd192c4b09ea6465d785e60d0ca9cb99df473e17e1b7c3a11298f4b
+01_logos/lockup-horizontal/white/print/rootsquare_lockup-horizontal_white_rgb.pdf,pdf,100,23.2,mm,RGB,4055,f740a67725ac01284e995b58f6adb2b5c2c70e1965eb66f28d070f8691ee32b2
+01_logos/lockup-stacked/black/digital/rootsquare_lockup-stacked_black_rgb.svg,svg,2100,1552.7,user units,RGB,4477,97ad4888cc3fba44dcb4a5b1f39bed90cdc9867685e51512d7ff0b98d7c44433
+01_logos/lockup-stacked/black/digital/rootsquare_lockup-stacked_black_rgb_1024.png,png,1024,757,px,RGB + alpha,24338,31806b208bb7dc243cd3f1fb2998f62a92d66f59a3df474adc9deef78def32c4
+01_logos/lockup-stacked/black/digital/rootsquare_lockup-stacked_black_rgb_2048.png,png,2048,1514,px,RGB + alpha,55459,7d659d3865b073763141f5e6217be6ec0bf3e09030f77b4774ce5f52b72449f1
+01_logos/lockup-stacked/black/digital/rootsquare_lockup-stacked_black_rgb_256.png,png,256,189,px,RGB + alpha,5256,02f2ac33dc1309f9f956e0a4b04d552b170fa61bffabf423efc99a8b470cb578
+01_logos/lockup-stacked/black/digital/rootsquare_lockup-stacked_black_rgb_512.png,png,512,379,px,RGB + alpha,11227,ebc990ab7f5f48e6882be834b26909904aadf088cad36c9181246fc4bfc5cf3e
+01_logos/lockup-stacked/black/print/rootsquare_lockup-stacked_black_cmyk-fogra39.pdf,pdf,100,73.9,mm,CMYK (DeviceCMYK),5829,032f0370397b39104bd515901f2a23960850d1053728fe67f6786c691cb12418
+01_logos/lockup-stacked/black/print/rootsquare_lockup-stacked_black_cmyk-swop.pdf,pdf,100,73.9,mm,CMYK (DeviceCMYK),5834,930ab927f4bd1f8dba85f0f4835c27ab03f0e8c2585eeeb43727d73d9af9d47d
+01_logos/lockup-stacked/black/print/rootsquare_lockup-stacked_black_rgb.eps,eps,100.2,74.1,mm,RGB,11068,70694299076c005633b30f4f9d293cba0e086161a677e45fa3cced13230817b8
+01_logos/lockup-stacked/black/print/rootsquare_lockup-stacked_black_rgb.pdf,pdf,100,73.9,mm,RGB,4199,a40bb2320e5d89462d77e349dddc583a5fbe739fd241ee4d2e07ac9fd5102174
+01_logos/lockup-stacked/colour/digital/rootsquare_lockup-stacked_colour_rgb.svg,svg,2100,1552.7,user units,RGB,4875,5cdf1bef012fa5bb0d2c842d224f4bbc8c000a471c35df9e18af1c3bbfdc46b6
+01_logos/lockup-stacked/colour/digital/rootsquare_lockup-stacked_colour_rgb_1024.png,png,1024,757,px,RGB + alpha,45164,4d9f179cf0f42dc1bdc79777c4af547c6a678c38d085007428d7b9dbbd7d5e93
+01_logos/lockup-stacked/colour/digital/rootsquare_lockup-stacked_colour_rgb_2048.png,png,2048,1514,px,RGB + alpha,108421,cf609bdc7f87b7af530683dcb8c334a1a28ce0d3423003c8383fdb2e82f99804
+01_logos/lockup-stacked/colour/digital/rootsquare_lockup-stacked_colour_rgb_256.png,png,256,189,px,RGB + alpha,9007,47a94c6294490124673174fa723b8091345aea4c4c311180798666eff936904d
+01_logos/lockup-stacked/colour/digital/rootsquare_lockup-stacked_colour_rgb_512.png,png,512,379,px,RGB + alpha,20114,6de77f9903614936015372fefa34af4c488e47ddd8780e391acc117371186702
+01_logos/lockup-stacked/colour/print/rootsquare_lockup-stacked_colour_cmyk-fogra39.pdf,pdf,100,73.9,mm,CMYK (DeviceCMYK),6281,89e69bf4a7a8ea89a4e8ece8fe792749895946f5fb0f9a4f7e8ae22aa4ab30ba
+01_logos/lockup-stacked/colour/print/rootsquare_lockup-stacked_colour_cmyk-swop.pdf,pdf,100,73.9,mm,CMYK (DeviceCMYK),6288,314a8e4f7beffb878ee5a764860a28efa9d768e4a86da83caab54873116b177c
+01_logos/lockup-stacked/colour/print/rootsquare_lockup-stacked_colour_rgb.eps,eps,100.2,74.1,mm,RGB,11810,c8d5038ad1f3cd0b15c3f1eb4fe80b3d4d96bc89c0fdad93b12757615c69df45
+01_logos/lockup-stacked/colour/print/rootsquare_lockup-stacked_colour_rgb.pdf,pdf,100,73.9,mm,RGB,4896,f2d739bb55c2b8641d2b7ea5b6cea1a2a29b00c719c500db04d82477fd1eb624
+01_logos/lockup-stacked/flat/digital/rootsquare_lockup-stacked_flat_rgb.svg,svg,2100,1552.7,user units,RGB,4476,eaf67080df6bc6b2c9fb60df4d70a2318f7ae5657a01f6be4865850b04a6c03d
+01_logos/lockup-stacked/flat/digital/rootsquare_lockup-stacked_flat_rgb_1024.png,png,1024,757,px,RGB + alpha,32870,c6e4c369dade88726a830284ce51858f029c4121b9b16099eb329d7a694d31a0
+01_logos/lockup-stacked/flat/digital/rootsquare_lockup-stacked_flat_rgb_2048.png,png,2048,1514,px,RGB + alpha,72654,333c3fa73fa3571231e2fae95db517cbd7802f0fc1ff0b9038be9b7a6bbce1e5
+01_logos/lockup-stacked/flat/digital/rootsquare_lockup-stacked_flat_rgb_256.png,png,256,189,px,RGB + alpha,7629,f854fd27892ccb3c5705d5171f3778483f0870d7b345fcc778263dbf0affc5ae
+01_logos/lockup-stacked/flat/digital/rootsquare_lockup-stacked_flat_rgb_512.png,png,512,379,px,RGB + alpha,15908,4de5249e8de7a7e9986f4299895a6b889b403af510bbb6b1a578eacc111be164
+01_logos/lockup-stacked/flat/print/rootsquare_lockup-stacked_flat_cmyk-fogra39.pdf,pdf,100,73.9,mm,CMYK (DeviceCMYK),5740,ec0c7d6cd9ae7f7915bb1939b133bfc24fe08661d216770a5ffa19098e48e384
+01_logos/lockup-stacked/flat/print/rootsquare_lockup-stacked_flat_cmyk-swop.pdf,pdf,100,73.9,mm,CMYK (DeviceCMYK),5744,83c5985bd1233642522428b18d6fbdeea8ac318376040d9290863894c28b6e5d
+01_logos/lockup-stacked/flat/print/rootsquare_lockup-stacked_flat_rgb.eps,eps,100.2,74.1,mm,RGB,11095,ebe0a620081238c2529ab79991c9959a0b6e062cf9b65fd7e45bc560a4e3223e
+01_logos/lockup-stacked/flat/print/rootsquare_lockup-stacked_flat_rgb.pdf,pdf,100,73.9,mm,RGB,4212,0ff488540201d47bdaf6a0b1b0bf86e0a8fecf5e16b9d962c5a9eb916b1ec15b
+01_logos/lockup-stacked/white/digital/rootsquare_lockup-stacked_white_rgb.svg,svg,2100,1552.7,user units,RGB,4477,eacfa4688f2584541c08c9ba6c23619812bb381aa6ba1667d6d0937ba1d1479a
+01_logos/lockup-stacked/white/digital/rootsquare_lockup-stacked_white_rgb_1024.png,png,1024,757,px,RGB + alpha,26911,e2ae6da88673a94b629d37dbae661660bf5fe94b3e1e6b0d1f3cfe2af38603b1
+01_logos/lockup-stacked/white/digital/rootsquare_lockup-stacked_white_rgb_2048.png,png,2048,1514,px,RGB + alpha,60468,c03f7c33eaa4d94d2d211540de256a7e459176f64af617649fae8c534accd3a8
+01_logos/lockup-stacked/white/digital/rootsquare_lockup-stacked_white_rgb_256.png,png,256,189,px,RGB + alpha,5974,8e7c27445f18b628adbd78b798450700b90d37d6dc590c50b1b6e258c56a0c3f
+01_logos/lockup-stacked/white/digital/rootsquare_lockup-stacked_white_rgb_512.png,png,512,379,px,RGB + alpha,12780,3aeeff03e2f948fa17ce449d2c2d49410c77b3225fe0ef2027f124e18eb3af5a
+01_logos/lockup-stacked/white/print/rootsquare_lockup-stacked_white_cmyk-fogra39.pdf,pdf,100,73.9,mm,CMYK (DeviceCMYK),6217,cdfc7fdc09c7c1360d0fb09b44a4af4e6cd76b6ade52a5d4df6c332f2230dcf7
+01_logos/lockup-stacked/white/print/rootsquare_lockup-stacked_white_cmyk-swop.pdf,pdf,100,73.9,mm,CMYK (DeviceCMYK),6222,0f4cbfa093b15ec8e394a942b26c4905ee8a6f364925eb37ab4910a1e79d1e05
+01_logos/lockup-stacked/white/print/rootsquare_lockup-stacked_white_rgb.eps,eps,100.2,74.1,mm,RGB,11068,66d42ec584ce54e06dee71c4f9e102b6002bb3a7cc8c64014910e8d93eed2665
+01_logos/lockup-stacked/white/print/rootsquare_lockup-stacked_white_rgb.pdf,pdf,100,73.9,mm,RGB,4199,520086d50e5690e31136dc8005a989271a693c2e0d1f1957c99959e48543e727
+01_logos/mark/black/digital/rootsquare_mark_black_rgb.svg,svg,620,620,user units,RGB,447,635961446321f0714b9fdafc32dc2e438abdefae723fbd9058cd2445413741e1
+01_logos/mark/black/digital/rootsquare_mark_black_rgb_1024.png,png,1024,1024,px,RGB + alpha,18309,7e68653b4b68e1ec8e296d4031c1bbff3db50c2f9fd8d8ff7e9450fc3f6f03d2
+01_logos/mark/black/digital/rootsquare_mark_black_rgb_2048.png,png,2048,2048,px,RGB + alpha,45105,21ffa02f98d34fa3b9dcf2363a0e1889caef18da6b31613b57e4af78aa17c594
+01_logos/mark/black/digital/rootsquare_mark_black_rgb_256.png,png,256,256,px,RGB + alpha,3539,bd35d3f92950d7ae144ee634a4850b5306164e95ea0a55385b7b898ef67392f9
+01_logos/mark/black/digital/rootsquare_mark_black_rgb_512.png,png,512,512,px,RGB + alpha,8084,86408524a37482875cb11daedae0bbeda7bd64225595822a4b1f7e3187a732cd
+01_logos/mark/black/print/rootsquare_mark_black_cmyk-fogra39.pdf,pdf,100,100,mm,CMYK (DeviceCMYK),3201,b7aef7b51e7561e8a8baa6ed7b10e541b8c1ba79363365c98fa4dd4eee825f68
+01_logos/mark/black/print/rootsquare_mark_black_cmyk-swop.pdf,pdf,100,100,mm,CMYK (DeviceCMYK),3206,39874258af86cc5a01f123f14f5a8de7223bc6d40169759fe2dafb377e20e441
+01_logos/mark/black/print/rootsquare_mark_black_rgb.eps,eps,100.2,100.2,mm,RGB,2837,db6037af9122432d10e9ff6abfa2b08f32b12fbfef3cfc89859db637d84fdc7d
+01_logos/mark/black/print/rootsquare_mark_black_rgb.pdf,pdf,100,100,mm,RGB,1250,8c00573f41ec1d00703d3b607b04c76d4119641f057954f0d36362befa941761
+01_logos/mark/colour/digital/rootsquare_mark_colour_rgb.svg,svg,620,620,user units,RGB,651,82437e2f8bc34b51ceeaa057440db076896ea0bfcff6c83af725b83d3b2ebddc
+01_logos/mark/colour/digital/rootsquare_mark_colour_rgb_1024.png,png,1024,1024,px,RGB + alpha,54099,2ef9ad4d3d85b5c396286083294fdfaf1d6730fd3ae1cc8f959df46a2f5fb6c9
+01_logos/mark/colour/digital/rootsquare_mark_colour_rgb_2048.png,png,2048,2048,px,RGB + alpha,143588,a07787632078d6772992a05199a03c4f2947dee757671895f00f25a8b54d87b0
+01_logos/mark/colour/digital/rootsquare_mark_colour_rgb_256.png,png,256,256,px,RGB + alpha,7645,b066aeef4c002c6562073253e8f948df52bd0a43c04a96f0acdf67fad17f93e0
+01_logos/mark/colour/digital/rootsquare_mark_colour_rgb_512.png,png,512,512,px,RGB + alpha,19356,eaa435a841d1526c48d66eeb5a35ee6a5832b38def3d94a8c443bd5dcbe412a4
+01_logos/mark/colour/print/rootsquare_mark_colour_cmyk-fogra39.pdf,pdf,100,100,mm,CMYK (DeviceCMYK),3392,0df495c66aaa12e885ec0c33fe374c728b8ba077d3109ceddfffe10a19ff50ca
+01_logos/mark/colour/print/rootsquare_mark_colour_cmyk-swop.pdf,pdf,100,100,mm,CMYK (DeviceCMYK),3398,be8c68ddebafbde58a972a4b272b10975f7ed37d6fa766d28709ae08086bcefa
+01_logos/mark/colour/print/rootsquare_mark_colour_rgb.eps,eps,100.2,100.2,mm,RGB,3190,0760b518778aa0f3cf2a830fa150e7999f8fe86659a6b92d583df39a3ccb545a
+01_logos/mark/colour/print/rootsquare_mark_colour_rgb.pdf,pdf,100,100,mm,RGB,1673,bfcf7380fcf384f3203ac3ea3e9dd2605acf15737a723a2568a39c343be4398f
+01_logos/mark/flat/digital/rootsquare_mark_flat_rgb.svg,svg,620,620,user units,RGB,446,41c74a3363714993f89e96d03a67287260801fdc84783ac93b0ade66878f3ae4
+01_logos/mark/flat/digital/rootsquare_mark_flat_rgb_1024.png,png,1024,1024,px,RGB + alpha,22346,6a77e9f5d70dbb05c4278f172ced21d009a4c82d658659f928a877657cc38cc3
+01_logos/mark/flat/digital/rootsquare_mark_flat_rgb_2048.png,png,2048,2048,px,RGB + alpha,52850,89755d4f78530bad41ed8a262f8cfcb8d892a2980907d5de63648968b27ede50
+01_logos/mark/flat/digital/rootsquare_mark_flat_rgb_256.png,png,256,256,px,RGB + alpha,4386,4b759f5c1ffb20ec95a34aa28cc81bae393d5305675f7debcc18fee4c4f50063
+01_logos/mark/flat/digital/rootsquare_mark_flat_rgb_512.png,png,512,512,px,RGB + alpha,9941,59cc909afe2d9e7d49eff12f2e9fba9ed3c9002a825b30c235564899a643e95a
+01_logos/mark/flat/print/rootsquare_mark_flat_cmyk-fogra39.pdf,pdf,100,100,mm,CMYK (DeviceCMYK),3110,688e442ea439654deaead729d3d0e39f180ee163d8afd8a84acf1230e34ee314
+01_logos/mark/flat/print/rootsquare_mark_flat_cmyk-swop.pdf,pdf,100,100,mm,CMYK (DeviceCMYK),3115,008eb20837df9d88bbd636677ff21c506cdf2933f60342c0ba0b328766feb040
+01_logos/mark/flat/print/rootsquare_mark_flat_rgb.eps,eps,100.2,100.2,mm,RGB,2864,54aea2b1ec927efea0cefe58c8e3f42a68c80f4789221e8faa998cf09518aed7
+01_logos/mark/flat/print/rootsquare_mark_flat_rgb.pdf,pdf,100,100,mm,RGB,1263,d0fce91a8feac2fa48eebd7b9e80fb5258ff68367d27e50a7c5789981e31aa39
+01_logos/mark/white/digital/rootsquare_mark_white_rgb.svg,svg,620,620,user units,RGB,447,38b8af8475f8d802e94849e3c4271daad82adc100aeef9ff4c1750002bd85c7a
+01_logos/mark/white/digital/rootsquare_mark_white_rgb_1024.png,png,1024,1024,px,RGB + alpha,19711,21e7980f746cae8927ad47f875fa5383c1c8dc018da5864e1ab7cf5777397f16
+01_logos/mark/white/digital/rootsquare_mark_white_rgb_2048.png,png,2048,2048,px,RGB + alpha,47593,c5bca7331797083644272f2b301cc3aad214eb3b322fd8cb6644dc8e313bb42e
+01_logos/mark/white/digital/rootsquare_mark_white_rgb_256.png,png,256,256,px,RGB + alpha,3846,6bfbb8837782401a51dbdd08db14b20ee3ab854c22874217aee27e228d64dfeb
+01_logos/mark/white/digital/rootsquare_mark_white_rgb_512.png,png,512,512,px,RGB + alpha,8687,1f57878659a324f364096debdfed38986f3f3e2246b41db3e7b51d077768aaf3
+01_logos/mark/white/print/rootsquare_mark_white_cmyk-fogra39.pdf,pdf,100,100,mm,CMYK (DeviceCMYK),3589,ef2e6383c2665ddb5e72b9d4ded551ec506e28c1c29004c7a5f28ab4b5023291
+01_logos/mark/white/print/rootsquare_mark_white_cmyk-swop.pdf,pdf,100,100,mm,CMYK (DeviceCMYK),3594,d2cf74dc51bba77aedab66675d09e0715c3da32865e05a68c53970be3d76dbfd
+01_logos/mark/white/print/rootsquare_mark_white_rgb.eps,eps,100.2,100.2,mm,RGB,2837,3994a84205758d11e7f9f202d40edf1623839cf1267a9268fbfca115cc463952
+01_logos/mark/white/print/rootsquare_mark_white_rgb.pdf,pdf,100,100,mm,RGB,1250,6444a229471542559ad485b9eaaf8889ea27145ac2d341e8450b100b25fb46ec
+01_logos/primary-alternates/black/digital/rootsquare_primary-alt-1_black_rgb.svg,svg,462,462,user units,RGB,168657,73375afbf319200acbadf6383460639cad926b2fdd0081121b1e35fa773665ca
+01_logos/primary-alternates/black/digital/rootsquare_primary-alt-1_black_rgb_1024.png,png,1024,1024,px,RGB + alpha,133392,10532ea958dec41f101ccb6080e36ea99e55ef62821aa7ae830b407b512947a8
+01_logos/primary-alternates/black/digital/rootsquare_primary-alt-1_black_rgb_2048.png,png,2048,2048,px,RGB + alpha,279387,33594a005c77652ddfc4595167dd6c5045c12364e28ef87b388d6b35549c7d38
+01_logos/primary-alternates/black/digital/rootsquare_primary-alt-2_black_rgb.svg,svg,462,462,user units,RGB,168601,eb2432ac990c1afbf4dbf4f6add666e65346995b86f6e64ec1e5c97abadc0c47
+01_logos/primary-alternates/black/digital/rootsquare_primary-alt-2_black_rgb_1024.png,png,1024,1024,px,RGB + alpha,137164,42d38a77476d4af2d63d022bd0267d554762a028a0e58709f6418ce75b42c343
+01_logos/primary-alternates/black/digital/rootsquare_primary-alt-2_black_rgb_2048.png,png,2048,2048,px,RGB + alpha,289336,07c9a56f60df6a810936168ff3c4501a8df731580faa3008747ab60788e315b4
+01_logos/primary-alternates/black/digital/rootsquare_primary-alt-3_black_rgb.svg,svg,462,462,user units,RGB,168557,bdd1dc370cdcfc3c0317e3deb94abc6e62dbc2519d917ea81e062e2528eaa969
+01_logos/primary-alternates/black/digital/rootsquare_primary-alt-3_black_rgb_1024.png,png,1024,1024,px,RGB + alpha,137195,ef6e198a79f12604441c8562860a471c22865ec52bba2759f19085c8a90a4bbb
+01_logos/primary-alternates/black/digital/rootsquare_primary-alt-3_black_rgb_2048.png,png,2048,2048,px,RGB + alpha,286696,adfe44f115384075c6b2e7b14352917c4c6e9c69f33f2c1781e4f31440b534f8
+01_logos/primary-alternates/colour/digital/rootsquare_primary-alt-1_colour_rgb.svg,svg,462,462,user units,RGB,169171,50dd11b5dc2d19b864f5be8e6b199b9d5528a907380b4208301032eadf2982c6
+01_logos/primary-alternates/colour/digital/rootsquare_primary-alt-1_colour_rgb_1024.png,png,1024,1024,px,RGB + alpha,314068,cc8ef36ab1d886fe7efa2243de3157f39dafc1a28687413f0974ac975144eb5c
+01_logos/primary-alternates/colour/digital/rootsquare_primary-alt-1_colour_rgb_2048.png,png,2048,2048,px,RGB + alpha,724370,15eff9e244520f2f6ed6d4fbe373528d8a3318a387290c5e5dd2ab18d6462621
+01_logos/primary-alternates/colour/digital/rootsquare_primary-alt-2_colour_rgb.svg,svg,462,462,user units,RGB,169115,2212a2f0fca1988de52e7eb277aa982683db818c5c2ab4c5b1d133cdc94bdc41
+01_logos/primary-alternates/colour/digital/rootsquare_primary-alt-2_colour_rgb_1024.png,png,1024,1024,px,RGB + alpha,320497,44fa89d1b355b72ae3b858cc9e23406ab22fed92469f71709d2a23821309e850
+01_logos/primary-alternates/colour/digital/rootsquare_primary-alt-2_colour_rgb_2048.png,png,2048,2048,px,RGB + alpha,739179,4dcc2ab4757de16c957eef04513cdc7a6e8978d68b0c8271667711e80ca16e18
+01_logos/primary-alternates/colour/digital/rootsquare_primary-alt-3_colour_rgb.svg,svg,462,462,user units,RGB,169071,083bf3776d24f32dc4c65a2c19fcc0e2f341bb3f00268d4b9f9fda4ed0a7fd70
+01_logos/primary-alternates/colour/digital/rootsquare_primary-alt-3_colour_rgb_1024.png,png,1024,1024,px,RGB + alpha,316343,6616d688cb2d46852f6aa2b61f7a5e77dca092d7e543307c6a6d1582abfbce13
+01_logos/primary-alternates/colour/digital/rootsquare_primary-alt-3_colour_rgb_2048.png,png,2048,2048,px,RGB + alpha,729119,3c994dd99bf5058f1fd44990f0662709b3ac03ae8653309215f9911dcdeed6a0
+01_logos/primary-alternates/flat/digital/rootsquare_primary-alt-1_flat_rgb.svg,svg,462,462,user units,RGB,168656,97f7232c9c274a4091a6b163b16ffd22e0059bd768f4f005bcfe53b4b67a4d9a
+01_logos/primary-alternates/flat/digital/rootsquare_primary-alt-1_flat_rgb_1024.png,png,1024,1024,px,RGB + alpha,223881,5cbfbbfed349b215cfa2a9b8faf75ee83340d0a75169580d06b898d5f4731de0
+01_logos/primary-alternates/flat/digital/rootsquare_primary-alt-1_flat_rgb_2048.png,png,2048,2048,px,RGB + alpha,463520,ddda9d711dc3f0702fdc11b46bfdcb0e906e6cdfb0dcb596f4c50e76f0626553
+01_logos/primary-alternates/flat/digital/rootsquare_primary-alt-2_flat_rgb.svg,svg,462,462,user units,RGB,168600,69e5c5e37713a217b2160469fea1929164b482604a29522ddb2ac5612c90a5a9
+01_logos/primary-alternates/flat/digital/rootsquare_primary-alt-2_flat_rgb_1024.png,png,1024,1024,px,RGB + alpha,229967,cdf8d6c09175b39541855562475db13fe557a317747ff478cd4500db0cd55b1f
+01_logos/primary-alternates/flat/digital/rootsquare_primary-alt-2_flat_rgb_2048.png,png,2048,2048,px,RGB + alpha,476255,7082f9ed56abb8e367ed82ee504135d0cf6090fbe71167e2242b959b4d888837
+01_logos/primary-alternates/flat/digital/rootsquare_primary-alt-3_flat_rgb.svg,svg,462,462,user units,RGB,168556,34a8e4c9e7cb79b486fc1bcba0ef303c9a139271e2309494fdf6e573fc4415ef
+01_logos/primary-alternates/flat/digital/rootsquare_primary-alt-3_flat_rgb_1024.png,png,1024,1024,px,RGB + alpha,227752,5e9d041edce31a3181d38c6764355720cf08e60f50aa65fc03dabd4b4b07ae00
+01_logos/primary-alternates/flat/digital/rootsquare_primary-alt-3_flat_rgb_2048.png,png,2048,2048,px,RGB + alpha,470118,c8b9837596550e616ab88a780d43547140bcf8efe93668409729146434368986
+01_logos/primary-alternates/white/digital/rootsquare_primary-alt-1_white_rgb.svg,svg,462,462,user units,RGB,168657,8a90657e12df5076a0c8cd5fdb2a5292534f9b1b3e311d3a704c6a75114e3ccb
+01_logos/primary-alternates/white/digital/rootsquare_primary-alt-1_white_rgb_1024.png,png,1024,1024,px,RGB + alpha,142302,5d435387bdf38dd9837da9b550aa806cd0ccc64826df3b533673707f3dde5065
+01_logos/primary-alternates/white/digital/rootsquare_primary-alt-1_white_rgb_2048.png,png,2048,2048,px,RGB + alpha,296977,40b58da40fbfccf993b584618bf6009d7f9837a6b2eb902ad35c578250af9b64
+01_logos/primary-alternates/white/digital/rootsquare_primary-alt-2_white_rgb.svg,svg,462,462,user units,RGB,168601,85836f22d7a48bc20c3e69121e6dd75a16ccb51697cba8daa030a954f062d11f
+01_logos/primary-alternates/white/digital/rootsquare_primary-alt-2_white_rgb_1024.png,png,1024,1024,px,RGB + alpha,146354,7e71c3d2c7c2ccc934de28a7cc901b6277104832252cf8fd1f8f278e420aa58a
+01_logos/primary-alternates/white/digital/rootsquare_primary-alt-2_white_rgb_2048.png,png,2048,2048,px,RGB + alpha,307208,093e2be130c25428bf6d23629ead19c4bf91192c3eb24df30eb540b35383a9eb
+01_logos/primary-alternates/white/digital/rootsquare_primary-alt-3_white_rgb.svg,svg,462,462,user units,RGB,168557,10a09067c41f283bdd9f177f0997ac86d3585166d30b10d1f88b878870bc80fc
+01_logos/primary-alternates/white/digital/rootsquare_primary-alt-3_white_rgb_1024.png,png,1024,1024,px,RGB + alpha,146705,8f14b8c0474edbc2bb36ad0b6ae439c0bee75ac4cf270d86ea4b644ed0792ea0
+01_logos/primary-alternates/white/digital/rootsquare_primary-alt-3_white_rgb_2048.png,png,2048,2048,px,RGB + alpha,305062,5bc53069578368478cf3c24a40fc84a38f505e812184e64a368f61cf4573ef13
+01_logos/primary/black/digital/rootsquare_primary_black_rgb.svg,svg,462,462,user units,RGB,168679,aa007fa35bcd35f27ed1f14a6ab01fce4cf371c0dd99236254b07273848983c4
+01_logos/primary/black/digital/rootsquare_primary_black_rgb_1024.jpg,jpg,1024,1024,px,RGB (YCbCr),175955,a42e88399550ee14bce8f51ee3470565ee1052589493d1d181b9802e80f50783
+01_logos/primary/black/digital/rootsquare_primary_black_rgb_1024.png,png,1024,1024,px,RGB + alpha,137926,e1f81b39da78a7d5f6448afc91e1785ff74d73f8108d56a5dcf66e25fd5974d7
+01_logos/primary/black/digital/rootsquare_primary_black_rgb_2048.png,png,2048,2048,px,RGB + alpha,287949,923d454a09a111fddf45cd9505124250337fadabbe6d4c1fff794d9956f37c9a
+01_logos/primary/black/digital/rootsquare_primary_black_rgb_256.png,png,256,256,px,RGB + alpha,29523,0dbb9310708956f160087411638640d4676526b7d088ea244e6b0bead8135903
+01_logos/primary/black/digital/rootsquare_primary_black_rgb_4096.png,png,4096,4096,px,RGB + alpha,654049,572b3ba6161d81c0c641499dd5837f94e09726269e8c2ed3a8119dc0bca325fd
+01_logos/primary/black/digital/rootsquare_primary_black_rgb_512.png,png,512,512,px,RGB + alpha,67401,a506fcf05e82180c3f9ca98d1718d78b5359b3478e1b22515f9af703525adc90
+01_logos/primary/black/print/rootsquare_primary_black_cmyk-fogra39.pdf,pdf,100,100,mm,CMYK (DeviceCMYK),54819,d0b2d2526e2a1ff927233a64310d6d4ea0841bcb0a6fe93ac7658724100f34ee
+01_logos/primary/black/print/rootsquare_primary_black_cmyk-swop.pdf,pdf,100,100,mm,CMYK (DeviceCMYK),54824,d9b091f271787c979b5f3846823bcbd947a6c7bed6a7f74b775267a708ef67f6
+01_logos/primary/black/print/rootsquare_primary_black_rgb.eps,eps,97.4,97.4,mm,RGB,97251,5aa39ade253d13c338f6ee124bc5706ab58c9151af0248e13186e15e2631db8f
+01_logos/primary/black/print/rootsquare_primary_black_rgb.pdf,pdf,100,100,mm,RGB,36028,361b9e95a5dba08e0e71df493b269e32a288d20167504794c5a800eb754525a2
+01_logos/primary/colour/digital/rootsquare_primary_colour_rgb.svg,svg,462,462,user units,RGB,169193,ad866dfc2e36940a5e7a2b3f978f3caf85c86513cc4dd5fab4af8b149ffe3903
+01_logos/primary/colour/digital/rootsquare_primary_colour_rgb_1024.jpg,jpg,1024,1024,px,RGB (YCbCr),324208,a957155d801b1ea29adef62297eb1c7ab89df37b466a6b7c4d4b5921e278f8f8
+01_logos/primary/colour/digital/rootsquare_primary_colour_rgb_1024.png,png,1024,1024,px,RGB + alpha,317138,21818f871cf80ffe334847d5db7e4dc84d6b08a07d58ec68d37af0f0d494dd26
+01_logos/primary/colour/digital/rootsquare_primary_colour_rgb_2048.png,png,2048,2048,px,RGB + alpha,731343,2c2456456120e55adc68a5e7d32b6ceb0232690aa89ca98e129dd8a43fd7f563
+01_logos/primary/colour/digital/rootsquare_primary_colour_rgb_256.png,png,256,256,px,RGB + alpha,53179,ff5d5a4e1092e2d2fdad24b4774f9457c275ddfb34d79158d05b24d86d9607cc
+01_logos/primary/colour/digital/rootsquare_primary_colour_rgb_4096.png,png,4096,4096,px,RGB + alpha,1652832,17470261c492ca5d2eaa5af4952038253e96c99b1da100cf3dac9c65ce261806
+01_logos/primary/colour/digital/rootsquare_primary_colour_rgb_512.png,png,512,512,px,RGB + alpha,132203,bda32aefbafb4a84a84e81c3f652dd717ee1378a87852fc7904cbcd0faede3eb
+01_logos/primary/colour/print/rootsquare_primary_colour_cmyk-fogra39.pdf,pdf,100,100,mm,CMYK (DeviceCMYK),55556,4365d480bb5eebf6de7a00c7582f23949c453dfcba3d16e5e4fa108af1e2c1b7
+01_logos/primary/colour/print/rootsquare_primary_colour_cmyk-swop.pdf,pdf,100,100,mm,CMYK (DeviceCMYK),55565,089f04c37f6f35fc9480fb637e722cd4800290a04cfcfd2e219aaf19ab69a664
+01_logos/primary/colour/print/rootsquare_primary_colour_rgb.eps,eps,97.4,97.4,mm,RGB,174370,eef7c932379f833f62cd51d8834a75565ddd172a8e20287c465e5fe80890c612
+01_logos/primary/colour/print/rootsquare_primary_colour_rgb.pdf,pdf,100,100,mm,RGB,168139,77ae80333c5030c0d48f87f24023492fb59d856efce931db430555ac7c2a466e
+01_logos/primary/flat/digital/rootsquare_primary_flat_rgb.svg,svg,462,462,user units,RGB,168678,d4a5ef4f559ceafa0b563131e14e783946ba1abfa9e0203fa3cd891d61ee4722
+01_logos/primary/flat/digital/rootsquare_primary_flat_rgb_1024.jpg,jpg,1024,1024,px,RGB (YCbCr),356540,ac00e7a32fab52a0cd3e14de17fe436965a65982e7f4d155ff202b64d65ded92
+01_logos/primary/flat/digital/rootsquare_primary_flat_rgb_1024.png,png,1024,1024,px,RGB + alpha,229131,3c57246aac3dd0fea6c36e0091e0cf1a05fc24a5b12cca705d20a6dab0b3467f
+01_logos/primary/flat/digital/rootsquare_primary_flat_rgb_2048.png,png,2048,2048,px,RGB + alpha,471676,b8091e0ff6190fd398bf87dbc8726bd690140d3f00e399f9ff6dfb22cb737ee2
+01_logos/primary/flat/digital/rootsquare_primary_flat_rgb_256.png,png,256,256,px,RGB + alpha,46016,762d639d54170de1e996dcc6163e6eac86b64f78743c9f830dc93b64e3af9d1b
+01_logos/primary/flat/digital/rootsquare_primary_flat_rgb_4096.png,png,4096,4096,px,RGB + alpha,1010311,7f72e62595f362702e6f7aa2b67cf2e168117bfb86de69cd1cedc02cbc7a6091
+01_logos/primary/flat/digital/rootsquare_primary_flat_rgb_512.png,png,512,512,px,RGB + alpha,107833,8a2c7db6492329a022413fea346dcbd28b210a34be02388d96570d4a9612c33c
+01_logos/primary/flat/print/rootsquare_primary_flat_cmyk-fogra39.pdf,pdf,100,100,mm,CMYK (DeviceCMYK),54734,830a12fc2e7bfc6084847393f3597d2f077d08f9a3a8426e2eeb804b07b6ef9a
+01_logos/primary/flat/print/rootsquare_primary_flat_cmyk-swop.pdf,pdf,100,100,mm,CMYK (DeviceCMYK),54741,c81b76ed94a5d9001c07472bf3b02d0188b3bb4d112dd4979a150c5af7db95df
+01_logos/primary/flat/print/rootsquare_primary_flat_rgb.eps,eps,97.4,97.4,mm,RGB,97278,c3e42ee06b0818b4827526af4da4609d5ed707d7054602cfd2a1826ecff9406f
+01_logos/primary/flat/print/rootsquare_primary_flat_rgb.pdf,pdf,100,100,mm,RGB,36044,fcdcb18b79d2f57c8d18973cc36d9df12552493d8f2f65509d6e08513eda0be0
+01_logos/primary/white/digital/rootsquare_primary_white_rgb.svg,svg,462,462,user units,RGB,168679,96b3bd9a6dc435f258658b2e9aba374438b13f96564fe6d2de66fdce77d2577a
+01_logos/primary/white/digital/rootsquare_primary_white_rgb_1024.png,png,1024,1024,px,RGB + alpha,147493,3fe141eed9287ebfe9db79aec89e603f3ce6e9787dbb6910b56b65c92cf016e5
+01_logos/primary/white/digital/rootsquare_primary_white_rgb_2048.png,png,2048,2048,px,RGB + alpha,306014,9cde7742312f93747be31b63a3c3fff0cd5f5f476a661cd386cecbef67e6f93d
+01_logos/primary/white/digital/rootsquare_primary_white_rgb_256.png,png,256,256,px,RGB + alpha,32220,04e0c4242f367b45e8c86ee15b41e424475cf3c82382e2b75bfa51aa1452bbf7
+01_logos/primary/white/digital/rootsquare_primary_white_rgb_4096.png,png,4096,4096,px,RGB + alpha,693095,2adcfeb23f46f9411bee965f7a162a5ef5ef90a0fd7d8d3c85a9b2592f11e31a
+01_logos/primary/white/digital/rootsquare_primary_white_rgb_512.png,png,512,512,px,RGB + alpha,72409,85644a08610820aa557e641a2681405cdca8cf1c215543aed18e640803bd0dc3
+01_logos/primary/white/print/rootsquare_primary_white_cmyk-fogra39.pdf,pdf,100,100,mm,CMYK (DeviceCMYK),55207,63a010afc8305076b8ff04ebf37af05605cc2675c17c52ffdde4103e1351d71a
+01_logos/primary/white/print/rootsquare_primary_white_cmyk-swop.pdf,pdf,100,100,mm,CMYK (DeviceCMYK),55212,1412663aa8b56889432b894ed6b0c6ee88c86e84ee15a550e47f1adacc5a9f48
+01_logos/primary/white/print/rootsquare_primary_white_rgb.eps,eps,97.4,97.4,mm,RGB,97251,ba6d3100340c928ad1c4f2cec71e9b6e1c43f9e6601237ed39a6b5da4c9df0a6
+01_logos/primary/white/print/rootsquare_primary_white_rgb.pdf,pdf,100,100,mm,RGB,36029,f768eaaf305427da6399775a1384899b96bf51f02fc3f219b98f45a06ee2ee21
+01_logos/wordmark/black/digital/rootsquare_wordmark_black_rgb.svg,svg,5454,928,user units,RGB,4150,c34ae491914b2f4c10b65951645047c5179713e2071fc4b5d7e249afd24a87d3
+01_logos/wordmark/black/digital/rootsquare_wordmark_black_rgb_1024.png,png,1024,174,px,RGB + alpha,15260,09521b7b396c0c3d428b0cb782e0550394d2bd5422de9f2fcc51b958b5aa55d6
+01_logos/wordmark/black/digital/rootsquare_wordmark_black_rgb_2048.png,png,2048,348,px,RGB + alpha,32877,e406ae8ad4e217153ca1021f8971b44c7f37369ebabe2cad824dcb67bcbf9aa0
+01_logos/wordmark/black/digital/rootsquare_wordmark_black_rgb_256.png,png,256,44,px,RGB + alpha,3331,1621eaf90d203d2626ae509f5ca7b2392579bcdcfda75a449f156be440371540
+01_logos/wordmark/black/digital/rootsquare_wordmark_black_rgb_512.png,png,512,87,px,RGB + alpha,6929,c0f59dd0a154c3961d73c0c7c9debfef5bb251b8ae563cab73c6483493fbbf74
+01_logos/wordmark/black/print/rootsquare_wordmark_black_cmyk-fogra39.pdf,pdf,100,17,mm,CMYK (DeviceCMYK),5614,d564d53ea27b0cd4e0cedc2c1ece5ed6fdc7dd045b177158a753e64f7bd7dd3d
+01_logos/wordmark/black/print/rootsquare_wordmark_black_cmyk-swop.pdf,pdf,100,17,mm,CMYK (DeviceCMYK),5619,44044d667f125f332650183abb944e6928a6335d1e9f4e29c40d4293041b2279
+01_logos/wordmark/black/print/rootsquare_wordmark_black_rgb.eps,eps,100.2,17.3,mm,RGB,10094,19a7240b25f32a6b6dc178016917dc11ef804835939dab4d3b49e01efb32ebaf
+01_logos/wordmark/black/print/rootsquare_wordmark_black_rgb.pdf,pdf,100,17,mm,RGB,3944,46e5a26f0cc807538d111fb550907d95e5b5b069d5092aef09c6dedc882d9fc5
+01_logos/wordmark/colour/digital/rootsquare_wordmark_colour_rgb.svg,svg,5454,928,user units,RGB,4359,2672fd89df529b1662d25ca4b7b615e17f138da820f501ec87a71544f0df2d0d
+01_logos/wordmark/colour/digital/rootsquare_wordmark_colour_rgb_1024.png,png,1024,174,px,RGB + alpha,23962,132d1275bf696b31ac57f5c6f25ae19fba4bbc1f381b2834439ac0bef10898e5
+01_logos/wordmark/colour/digital/rootsquare_wordmark_colour_rgb_2048.png,png,2048,348,px,RGB + alpha,50740,ddaccd2134672e0538ef65464fbeba440bfa4a30caf34dad2b95900d0a8bda36
+01_logos/wordmark/colour/digital/rootsquare_wordmark_colour_rgb_256.png,png,256,44,px,RGB + alpha,5699,845468ef0b734b78422d989f412289221cecfd5576a19f81fd3e4ead7e58c024
+01_logos/wordmark/colour/digital/rootsquare_wordmark_colour_rgb_512.png,png,512,87,px,RGB + alpha,11639,f2200e8bbd126012799bc23aa9bba72b71a9dcdac71c570208847332614423dd
+01_logos/wordmark/colour/print/rootsquare_wordmark_colour_cmyk-fogra39.pdf,pdf,100,17,mm,CMYK (DeviceCMYK),5813,de28c13abe81bd7cd52eeb7eda706c3bdc99bbf5cf8ad9c4ac27f588e470f88c
+01_logos/wordmark/colour/print/rootsquare_wordmark_colour_cmyk-swop.pdf,pdf,100,17,mm,CMYK (DeviceCMYK),5819,4ea4f6134b9d9409ed7a5aaf5377853e096a1f9d2634a9e79b3afeecdbcf91f0
+01_logos/wordmark/colour/print/rootsquare_wordmark_colour_rgb.eps,eps,100.2,17.3,mm,RGB,10470,851b0f58c94780d1cf713e0eb473231e2c01b05e3acfdc0916cf04501777d803
+01_logos/wordmark/colour/print/rootsquare_wordmark_colour_rgb.pdf,pdf,100,17,mm,RGB,4387,e1b113910da70c31746068433c647d8314a287b8771f7ce2edf48fbb683794bd
+01_logos/wordmark/flat/digital/rootsquare_wordmark_flat_rgb.svg,svg,5454,928,user units,RGB,4149,681b953a5a4ccaa84a901ac5ca3f4c416d5f873ff5538d69de61b8e5b1885454
+01_logos/wordmark/flat/digital/rootsquare_wordmark_flat_rgb_1024.png,png,1024,174,px,RGB + alpha,21896,a071ca14c18c8233e78a0d44bc9b86a08a10abe1066acea154bb3b340b7467ce
+01_logos/wordmark/flat/digital/rootsquare_wordmark_flat_rgb_2048.png,png,2048,348,px,RGB + alpha,45784,c0a433847aa0471b2ee8c3d804290eb59dcd303fe4095a27d388062fbe5fa80b
+01_logos/wordmark/flat/digital/rootsquare_wordmark_flat_rgb_256.png,png,256,44,px,RGB + alpha,5259,b356633bda7c89c834a0a2e4532174d2ae1149056601b0626938375bd0338035
+01_logos/wordmark/flat/digital/rootsquare_wordmark_flat_rgb_512.png,png,512,87,px,RGB + alpha,10624,c65c0e81c95c953cd6393c2edc9b4d4f388e15337a9ba52cec673879a24dceeb
+01_logos/wordmark/flat/print/rootsquare_wordmark_flat_cmyk-fogra39.pdf,pdf,100,17,mm,CMYK (DeviceCMYK),5526,85010042f3cba838d636f996d84e23283c9090633707e2d978d4e757e2c9a138
+01_logos/wordmark/flat/print/rootsquare_wordmark_flat_cmyk-swop.pdf,pdf,100,17,mm,CMYK (DeviceCMYK),5530,e3481be206420a726d8abca58c8b28883ed7b9b5340f9b1764f93f1895952222
+01_logos/wordmark/flat/print/rootsquare_wordmark_flat_rgb.eps,eps,100.2,17.3,mm,RGB,10121,7cb0008cc589f9c94bfcaa8160ffd0bf67f7624557180590701ae997a0de2507
+01_logos/wordmark/flat/print/rootsquare_wordmark_flat_rgb.pdf,pdf,100,17,mm,RGB,3960,b860149ae405f03d52e050e61cfa61e4f18095c6c494ea08d954d346770513c3
+01_logos/wordmark/white/digital/rootsquare_wordmark_white_rgb.svg,svg,5454,928,user units,RGB,4150,30b695bfb5d369ac70116b205680f3509088df751b6d0051224f74a96d3a9e60
+01_logos/wordmark/white/digital/rootsquare_wordmark_white_rgb_1024.png,png,1024,174,px,RGB + alpha,17399,9c9ad1958c91302c629c365e694cb80e45117401fd62497b496914d95980a170
+01_logos/wordmark/white/digital/rootsquare_wordmark_white_rgb_2048.png,png,2048,348,px,RGB + alpha,36530,c87679e2620744ad05d6b89a8eb332614e6e4da89280abb9e3738e875388b038
+01_logos/wordmark/white/digital/rootsquare_wordmark_white_rgb_256.png,png,256,44,px,RGB + alpha,3786,29a97d757c0aafee9cddeb0c31abca39a805a9a1f6798ce48843017e3ea83e76
+01_logos/wordmark/white/digital/rootsquare_wordmark_white_rgb_512.png,png,512,87,px,RGB + alpha,8161,621c48cb8ff796e3810a74379615919416e29ddbe45a5cfd139e2b5a97567c12
+01_logos/wordmark/white/print/rootsquare_wordmark_white_cmyk-fogra39.pdf,pdf,100,17,mm,CMYK (DeviceCMYK),6003,19b1650f1be9c3799bb98f00ead6560303c6b8dd705e231b4a2119835a3fc7c7
+01_logos/wordmark/white/print/rootsquare_wordmark_white_cmyk-swop.pdf,pdf,100,17,mm,CMYK (DeviceCMYK),6008,ecec2b9c4a3e6b432787eff0994a2cebd3ee2b948451aecc8696cd449147b6b0
+01_logos/wordmark/white/print/rootsquare_wordmark_white_rgb.eps,eps,100.2,17.3,mm,RGB,10094,9aa73c009dc147bf3bca7389ab2ef2b6772972f7b1e43ca268ff4e160449adbf
+01_logos/wordmark/white/print/rootsquare_wordmark_white_rgb.pdf,pdf,100,17,mm,RGB,3945,3918dbe99cd1d2a56511fe1328abcd3def6a61e1fb9d8765be3345607076f22c
+02_palette/palette.ase,ase,,,,n/a,2346,bdeceb10bd4495de6a351b73204f129bb57b1c55079cd47ec1f7d2879998408c
+02_palette/palette.css,css,,,,n/a,1403,2fff614197b7233683cd38ac4f76a249c6a70469236dfd60cbc8322b905fdc3b
+02_palette/palette.json,json,,,,n/a,14719,4605f74dccc61c365d2d017dfbeb9c87ab2ca299cf61365b2f4c2b64427c36cd
+02_palette/rootsquare_palette-sheet_colour_rgb.pdf,pdf,297,210,mm,RGB,43384,0d7bbfe14807895fb3c26f28da485e525ae8bed2ac380621d0a008506dec47bd
+02_palette/rootsquare_palette-sheet_colour_rgb.png,png,2245,1587,px,RGB + alpha,593600,bc784925028cfcc895e1d119d0b3029e614a835e6052c9782b213dce0157f6b7
+03_typography/outfit/OFL.txt,txt,,,,n/a,4389,c676351bf8576b9aba743cd5eaa8c0e7ee0d51f805d720447b4df4ddb6a2e416
+03_typography/outfit/Outfit-Black.ttf,ttf,,,,n/a,74712,1c033aa4d2ed288e5a9fb6e379bbe52e2c5b8ce0fd06bcee928c14f9bccbca4c
+03_typography/outfit/Outfit-Bold.ttf,ttf,,,,n/a,75992,f620b69582e06d7e1b3bbde74ed8c5876eadabb038390780db2a3414a1490197
+03_typography/outfit/Outfit-ExtraBold.ttf,ttf,,,,n/a,74048,0f028cbdc61a588bc44fef911e8d2bcfc0bc05b241a9b797686024d269d964b6
+03_typography/outfit/Outfit-ExtraLight.ttf,ttf,,,,n/a,74968,d7024212daae2cdbe59b8a33dc1f4bb9a3c4399cb88739531b381f71dfb33e76
+03_typography/outfit/Outfit-Light.ttf,ttf,,,,n/a,77644,181c6867345960e0fbd807131624d092accb5f87185910f9496ba8b188aa2730
+03_typography/outfit/Outfit-Medium.ttf,ttf,,,,n/a,74996,dc8d9212fc57556a55d01e863071f727cd6264b748e28885d853807aeb186142
+03_typography/outfit/Outfit-Regular.ttf,ttf,,,,n/a,75132,3b64ac4f6ab6a8eebddd4b0bc03c811c43602e11e176382ab0ee6be615ab861b
+03_typography/outfit/Outfit-SemiBold.ttf,ttf,,,,n/a,76116,bf2e1d2a6ec2a67952e8b36edd2b2bb9f340c0cdd10b0ad5145b4dbbc1339608
+03_typography/outfit/Outfit-Thin.ttf,ttf,,,,n/a,73616,927116fc2adf773f9b4f4062ce59d629db254e52f12474e7d72eedf1c9460cda
+03_typography/outfit/Outfit[wght].ttf,ttf,,,,n/a,110884,fc7287273e66929776e2ba54f144fe699080bec29f61bf649d70d871468aeade
+03_typography/typography.md,md,,,,n/a,2856,ed46f049b082ff56a0fce269a58b032ac4afc433d7b0203ae23fb197f78aad76
+04_social/rootsquare_linkedin-avatar_colour_rgb_400.png,png,400,400,px,RGB,8683,6aaafc0205e3db7d7d1d050c61db4f823fd1c4843a976f7e2a4f780b1c3b4d2d
+04_social/rootsquare_linkedin-banner_colour_rgb_1584x396.png,png,1584,396,px,RGB,315103,70f9707122973e56a0e179f408eb035ab729602f39b55d58bab7cccd1222de6f
+04_social/rootsquare_og-image_colour_rgb_1200x630.png,png,1200,630,px,RGB,17891,2e97c21fc2098e9a25023bf3defcda1dfccc1461d9dcf9a6b7c2f141a694f8cd
+05_motion/rootsquare_primary-loop_colour_rgb_1080.mp4,mp4,1080,1080,"px, 30 fps, 5.00 s, h264",YUV 420,4059558,3a5f4f6b1218b4cbb18f654981697fc65cc016b5730ea9d26a1716b53c6dd0a8
+05_motion/rootsquare_primary-loop_colour_rgb_1080.webm,webm,1080,1080,"px, 30 fps, 5.00 s, vp9",YUV 420 + alpha,10103257,7b9afbafad760b5b175fd00f7887df2f17d7fa3e959b29fa7706163d69d1bce4
+06_guidelines/rootsquare_clearspace_colour_rgb.pdf,pdf,476.3,328.1,mm,RGB,232217,746d809043a80d18a1af52e67b97e6b0e9124e253105da71d5a88a59e326639a
+06_guidelines/rootsquare_clearspace_colour_rgb.svg,svg,1800,1240,user units,RGB,308550,bcfe8db2c2a19ba951aa1750a3e7deff644c8aa248666901056ab73e45843a18
+06_guidelines/rootsquare_clearspace_colour_rgb_1800.png,png,1800,1240,px,RGB + alpha,206865,f8a66f96aa9c9f452ec87c23a9773df923a8b8201ca7bb849b2e8f071f78e72e
+06_guidelines/rootsquare_usage-guidelines_colour_rgb.pdf,pdf,210,297,mm,RGB,41878,2a4c2d7c25ab06562324e761a8a4e8f5d7655a20b4f0151447160c02be1f54aa
+README.md,md,,,,n/a,13825,fc39471b9abf6688f0d720155a8abb63fdac596d3f95c5fa22390363dc6d4f9a
+README.pdf,pdf,210,297,mm (page 1 of 4),RGB,112750,cd59474c2457c8e05e30d6574a3ea5bc887945b1246be3b0d4c01343ee0375a7
+contact_sheet.pdf,pdf,297,210,mm (page 1 of 9),RGB,5147283,cdc0a51b13cbfcee900ba3d28c099e45e330c2252dee36c6826e1d6dc5d38304

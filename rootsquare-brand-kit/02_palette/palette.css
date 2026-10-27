@@ -1,0 +1,32 @@
+/* RootSquare palette v1.1 (2026-10-26)
+ * Screen colours (sRGB). For print values see palette.json; CMYK figures are conversions,
+ * not proofs.
+ *
+ * The website (css/root-square.css) uses its own variable names for the same colours:
+   --ink          -> --shadow-grey   (site uses #1b1825; palette is #1d1a27)
+   --indigo       -> --twilight-indigo
+   --muted        -> --chocolate-plum
+   --sky, --line  -> --light-blue   (site uses #d3e7ee; palette is #aacfdd)
+   --bg           -> --white-smoke
+   --soft         -> --powder-petal
+   --blush        -> --cherry-blossom
+   --accent       -> --blaze-orange
+   --flame        -> --blazing-flame
+   --red          -> --electric-red
+ */
+:root {
+  /* brand palette */
+  --shadow-grey: #1d1a27;      /* Shadow Grey */
+  --twilight-indigo: #37375e;  /* Twilight Indigo */
+  --chocolate-plum: #644041;   /* Chocolate Plum */
+  --light-blue: #aacfdd;       /* Light Blue */
+  --white-smoke: #f5f5f5;      /* White Smoke */
+  --powder-petal: #ffe8d9;     /* Powder Petal */
+  --cherry-blossom: #fea9af;   /* Cherry Blossom */
+  --blaze-orange: #fd5a01;     /* Blaze Orange */
+  --blazing-flame: #fe3911;    /* Blazing Flame */
+  --electric-red: #fe1100;     /* Electric Red */
+
+  /* the logo gradient: Blaze Orange to Blazing Flame, top-left to bottom-right */
+  --logo-gradient: linear-gradient(135deg, var(--blaze-orange) 0%, var(--blazing-flame) 100%);
+}

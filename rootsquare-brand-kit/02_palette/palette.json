@@ -1,0 +1,577 @@
+{
+  "name": "RootSquare palette",
+  "version": "1.1",
+  "date": "2026-10-26",
+  "source": "The official RootSquare palette, Shadow Grey to Electric Red. The logo uses Blaze Orange and Blazing Flame.",
+  "notes": {
+    "cmyk": "CMYK values are conversions from sRGB, not proofs. Each is the closest colorimetric match (dE2000) within the standard's ink limit: North America, U.S. Web Coated (SWOP) v2; Europe, Coated FOGRA39 (ISO 12647-2:2004). Ask your printer to proof on their own press.",
+    "pantone": "Nearest PANTONE Coated by dE2000 against Pantone's published sRGB values. Nearest match, verify against a physical guide.",
+    "contrast": "WCAG 2.x contrast ratio against white (#ffffff) and Shadow Grey (#1d1a27). Anything under 3:1 is flagged. 3:1 is the minimum for graphics and large text; body text needs 4.5:1.",
+    "website": "Website check (css/root-square.css): 8 of 10 colours match. Shadow Grey is #1B1825 on the site (--ink, dE 0.63, not visible); Light Blue is #D3E7EE on the site (--sky, --line, dE 7.87, visibly different).",
+    "logo_white_black": "The white logo is #ffffff (CMYK: no ink). The black logo is #000000 (CMYK: K 100 only)."
+  },
+  "brand": [
+    {
+      "name": "Shadow Grey",
+      "css_variable": "--shadow-grey",
+      "role": "Text, dark sections and primary buttons. The dark ground for the white logo.",
+      "hex": "#1d1a27",
+      "rgb": [
+        29,
+        26,
+        39
+      ],
+      "hsl": [
+        254,
+        20,
+        13
+      ],
+      "cmyk": {
+        "swop": {
+          "standard": "U.S. Web Coated (SWOP) v2",
+          "region": "North America",
+          "c": 25,
+          "m": 23,
+          "y": 0,
+          "k": 95,
+          "deltaE2000_vs_srgb": 0.31
+        },
+        "fogra39": {
+          "standard": "Coated FOGRA39 (ISO 12647-2:2004)",
+          "region": "Europe",
+          "c": 51,
+          "m": 45,
+          "y": 10,
+          "k": 91,
+          "deltaE2000_vs_srgb": 0.31
+        }
+      },
+      "pantone_nearest": {
+        "name": "PANTONE 532 C",
+        "srgb_reference": "#1c1f2a",
+        "deltaE2000": 4.21,
+        "runner_up": "PANTONE 276 C (dE 5.92)",
+        "note": "nearest match, verify against a physical guide"
+      },
+      "wcag_contrast": {
+        "on_white": 17.08,
+        "on_shadow_grey": null
+      },
+      "flags": [],
+      "website": {
+        "variable": "--ink",
+        "value": "#1b1825",
+        "matches": false,
+        "deltaE2000": 0.63
+      }
+    },
+    {
+      "name": "Twilight Indigo",
+      "css_variable": "--twilight-indigo",
+      "role": "Section labels (eyebrows), call-to-action panels, team initials.",
+      "hex": "#37375e",
+      "rgb": [
+        55,
+        55,
+        94
+      ],
+      "hsl": [
+        240,
+        26,
+        29
+      ],
+      "cmyk": {
+        "swop": {
+          "standard": "U.S. Web Coated (SWOP) v2",
+          "region": "North America",
+          "c": 58,
+          "m": 53,
+          "y": 0,
+          "k": 62,
+          "deltaE2000_vs_srgb": 0.43
+        },
+        "fogra39": {
+          "standard": "Coated FOGRA39 (ISO 12647-2:2004)",
+          "region": "Europe",
+          "c": 69,
+          "m": 61,
+          "y": 0,
+          "k": 59,
+          "deltaE2000_vs_srgb": 0.49
+        }
+      },
+      "pantone_nearest": {
+        "name": "PANTONE 5265 C",
+        "srgb_reference": "#403a60",
+        "deltaE2000": 2.39,
+        "runner_up": "PANTONE 669 C (dE 6.77)",
+        "note": "nearest match, verify against a physical guide"
+      },
+      "wcag_contrast": {
+        "on_white": 11.23,
+        "on_shadow_grey": 1.52
+      },
+      "flags": [
+        "UNDER 3:1 against Shadow Grey"
+      ],
+      "website": {
+        "variable": "--indigo",
+        "value": "#37375e",
+        "matches": true,
+        "deltaE2000": 0
+      }
+    },
+    {
+      "name": "Chocolate Plum",
+      "css_variable": "--chocolate-plum",
+      "role": "Secondary text: intros, captions, supporting copy.",
+      "hex": "#644041",
+      "rgb": [
+        100,
+        64,
+        65
+      ],
+      "hsl": [
+        358,
+        22,
+        32
+      ],
+      "cmyk": {
+        "swop": {
+          "standard": "U.S. Web Coated (SWOP) v2",
+          "region": "North America",
+          "c": 10,
+          "m": 47,
+          "y": 30,
+          "k": 68,
+          "deltaE2000_vs_srgb": 0.47
+        },
+        "fogra39": {
+          "standard": "Coated FOGRA39 (ISO 12647-2:2004)",
+          "region": "Europe",
+          "c": 25,
+          "m": 58,
+          "y": 40,
+          "k": 63,
+          "deltaE2000_vs_srgb": 0.42
+        }
+      },
+      "pantone_nearest": {
+        "name": "PANTONE 7617 C",
+        "srgb_reference": "#583d3e",
+        "deltaE2000": 3.54,
+        "runner_up": "PANTONE 7616 C (dE 4.06)",
+        "note": "nearest match, verify against a physical guide"
+      },
+      "wcag_contrast": {
+        "on_white": 8.93,
+        "on_shadow_grey": 1.91
+      },
+      "flags": [
+        "UNDER 3:1 against Shadow Grey"
+      ],
+      "website": {
+        "variable": "--muted",
+        "value": "#644041",
+        "matches": true,
+        "deltaE2000": 0
+      }
+    },
+    {
+      "name": "Light Blue",
+      "css_variable": "--light-blue",
+      "role": "Lines and borders, light bands, light text on Shadow Grey.",
+      "hex": "#aacfdd",
+      "rgb": [
+        170,
+        207,
+        221
+      ],
+      "hsl": [
+        196,
+        43,
+        77
+      ],
+      "cmyk": {
+        "swop": {
+          "standard": "U.S. Web Coated (SWOP) v2",
+          "region": "North America",
+          "c": 23,
+          "m": 0,
+          "y": 1,
+          "k": 11,
+          "deltaE2000_vs_srgb": 0.5
+        },
+        "fogra39": {
+          "standard": "Coated FOGRA39 (ISO 12647-2:2004)",
+          "region": "Europe",
+          "c": 31,
+          "m": 0,
+          "y": 5,
+          "k": 11,
+          "deltaE2000_vs_srgb": 0.4
+        }
+      },
+      "pantone_nearest": {
+        "name": "PANTONE 551 C",
+        "srgb_reference": "#a3c7d2",
+        "deltaE2000": 2.35,
+        "runner_up": "PANTONE 552 C (dE 3.29)",
+        "note": "nearest match, verify against a physical guide"
+      },
+      "wcag_contrast": {
+        "on_white": 1.66,
+        "on_shadow_grey": 10.31
+      },
+      "flags": [
+        "UNDER 3:1 against white"
+      ],
+      "website": {
+        "variable": "--sky, --line",
+        "value": "#d3e7ee",
+        "matches": false,
+        "deltaE2000": 7.87
+      }
+    },
+    {
+      "name": "White Smoke",
+      "css_variable": "--white-smoke",
+      "role": "Page background, and text on Shadow Grey buttons.",
+      "hex": "#f5f5f5",
+      "rgb": [
+        245,
+        245,
+        245
+      ],
+      "hsl": [
+        0,
+        0,
+        96
+      ],
+      "cmyk": {
+        "swop": {
+          "standard": "U.S. Web Coated (SWOP) v2",
+          "region": "North America",
+          "c": 0,
+          "m": 0,
+          "y": 0,
+          "k": 3,
+          "deltaE2000_vs_srgb": 0
+        },
+        "fogra39": {
+          "standard": "Coated FOGRA39 (ISO 12647-2:2004)",
+          "region": "Europe",
+          "c": 0,
+          "m": 0,
+          "y": 0,
+          "k": 4,
+          "deltaE2000_vs_srgb": 0.41
+        }
+      },
+      "pantone_nearest": {
+        "name": "PANTONE 663 C",
+        "srgb_reference": "#e5e1e6",
+        "deltaE2000": 5.36,
+        "runner_up": "PANTONE 656 C (dE 5.85)",
+        "note": "nearest match, verify against a physical guide"
+      },
+      "wcag_contrast": {
+        "on_white": 1.09,
+        "on_shadow_grey": 15.67
+      },
+      "flags": [
+        "UNDER 3:1 against white"
+      ],
+      "website": {
+        "variable": "--bg",
+        "value": "#f5f5f5",
+        "matches": true,
+        "deltaE2000": 0
+      }
+    },
+    {
+      "name": "Powder Petal",
+      "css_variable": "--powder-petal",
+      "role": "Footer, soft sections and image placeholders.",
+      "hex": "#ffe8d9",
+      "rgb": [
+        255,
+        232,
+        217
+      ],
+      "hsl": [
+        24,
+        100,
+        93
+      ],
+      "cmyk": {
+        "swop": {
+          "standard": "U.S. Web Coated (SWOP) v2",
+          "region": "North America",
+          "c": 0,
+          "m": 9,
+          "y": 11,
+          "k": 0,
+          "deltaE2000_vs_srgb": 0.82
+        },
+        "fogra39": {
+          "standard": "Coated FOGRA39 (ISO 12647-2:2004)",
+          "region": "Europe",
+          "c": 0,
+          "m": 12,
+          "y": 15,
+          "k": 0,
+          "deltaE2000_vs_srgb": 0.85
+        }
+      },
+      "pantone_nearest": {
+        "name": "PANTONE 7604 C",
+        "srgb_reference": "#e4d5d3",
+        "deltaE2000": 7.32,
+        "runner_up": "PANTONE 475 C (dE 7.37)",
+        "note": "nearest match, verify against a physical guide"
+      },
+      "wcag_contrast": {
+        "on_white": 1.18,
+        "on_shadow_grey": 14.48
+      },
+      "flags": [
+        "UNDER 3:1 against white"
+      ],
+      "website": {
+        "variable": "--soft",
+        "value": "#ffe8d9",
+        "matches": true,
+        "deltaE2000": 0
+      }
+    },
+    {
+      "name": "Cherry Blossom",
+      "css_variable": "--cherry-blossom",
+      "role": "Decorative rings and soft accents.",
+      "hex": "#fea9af",
+      "rgb": [
+        254,
+        169,
+        175
+      ],
+      "hsl": [
+        356,
+        98,
+        83
+      ],
+      "cmyk": {
+        "swop": {
+          "standard": "U.S. Web Coated (SWOP) v2",
+          "region": "North America",
+          "c": 0,
+          "m": 40,
+          "y": 16,
+          "k": 0,
+          "deltaE2000_vs_srgb": 1.71
+        },
+        "fogra39": {
+          "standard": "Coated FOGRA39 (ISO 12647-2:2004)",
+          "region": "Europe",
+          "c": 0,
+          "m": 43,
+          "y": 20,
+          "k": 0,
+          "deltaE2000_vs_srgb": 2.15
+        }
+      },
+      "pantone_nearest": {
+        "name": "PANTONE 176 C",
+        "srgb_reference": "#ffb1bb",
+        "deltaE2000": 2.65,
+        "runner_up": "PANTONE Red 0331 C (dE 3.15)",
+        "note": "nearest match, verify against a physical guide"
+      },
+      "wcag_contrast": {
+        "on_white": 1.82,
+        "on_shadow_grey": 9.36
+      },
+      "flags": [
+        "UNDER 3:1 against white"
+      ],
+      "website": {
+        "variable": "--blush",
+        "value": "#fea9af",
+        "matches": true,
+        "deltaE2000": 0
+      }
+    },
+    {
+      "name": "Blaze Orange",
+      "css_variable": "--blaze-orange",
+      "role": "Logo gradient start (top-left). On screen: hover states and highlights (buttons, card borders, hero glow).",
+      "hex": "#fd5a01",
+      "rgb": [
+        253,
+        90,
+        1
+      ],
+      "hsl": [
+        21,
+        99,
+        50
+      ],
+      "cmyk": {
+        "swop": {
+          "standard": "U.S. Web Coated (SWOP) v2",
+          "region": "North America",
+          "c": 0,
+          "m": 74,
+          "y": 95,
+          "k": 0,
+          "deltaE2000_vs_srgb": 2.88
+        },
+        "fogra39": {
+          "standard": "Coated FOGRA39 (ISO 12647-2:2004)",
+          "region": "Europe",
+          "c": 0,
+          "m": 70,
+          "y": 88,
+          "k": 0,
+          "deltaE2000_vs_srgb": 3.55
+        }
+      },
+      "pantone_nearest": {
+        "name": "PANTONE Bright Orange C",
+        "srgb_reference": "#ff5e00",
+        "deltaE2000": 1.08,
+        "runner_up": "PANTONE Orange 021 C (dE 2.15)",
+        "note": "nearest match, verify against a physical guide"
+      },
+      "wcag_contrast": {
+        "on_white": 3.16,
+        "on_shadow_grey": 5.4
+      },
+      "flags": [],
+      "website": {
+        "variable": "--accent",
+        "value": "#fd5a01",
+        "matches": true,
+        "deltaE2000": 0
+      }
+    },
+    {
+      "name": "Blazing Flame",
+      "css_variable": "--blazing-flame",
+      "role": "Logo gradient end (bottom-right), mesh core and the flat logo. On screen: glow rings and warm emphasis.",
+      "hex": "#fe3911",
+      "rgb": [
+        254,
+        57,
+        17
+      ],
+      "hsl": [
+        10,
+        99,
+        53
+      ],
+      "cmyk": {
+        "swop": {
+          "standard": "U.S. Web Coated (SWOP) v2",
+          "region": "North America",
+          "c": 0,
+          "m": 85,
+          "y": 94,
+          "k": 0,
+          "deltaE2000_vs_srgb": 2.93
+        },
+        "fogra39": {
+          "standard": "Coated FOGRA39 (ISO 12647-2:2004)",
+          "region": "Europe",
+          "c": 0,
+          "m": 79,
+          "y": 84,
+          "k": 0,
+          "deltaE2000_vs_srgb": 4.06
+        }
+      },
+      "pantone_nearest": {
+        "name": "PANTONE 172 C",
+        "srgb_reference": "#fa4616",
+        "deltaE2000": 1.68,
+        "runner_up": "PANTONE Bright Red C (dE 2.80)",
+        "note": "nearest match, verify against a physical guide"
+      },
+      "wcag_contrast": {
+        "on_white": 3.62,
+        "on_shadow_grey": 4.72
+      },
+      "flags": [],
+      "website": {
+        "variable": "--flame",
+        "value": "#fe3911",
+        "matches": true,
+        "deltaE2000": 0
+      }
+    },
+    {
+      "name": "Electric Red",
+      "css_variable": "--electric-red",
+      "role": "Small emphasis marks, such as the check marks in lists.",
+      "hex": "#fe1100",
+      "rgb": [
+        254,
+        17,
+        0
+      ],
+      "hsl": [
+        4,
+        100,
+        50
+      ],
+      "cmyk": {
+        "swop": {
+          "standard": "U.S. Web Coated (SWOP) v2",
+          "region": "North America",
+          "c": 0,
+          "m": 90,
+          "y": 96,
+          "k": 0,
+          "deltaE2000_vs_srgb": 3.75
+        },
+        "fogra39": {
+          "standard": "Coated FOGRA39 (ISO 12647-2:2004)",
+          "region": "Europe",
+          "c": 0,
+          "m": 83,
+          "y": 90,
+          "k": 0,
+          "deltaE2000_vs_srgb": 4.32
+        }
+      },
+      "pantone_nearest": {
+        "name": "PANTONE Bright Red C",
+        "srgb_reference": "#f93822",
+        "deltaE2000": 3.09,
+        "runner_up": "PANTONE 172 C (dE 4.69)",
+        "note": "nearest match, verify against a physical guide"
+      },
+      "wcag_contrast": {
+        "on_white": 3.97,
+        "on_shadow_grey": 4.31
+      },
+      "flags": [],
+      "website": {
+        "variable": "--red",
+        "value": "#fe1100",
+        "matches": true,
+        "deltaE2000": 0
+      }
+    }
+  ],
+  "logo": {
+    "gradient": {
+      "from": "Blaze Orange",
+      "to": "Blazing Flame",
+      "direction": "top-left to bottom-right",
+      "css": "linear-gradient(135deg, var(--blaze-orange) 0%, var(--blazing-flame) 100%)"
+    },
+    "mesh": "Blazing Flame at the centre, fading to Blaze Orange at 55% opacity towards the edges",
+    "flat": "Blazing Flame"
+  }
+}

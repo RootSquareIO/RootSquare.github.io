@@ -1,0 +1,12 @@
+{
+  "name": "rootsquare-logo-scripts",
+  "private": true,
+  "description": "Builds the RootSquare logo package (../rootsquare-brand-kit) from ../Logo Material",
+  "scripts": {
+    "build": "node build-all.js"
+  },
+  "dependencies": {
+    "opentype.js": "1.3.4",
+    "pdf-lib": "1.17.1"
+  }
+}
